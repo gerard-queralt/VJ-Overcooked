@@ -10,8 +10,6 @@ class Player :
 	public Entity
 {
 public:
-	//Player();
-
 	void update(int deltaTime);
 
 	enum PlayerDirections {
@@ -25,6 +23,7 @@ public:
 
 private:
 	Item *holding;
+	int holdDropCD = 0;
 };
 
 #endif // _PLAYER_INCLUDE

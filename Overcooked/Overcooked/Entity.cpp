@@ -64,14 +64,14 @@ float Entity::getScale() const
 std::vector<glm::vec3> Entity::getBoundingBox()
 {
 	std::vector<glm::vec3> bbox = model->getBoundingBox();
-	
-	//la desplacem a la posicio de l'entitat
-	bbox[0] += position;
-	bbox[1] += position;
-	
+		
 	//l'escalem
 	bbox[0] *= scale/model->getHeight();
 	bbox[1] *= scale / model->getHeight();
+
+	//la desplacem a la posicio de l'entitat
+	bbox[0] += position;
+	bbox[1] += position;
 
 	return bbox;
 }

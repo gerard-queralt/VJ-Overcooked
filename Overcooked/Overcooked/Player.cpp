@@ -2,9 +2,12 @@
 #include "Game.h"
 
 #define PLAYER_SPEED 0.2
+#define HOLD_DROP_INTERVAL 300
 
 void Player::update(int deltaTime)
 {
+	holdDropCD -= deltaTime;
+
 	if (Game::instance().getKey('w'))
 		movePlayer(FRONT);
 	if (Game::instance().getKey('s'))
@@ -50,11 +53,16 @@ void Player::movePlayer(int dir)
 
 void Player::hold(Item * item)
 {
-	if(holding == NULL && Game::instance().getKey(' '))
+	if (holdDropCD <= 0 && holding == NULL && Game::instance().getKey(' ')) {
 		holding = item;
+		holdDropCD = HOLD_DROP_INTERVAL;
+	}
 }
 
 void Player::dropHolding()
 {
-	holding = NULL;
+	if (holdDropCD <= 0) {
+		holding = NULL;
+		holdDropCD = HOLD_DROP_INTERVAL;
+	}
 }
