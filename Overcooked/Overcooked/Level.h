@@ -27,6 +27,8 @@ public:
 	void render() const;
 	void free();
 
+	glm::vec3 getSize();
+
 private:
 	void prepareArrays(ShaderProgram &program);
 

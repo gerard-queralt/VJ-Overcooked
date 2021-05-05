@@ -31,12 +31,6 @@ public:
 	void update(int deltaTime);
 	void render();
 
-	enum PlayerDirections {
-		FRONT = 0, BACK, LEFT, RIGHT
-	};
-
-	void movePlayer(int dir);
-
 private:
 	void initShaders();
 

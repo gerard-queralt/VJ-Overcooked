@@ -14,16 +14,6 @@ void Game::init()
 bool Game::update(int deltaTime)
 {
 	scene.update(deltaTime);
-	
-	//Lectura inputs
-	if (keys['w'])
-		scene.movePlayer(scene.FRONT);
-	if (keys['s'])
-		scene.movePlayer(scene.BACK);
-	if (keys['a'])
-		scene.movePlayer(scene.LEFT);
-	if (keys['d'])
-		scene.movePlayer(scene.RIGHT);
 
 	return bPlay;
 }

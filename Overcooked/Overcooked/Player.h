@@ -10,7 +10,9 @@ class Player :
 	public Entity
 {
 public:
-	Player();
+	//Player();
+
+	void update(int deltaTime);
 
 	enum PlayerDirections {
 		FRONT = 0, BACK, LEFT, RIGHT

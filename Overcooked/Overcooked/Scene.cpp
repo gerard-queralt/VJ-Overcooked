@@ -81,6 +81,8 @@ void Scene::update(int deltaTime)
 
 	particles->update(deltaTime / 1000.f);
 
+	player->update(deltaTime);
+
 	for (Item* i : items) {
 		i->update(deltaTime);
 	}
@@ -139,11 +141,6 @@ void Scene::render()
 
 	glDisable(GL_BLEND);
 	glDepthMask(GL_TRUE);
-}
-
-void Scene::movePlayer(int dir)
-{
-	player->movePlayer(dir);
 }
 
 void Scene::initShaders()
