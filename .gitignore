@@ -27,6 +27,7 @@
 *.exe
 *.out
 *.app
+
 /Overcooked/Debug
 /Overcooked/Release
 /Overcooked/Overcooked/Debug
@@ -36,3 +37,4 @@
 /Overcooked/Overcooked.VC.db
 /Overcooked.VC.db
 /.vs/Overcooked/v14/.suo
+*.lnk
