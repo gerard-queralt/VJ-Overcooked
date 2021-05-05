@@ -9,6 +9,8 @@
 #include "Billboard.h"
 #include "ParticleSystem.h"
 
+#include "Player.h"
+#include "Item.h"
 
 #define CAMERA_WIDTH 640
 #define CAMERA_HEIGHT 480
@@ -33,27 +35,21 @@ public:
 		FRONT = 0, BACK, LEFT, RIGHT
 	};
 
-	enum CameraTypes {
-		FP = 0, TP, CAM_1, CAM_2, CAM_3, CAM_4
-	};
-
 	void movePlayer(int dir);
-
-	void changeCamera(int newCam);
 
 private:
 	void initShaders();
 
 private:
 	Level *level;
-	AssimpModel *model;
+	Player *player;
 	Billboard *billboard;
 	ParticleSystem *particles;
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
 
-	int camera;
+	std::vector<Item *> items;
 };
 
 

@@ -13,6 +13,30 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Entities">
+      <UniqueIdentifier>{b60cb4bf-7074-4ae1-9d86-2f5690be8932}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities">
+      <UniqueIdentifier>{2f1bef54-acba-4b77-a43e-f0efa028b057}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entities\Items">
+      <UniqueIdentifier>{37941464-ea61-46fc-93b5-75084533c240}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entities\Items\Tools">
+      <UniqueIdentifier>{1206517e-53f8-4bfa-b35f-b119b20c8ad6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entities\Items\Food">
+      <UniqueIdentifier>{6aa3db51-16ea-4387-ae1e-66c00cb7d959}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\Items">
+      <UniqueIdentifier>{48227d0d-e8cb-4703-b765-05e5c50e8be9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\Items\Tools">
+      <UniqueIdentifier>{6fafe92a-28ea-48ee-94b6-1d8999d274e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\Items\Food">
+      <UniqueIdentifier>{c6d09538-2518-4c82-990a-321570b313a3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssimpModel.h">
@@ -43,6 +67,24 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ParticleSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Header Files\Entities\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool.h">
+      <Filter>Header Files\Entities\Items\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="FryingPan.h">
+      <Filter>Header Files\Entities\Items\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Food.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -76,6 +118,24 @@
     </ClCompile>
     <ClCompile Include="ParticleSystem.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Source Files\Entities\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="FryingPan.cpp">
+      <Filter>Source Files\Entities\Items\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Tool.cpp">
+      <Filter>Source Files\Entities\Items\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Food.cpp">
+      <Filter>Source Files\Entities\Items\Food</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

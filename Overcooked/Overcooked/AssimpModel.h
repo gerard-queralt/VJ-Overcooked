@@ -27,11 +27,7 @@ public:
 	float getHeight() const;
 	glm::vec3 getCenter() const;
 
-	void setPosition(const glm::vec3 pos);
-	glm::vec3 getPosition() const;
-
-	void setScale(const float scale);
-	float getScale() const;
+	vector<glm::vec3> getBoundingBox();
 
 private:
 	void clear();
@@ -43,16 +39,14 @@ private:
 
 private:
 	float height;
-	glm::vec3 center, bbox[2];
+	glm::vec3 center;
+	vector<glm::vec3> bbox;
 	vector<Mesh *> meshes;
 	vector<Texture *> textures;
 
 	vector<GLuint> VAOs;
 	vector<GLuint> VBOs;
 	vector<GLint> posLocations, normalLocations, texCoordLocations;
-
-	glm::vec3 position;
-	float scale;
 };
 
 
