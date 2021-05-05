@@ -5,8 +5,6 @@
 *.slo
 *.lo
 *.o
-*.obj
-!/Overcooked/Overcooked/models/*.obj
 
 # Precompiled Headers
 *.gch
