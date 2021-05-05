@@ -28,3 +28,12 @@
 *.exe
 *.out
 *.app
+/Overcooked/Debug
+/Overcooked/Release
+/Overcooked/Overcooked/Debug
+/Overcooked/Overcooked/Release
+/Overcooked/.vs/Overcooked/v14
+/Overcooked/Overcooked.VC.VC.opendb
+/Overcooked/Overcooked.VC.db
+/Overcooked.VC.db
+/.vs/Overcooked/v14/.suo
