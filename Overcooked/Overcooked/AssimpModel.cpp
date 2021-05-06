@@ -43,24 +43,9 @@ glm::vec3 AssimpModel::getCenter() const
 	return center;
 }
 
-void AssimpModel::setPosition(const glm::vec3 pos)
+vector<glm::vec3> AssimpModel::getBoundingBox()
 {
-	this->position = pos;
-}
-
-glm::vec3 AssimpModel::getPosition() const
-{
-	return position;
-}
-
-void AssimpModel::setScale(const float scale)
-{
-	this->scale = scale;
-}
-
-float AssimpModel::getScale() const
-{
-	return scale;
+	return bbox;
 }
 
 void AssimpModel::render(ShaderProgram &program) const
@@ -187,6 +172,7 @@ bool AssimpModel::initMaterials(const aiScene *pScene, const string &filename)
 
 void AssimpModel::computeBoundingBox()
 {
+	bbox.resize(2);
 	bbox[0] = glm::vec3(1e10f, 1e10f, 1e10f);
 	bbox[1] = glm::vec3(-1e10f, -1e10f, -1e10f);
 	for (unsigned int i = 0; i<meshes.size(); i++)

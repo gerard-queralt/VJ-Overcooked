@@ -14,30 +14,6 @@ void Game::init()
 bool Game::update(int deltaTime)
 {
 	scene.update(deltaTime);
-	
-	//Lectura inputs
-	if (keys['w'])
-		scene.movePlayer(scene.FRONT);
-	if (keys['s'])
-		scene.movePlayer(scene.BACK);
-	if (keys['a'])
-		scene.movePlayer(scene.LEFT);
-	if (keys['d'])
-		scene.movePlayer(scene.RIGHT);
-
-	if (keys['1'])
-		scene.changeCamera(scene.FP);
-	else if (keys['2'])
-		scene.changeCamera(scene.CAM_1);
-	else if (keys['3'])
-		scene.changeCamera(scene.CAM_2);
-	else if (keys['4'])
-		scene.changeCamera(scene.CAM_3);
-	else if (keys['5'])
-		scene.changeCamera(scene.CAM_4);
-	else if (keys['6']) {
-		scene.changeCamera(scene.TP);
-	}
 
 	return bPlay;
 }

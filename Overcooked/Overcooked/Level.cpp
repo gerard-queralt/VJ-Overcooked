@@ -59,6 +59,11 @@ void Level::free()
 	glDeleteVertexArrays(1, &vao[1]);
 }
 
+glm::vec3 Level::getSize()
+{
+	return size;
+}
+
 void Level::prepareArrays(ShaderProgram &program)
 {
 	vector<float> vertices;
