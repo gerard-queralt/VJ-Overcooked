@@ -6,7 +6,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "Scene.h"
 
-#include "FryingPan.h"
+#include "LevelFactory.h"
 
 #define PI 3.14159f
 
@@ -34,19 +34,14 @@ Scene::~Scene()
 void Scene::init()
 {
 	initShaders();
-	level = Level::createLevel(glm::vec3(32, 4, 32), texProgram, "images/floor.png", "images/wall.png");
+	level = LevelFactory::instance().createLevel(1, texProgram);
 	player = new Player();
-	player->loadFromFile("models/chr_swordless.obj", texProgram);
+	player->init(texProgram);
 	player->setPosition(glm::vec3(0.f, 0.f, -5.f));
 	player->setScale(2.f);
 	player->setLevel(level);
 
-	FryingPan* pan = new FryingPan();
-	pan->loadFromFile("models/pan.obj", texProgram);
-	pan->setPosition(glm::vec3(0.f, 0.f, 0.f));
-	pan->setScale(2.f);
-	pan->setPlayer(player);
-	items.push_back(pan);
+	level->setPlayer(player);
 
 	//billboard = Billboard::createBillboard(glm::vec2(1.f, 1.f), texProgram, "images/mushroom.png");
 	//billboard->setType(BILLBOARD_Y_AXIS);
@@ -83,9 +78,7 @@ void Scene::update(int deltaTime)
 
 	player->update(deltaTime);
 
-	for (Item* i : items) {
-		i->update(deltaTime);
-	}
+	level->update(deltaTime);
 }
 
 void Scene::render()
@@ -108,13 +101,11 @@ void Scene::render()
 	texProgram.setUniformMatrix3f("normalmatrix", normalMatrix);
 	level->render();
 
+	//Render items
+	level->renderItems(texProgram, viewMatrix);
+
 	// Render player
 	player->render(texProgram, viewMatrix);
-
-	//Render items
-	for (Item* i : items) {
-		i->render(texProgram, viewMatrix);
-	}
 
 	// Render billboard
 	/*

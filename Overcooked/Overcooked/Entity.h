@@ -2,13 +2,14 @@
 #define _ENTITY_INCLUDE
 
 #include "AssimpModel.h"
-#include "Level.h"
 
+class Level; //forward declaration
 class Player; //forward declaration
 
 class Entity
 {
 public:
+	virtual bool init(ShaderProgram &program) = 0;
 	bool loadFromFile(const string &filename, ShaderProgram &program);
 	virtual void update(int deltaTime);
 	void render(ShaderProgram & program, glm::mat4 viewMatrix) const;

@@ -4,6 +4,11 @@
 #define PLAYER_SPEED 0.2
 #define HOLD_DROP_INTERVAL 300
 
+bool Player::init(ShaderProgram & program)
+{
+	return loadFromFile("models/chr_swordless.obj", program);
+}
+
 void Player::update(int deltaTime)
 {
 	holdDropCD -= deltaTime;

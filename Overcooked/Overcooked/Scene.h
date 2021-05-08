@@ -9,9 +9,6 @@
 #include "Billboard.h"
 #include "ParticleSystem.h"
 
-#include "Player.h"
-#include "Item.h"
-
 #define CAMERA_WIDTH 640
 #define CAMERA_HEIGHT 480
 
@@ -42,8 +39,6 @@ private:
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
-
-	std::vector<Item *> items;
 };
 
 

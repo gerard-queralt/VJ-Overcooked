@@ -85,7 +85,13 @@
       <Filter>Header Files\Entities\Items\Tools</Filter>
     </ClInclude>
     <ClInclude Include="Food.h">
+      <Filter>Header Files\Entities\Items\Food</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelFactory.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CuttingTable.h">
+      <Filter>Header Files\Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +142,12 @@
     </ClCompile>
     <ClCompile Include="Food.cpp">
       <Filter>Source Files\Entities\Items\Food</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CuttingTable.cpp">
+      <Filter>Source Files\Entities</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

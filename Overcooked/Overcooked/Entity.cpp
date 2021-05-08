@@ -1,6 +1,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "Entity.h"
-#include "Player.h"
+#include "Level.h"
 
 bool Entity::loadFromFile(const string & filename, ShaderProgram & program)
 {

@@ -1,7 +1,6 @@
 #ifndef _PLAYER_INCLUDE
 #define _PLAYER_INCLUDE
 
-#include "Entity.h"
 #include "Item.h"
 
 class Entity;
@@ -10,6 +9,8 @@ class Player :
 	public Entity
 {
 public:
+	bool init(ShaderProgram &program);
+
 	void update(int deltaTime);
 
 	enum PlayerDirections {

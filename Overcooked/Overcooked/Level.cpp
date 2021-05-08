@@ -2,6 +2,7 @@
 #include <vector>
 #include "Level.h"
 
+#include "Item.h"
 
 using namespace std;
 
@@ -50,6 +51,20 @@ void Level::render() const
 	glDisable(GL_TEXTURE_2D);
 }
 
+void Level::renderItems(ShaderProgram texProgram, glm::mat4 viewMatrix)
+{
+	for (Item* i : items) {
+		i->render(texProgram, viewMatrix);
+	}
+}
+
+void Level::update(int deltaTime)
+{
+	for (Item* i : items) {
+		i->update(deltaTime);
+	}
+}
+
 void Level::free()
 {
 	glDeleteBuffers(1, &vbo[0]);
@@ -62,6 +77,18 @@ void Level::free()
 glm::vec3 Level::getSize()
 {
 	return size;
+}
+
+void Level::addItem(Item * item)
+{
+	items.push_back(item);
+}
+
+void Level::setPlayer(Player * player)
+{
+	for (Item* i : items) {
+		i->setPlayer(player);
+	}
 }
 
 void Level::prepareArrays(ShaderProgram &program)

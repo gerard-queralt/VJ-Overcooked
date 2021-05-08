@@ -1,18 +1,19 @@
 #ifndef _LEVEL_INCLUDE
 #define _LEVEL_INCLUDE
 
-
 #include <string>
 #include <glm/glm.hpp>
 #include "Texture.h"
 #include "ShaderProgram.h"
 
+#include "Player.h"
 
 using namespace std;
 
 
 // Class Level renders a very simple room with textures
 
+class Item; //forward declaration
 
 class Level
 {
@@ -25,9 +26,14 @@ public:
 	~Level();
 
 	void render() const;
+	void renderItems(ShaderProgram texProgram, glm::mat4 viewMatrix);
+	void update(int deltaTime);
 	void free();
 
 	glm::vec3 getSize();
+	
+	void addItem(Item* item);
+	void setPlayer(Player* player);
 
 private:
 	void prepareArrays(ShaderProgram &program);
@@ -39,6 +45,7 @@ private:
 	glm::vec3 size;
 	Texture floor, wall;
 
+	vector<Item *> items;
 };
 
 
