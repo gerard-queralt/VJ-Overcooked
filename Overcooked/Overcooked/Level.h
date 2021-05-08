@@ -36,6 +36,8 @@ public:
 
 	bool playerCollision(Player* player);
 
+	void putItemOnTable(Item* item);
+
 private:
 	void prepareArrays(ShaderProgram &program);
 

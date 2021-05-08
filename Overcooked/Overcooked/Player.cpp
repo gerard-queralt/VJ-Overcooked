@@ -3,6 +3,7 @@
 
 #define PLAYER_SPEED 0.2
 #define HOLD_DROP_INTERVAL 300
+#define ROTATION_STEP 5.f
 
 bool Player::init(ShaderProgram & program)
 {
@@ -33,27 +34,69 @@ void Player::movePlayer(int dir)
 		position.z += PLAYER_SPEED;
 		if(level->playerCollision(this))
 			position.z -= PLAYER_SPEED;
-		else if (holding != NULL) holding->setPosition(glm::vec3(holding->getPosition().x, holding->getPosition().y, holding->getPosition().z + PLAYER_SPEED));
+		else {
+			float rotation = getRotation();
+			if (rotation != 0) {
+				if (rotation <= 180)
+					setRotation(rotation - ROTATION_STEP);
+				else
+					setRotation(rotation + ROTATION_STEP);
+			}
+			if (holding != NULL)
+				holding->setPosition(glm::vec3(holding->getPosition().x, holding->getPosition().y, holding->getPosition().z + PLAYER_SPEED));
+		}
 		break;
 	case BACK:
 		position.z -= PLAYER_SPEED;
 		if (level->playerCollision(this))
 			position.z += PLAYER_SPEED;
-		else if (holding != NULL) holding->setPosition(glm::vec3(holding->getPosition().x, holding->getPosition().y, holding->getPosition().z - PLAYER_SPEED));
+		else {
+			float rotation = getRotation();
+			if (rotation != 180) {
+				if (rotation < 180)
+					setRotation(rotation + ROTATION_STEP);
+				else
+					setRotation(rotation - ROTATION_STEP);
+			}
+			if (holding != NULL)
+				holding->setPosition(glm::vec3(holding->getPosition().x, holding->getPosition().y, holding->getPosition().z - PLAYER_SPEED));
+		}
 		break;
 	case LEFT:
 		position.x += PLAYER_SPEED;
 		if (level->playerCollision(this))
 			position.x -= PLAYER_SPEED;
-		else if (holding != NULL) holding->setPosition(glm::vec3(holding->getPosition().x + PLAYER_SPEED, holding->getPosition().y, holding->getPosition().z));
+		else {
+			float rotation = getRotation();
+			if (rotation != 90) {
+				if (rotation < 90 || rotation > 270)
+					setRotation(rotation + ROTATION_STEP);
+				else
+					setRotation(rotation - ROTATION_STEP);
+			}
+			if (holding != NULL)
+				holding->setPosition(glm::vec3(holding->getPosition().x + PLAYER_SPEED, holding->getPosition().y, holding->getPosition().z));
+		}
 		break;
 	case RIGHT:
 		position.x -= PLAYER_SPEED;
 		if (level->playerCollision(this))
 			position.x += PLAYER_SPEED;
-		else if (holding != NULL) holding->setPosition(glm::vec3(holding->getPosition().x - PLAYER_SPEED, holding->getPosition().y, holding->getPosition().z));
+		else {
+			float rotation = getRotation();
+			if (rotation != 270) {
+				if (rotation < 90 || rotation > 270)
+					setRotation(rotation - ROTATION_STEP);
+				else
+					setRotation(rotation + ROTATION_STEP);
+			}
+			if (holding != NULL)
+				holding->setPosition(glm::vec3(holding->getPosition().x - PLAYER_SPEED, holding->getPosition().y, holding->getPosition().z));
+		}
 		break;
 	}
+	if (holding != NULL)
+		holding->setRotation(getRotation());
 }
 
 void Player::hold(Item * item)
@@ -67,6 +110,7 @@ void Player::hold(Item * item)
 void Player::dropHolding()
 {
 	if (holdDropCD <= 0) {
+		level->putItemOnTable(holding);
 		holding = NULL;
 		holdDropCD = HOLD_DROP_INTERVAL;
 	}

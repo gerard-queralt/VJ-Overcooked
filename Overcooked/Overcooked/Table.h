@@ -14,6 +14,8 @@ public:
 
 	bool collisionWithPlayer();
 
+	bool playerFacingThis();
+
 protected:
 	Item* item = NULL;
 };

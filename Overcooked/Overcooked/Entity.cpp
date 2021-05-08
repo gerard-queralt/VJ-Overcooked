@@ -2,6 +2,8 @@
 #include "Entity.h"
 #include "Level.h"
 
+#define PI 3.14159f
+
 bool Entity::loadFromFile(const string & filename, ShaderProgram & program)
 {
 	model = new AssimpModel();
@@ -20,6 +22,7 @@ void Entity::render(ShaderProgram & program, glm::mat4 viewMatrix) const
 
 	modelMatrix = glm::mat4(1.0f);
 	modelMatrix = glm::translate(modelMatrix, position);
+	modelMatrix = glm::rotate(modelMatrix, rotation * PI / 180, glm::vec3(0.f, 1.f, 0.f));
 	modelMatrix = glm::translate(modelMatrix, glm::vec3(0.f, -2.f, 0.f));
 	modelMatrix = glm::scale(modelMatrix, glm::vec3(scale, scale, scale));
 	modelMatrix = glm::translate(modelMatrix, -centerModelBase);
@@ -61,6 +64,20 @@ float Entity::getScale() const
 	return scale;
 }
 
+void Entity::setRotation(const float rotation)
+{
+	this->rotation = rotation;
+	if (this->rotation >= 360)
+		this->rotation -= 360;
+	else if (this->rotation < 0)
+		this->rotation += 360;
+}
+
+float Entity::getRotation() const
+{
+	return rotation;
+}
+
 std::vector<glm::vec3> Entity::getBoundingBox()
 {
 	std::vector<glm::vec3> bbox = model->getBoundingBox();
@@ -90,6 +107,13 @@ bool Entity::inContactWithPlayer()
 {
 	std::vector<glm::vec3> bbox = getBoundingBox();
 	std::vector<glm::vec3> playerBbox = player->getBoundingBox();
+
+	//ignorem la y
+	bbox[0].y = 0;
+	bbox[1].y = 0;
+	playerBbox[0].y = 0;
+	playerBbox[1].y = 0;
+
 	bool en0InsidePlayer = glm::all(glm::greaterThanEqual(bbox[0], playerBbox[0])) && glm::all(glm::lessThanEqual(bbox[0], playerBbox[1]));
 	bool en1InsidePlayer = glm::all(glm::greaterThanEqual(bbox[1], playerBbox[0])) && glm::all(glm::lessThanEqual(bbox[1], playerBbox[1]));
 	bool p0InsideEntity = glm::all(glm::greaterThanEqual(playerBbox[0], bbox[0])) && glm::all(glm::lessThanEqual(playerBbox[0], bbox[1]));

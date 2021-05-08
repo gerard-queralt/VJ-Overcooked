@@ -92,7 +92,7 @@ void Scene::render()
 	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
 
 	glm::vec3 obs = obs = glm::vec3(0.f, 24.f, -30.f);
-	viewMatrix = glm::lookAt(obs, glm::vec3(0.f, -(90.f*PI), (90.f*PI)), glm::vec3(0.f, 1.f, 0.f));
+	viewMatrix = glm::lookAt(obs, glm::vec3(0.f, -(360.f*PI/180.f), (90.f*PI/180.f)), glm::vec3(0.f, 1.f, 0.f));
 
 	// Render level
 	modelMatrix = glm::mat4(1.0f);

@@ -121,6 +121,16 @@ bool Level::playerCollision(Player * player)
 	return false;
 }
 
+void Level::putItemOnTable(Item * item)
+{
+	for (Table* t : tables) {
+		if (t->playerFacingThis()) {
+			t->setItem(item);
+			break;
+		}
+	}
+}
+
 void Level::prepareArrays(ShaderProgram &program)
 {
 	vector<float> vertices;

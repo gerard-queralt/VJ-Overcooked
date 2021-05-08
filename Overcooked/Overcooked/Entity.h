@@ -23,6 +23,9 @@ public:
 	void setScale(const float scale);
 	float getScale() const;
 
+	void setRotation(const float rotation);
+	float getRotation() const;
+
 	std::vector<glm::vec3> getBoundingBox();
 
 	void setPlayer(Player *player);
@@ -35,6 +38,7 @@ protected:
 	AssimpModel *model;
 	glm::vec3 position;
 	float scale;
+	float rotation;
 
 	Player *player;
 	Level *level;
