@@ -50,11 +50,11 @@ Level* LevelFactory::createLevel1(ShaderProgram texProgram)
 	ct->setScale(1.f);
 	lvl->addTable(ct);
 
-	//Ceba hardcoded damunt de la taula de tallar
+	//Ceba que posem a la taula de tallar
 	Onion* onion2 = new Onion();
 	onion2->init(texProgram);
-	onion2->setPosition(glm::vec3(10.f, 1.2f, 14.f));
 	onion2->setScale(4.f);
+	ct->setItem(onion2);
 	lvl->addItem(onion2);
 
 	return lvl;
