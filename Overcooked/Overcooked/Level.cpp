@@ -121,14 +121,17 @@ bool Level::playerCollision(Player * player)
 	return false;
 }
 
-void Level::putItemOnTable(Item * item)
+Level::PutItemResult Level::putItemOnTable(Item * item)
 {
 	for (Table* t : tables) {
 		if (t->playerFacingThis()) {
-			t->setItem(item);
-			break;
+			if (t->setItem(item))
+				return SUCCESS;
+			else
+				return FULL;
 		}
 	}
+	return NOT_TOUCHING;
 }
 
 void Level::prepareArrays(ShaderProgram &program)

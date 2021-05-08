@@ -10,7 +10,7 @@ class Table :
 public:
 	virtual bool init(ShaderProgram &program);
 
-	void setItem(Item* item);
+	bool setItem(Item* item);
 
 	bool collisionWithPlayer();
 

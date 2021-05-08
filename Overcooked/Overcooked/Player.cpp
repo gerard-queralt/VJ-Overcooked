@@ -7,6 +7,7 @@
 
 bool Player::init(ShaderProgram & program)
 {
+	setScale(2.f);
 	return loadFromFile("models/chr_swordless.obj", program);
 }
 
@@ -110,8 +111,9 @@ void Player::hold(Item * item)
 void Player::dropHolding()
 {
 	if (holdDropCD <= 0) {
-		level->putItemOnTable(holding);
-		holding = NULL;
-		holdDropCD = HOLD_DROP_INTERVAL;
+		if (level->putItemOnTable(holding) != Level::FULL) {
+			holding = NULL;
+			holdDropCD = HOLD_DROP_INTERVAL;
+		}
 	}
 }

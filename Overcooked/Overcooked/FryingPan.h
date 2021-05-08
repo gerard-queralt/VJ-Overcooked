@@ -8,6 +8,13 @@ class FryingPan :
 {
 public:
 	bool init(ShaderProgram &program);
+
+	void setPosition(const glm::vec3 pos);
+
+	bool addFood(Food* food);
+
+private:
+	Food* food;
 };
 
 #endif // _FRYING_PAN_INCLUDE

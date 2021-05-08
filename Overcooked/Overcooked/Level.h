@@ -36,7 +36,10 @@ public:
 
 	bool playerCollision(Player* player);
 
-	void putItemOnTable(Item* item);
+	enum PutItemResult {
+		NOT_TOUCHING = 0, FULL, SUCCESS
+	};
+	PutItemResult putItemOnTable(Item* item);
 
 private:
 	void prepareArrays(ShaderProgram &program);

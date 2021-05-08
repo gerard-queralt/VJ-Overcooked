@@ -38,7 +38,6 @@ void Scene::init()
 	player = new Player();
 	player->init(texProgram);
 	player->setPosition(glm::vec3(0.f, 0.f, -5.f));
-	player->setScale(2.f);
 	player->setLevel(level);
 
 	level->setPlayer(player);

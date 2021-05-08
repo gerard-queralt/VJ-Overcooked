@@ -7,7 +7,7 @@ class Food :
 	public Item
 {
 public:
-	
+	bool isFood();
 };
 
 #endif // _FOOD_INCLUDE

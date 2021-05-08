@@ -8,6 +8,8 @@ class Item :
 {
 public:
 	void update(int deltaTime);
+
+	virtual bool isFood() = 0;
 };
 
 #endif // _ITEM_INCLUDE

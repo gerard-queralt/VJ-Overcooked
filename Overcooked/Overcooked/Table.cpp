@@ -1,15 +1,32 @@
 #include "Table.h"
 #include "Player.h"
+#include "Tool.h"
 
 bool Table::init(ShaderProgram & program)
 {
+	setScale(1.f);
 	return loadFromFile("models/EmptyTable.obj", program);
 }
 
-void Table::setItem(Item * item)
+bool Table::setItem(Item * item)
 {
-	item->setPosition(glm::vec3(position.x, 1.2f, position.z));
-	this->item = item;
+	if (this->item == NULL) {
+		item->setPosition(glm::vec3(position.x, 1.2f, position.z));
+		this->item = item;
+		return true;
+	}
+	else if (this->item->isFood() && !item->isFood()) {
+		if (((Tool*)item)->addFood((Food*) this->item)) {
+			item->setPosition(glm::vec3(position.x, 1.2f, position.z));
+			this->item = item;
+			return true;
+		}
+	}
+	else if (!this->item->isFood() && item->isFood()) {
+		((Tool*) this->item)->addFood((Food*)item);
+		return true;
+	}
+	return false;
 }
 
 bool Table::collisionWithPlayer()
