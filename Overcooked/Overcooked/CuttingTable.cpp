@@ -9,8 +9,5 @@ bool CuttingTable::init(ShaderProgram & program)
 
 void CuttingTable::update(int deltaTime)
 {
-	//per fer proves
-	if (inContactWithPlayer()) {
-		player->dropHolding();
-	}
+	
 }

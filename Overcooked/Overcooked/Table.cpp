@@ -10,3 +10,8 @@ void Table::setItem(Item * item)
 	item->setPosition(glm::vec3(position.x, 1.2f, position.z));
 	this->item = item;
 }
+
+bool Table::collisionWithPlayer()
+{
+	return inContactWithPlayer();
+}

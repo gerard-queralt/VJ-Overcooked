@@ -12,6 +12,8 @@ public:
 
 	void setItem(Item* item);
 
+	bool collisionWithPlayer();
+
 protected:
 	Item* item = NULL;
 };

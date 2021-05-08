@@ -102,6 +102,25 @@ void Level::setPlayer(Player * player)
 	}
 }
 
+bool Level::playerCollision(Player * player)
+{
+	std::vector<glm::vec3> bbox = player->getBoundingBox();
+	
+	if (bbox[0].x >= getSize().x / 2 || bbox[1].x >= getSize().x / 2)
+		return true;
+	if (bbox[0].z >= getSize().z / 2 || bbox[1].z >= getSize().z / 2)
+		return true;
+	if (bbox[0].x <= -getSize().x / 2 || bbox[1].x <= -getSize().x / 2)
+		return true;
+	if (bbox[0].z <= -getSize().z / 2 || bbox[1].z <= -getSize().z / 2)
+		return true;
+	for (Table* t : tables) {
+		if (t->collisionWithPlayer())
+			return true;
+	}
+	return false;
+}
+
 void Level::prepareArrays(ShaderProgram &program)
 {
 	vector<float> vertices;

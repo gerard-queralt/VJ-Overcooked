@@ -92,5 +92,7 @@ bool Entity::inContactWithPlayer()
 	std::vector<glm::vec3> playerBbox = player->getBoundingBox();
 	bool en0InsidePlayer = glm::all(glm::greaterThanEqual(bbox[0], playerBbox[0])) && glm::all(glm::lessThanEqual(bbox[0], playerBbox[1]));
 	bool en1InsidePlayer = glm::all(glm::greaterThanEqual(bbox[1], playerBbox[0])) && glm::all(glm::lessThanEqual(bbox[1], playerBbox[1]));
-	return en0InsidePlayer || en1InsidePlayer;
+	bool p0InsideEntity = glm::all(glm::greaterThanEqual(playerBbox[0], bbox[0])) && glm::all(glm::lessThanEqual(playerBbox[0], bbox[1]));
+	bool p1InsideEntity = glm::all(glm::greaterThanEqual(playerBbox[1], bbox[0])) && glm::all(glm::lessThanEqual(playerBbox[1], bbox[1]));
+	return en0InsidePlayer || en1InsidePlayer || p0InsideEntity || p1InsideEntity;
 }

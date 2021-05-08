@@ -34,6 +34,8 @@ public:
 	void addTable(Table* table);
 	void setPlayer(Player* player);
 
+	bool playerCollision(Player* player);
+
 private:
 	void prepareArrays(ShaderProgram &program);
 

@@ -31,25 +31,25 @@ void Player::movePlayer(int dir)
 	switch (dir) {
 	case FRONT:
 		position.z += PLAYER_SPEED;
-		if(position.z >= level->getSize().z/2)
+		if(level->playerCollision(this))
 			position.z -= PLAYER_SPEED;
 		else if (holding != NULL) holding->setPosition(glm::vec3(holding->getPosition().x, holding->getPosition().y, holding->getPosition().z + PLAYER_SPEED));
 		break;
 	case BACK:
 		position.z -= PLAYER_SPEED;
-		if (position.z <= - level->getSize().z / 2)
+		if (level->playerCollision(this))
 			position.z += PLAYER_SPEED;
 		else if (holding != NULL) holding->setPosition(glm::vec3(holding->getPosition().x, holding->getPosition().y, holding->getPosition().z - PLAYER_SPEED));
 		break;
 	case LEFT:
 		position.x += PLAYER_SPEED;
-		if (position.x >= level->getSize().x / 2)
+		if (level->playerCollision(this))
 			position.x -= PLAYER_SPEED;
 		else if (holding != NULL) holding->setPosition(glm::vec3(holding->getPosition().x + PLAYER_SPEED, holding->getPosition().y, holding->getPosition().z));
 		break;
 	case RIGHT:
 		position.x -= PLAYER_SPEED;
-		if (position.x <= - level->getSize().x / 2)
+		if (level->playerCollision(this))
 			position.x += PLAYER_SPEED;
 		else if (holding != NULL) holding->setPosition(glm::vec3(holding->getPosition().x - PLAYER_SPEED, holding->getPosition().y, holding->getPosition().z));
 		break;
