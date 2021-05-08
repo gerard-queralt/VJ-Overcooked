@@ -48,17 +48,23 @@ void Level::render() const
 	glDisable(GL_TEXTURE_2D);
 }
 
-void Level::renderItems(ShaderProgram texProgram, glm::mat4 viewMatrix)
+void Level::renderEntities(ShaderProgram texProgram, glm::mat4 viewMatrix)
 {
-	for (Entity* e : entities) {
-		e->render(texProgram, viewMatrix);
+	for (Item* i : items) {
+		i->render(texProgram, viewMatrix);
+	}
+	for (Table* t : tables) {
+		t->render(texProgram, viewMatrix);
 	}
 }
 
 void Level::update(int deltaTime)
 {
-	for (Entity* e : entities) {
-		e->update(deltaTime);
+	for (Item* i : items) {
+		i->update(deltaTime);
+	}
+	for (Table* t : tables) {
+		t->update(deltaTime);
 	}
 }
 
@@ -76,15 +82,23 @@ glm::vec3 Level::getSize()
 	return size;
 }
 
-void Level::addEntity(Entity * entity)
+void Level::addItem(Item * item)
 {
-	entities.push_back(entity);
+	items.push_back(item);
+}
+
+void Level::addTable(Table * table)
+{
+	tables.push_back(table);
 }
 
 void Level::setPlayer(Player * player)
 {
-	for (Entity* e : entities) {
-		e->setPlayer(player);
+	for (Item* i : items) {
+		i->setPlayer(player);
+	}
+	for (Table* t : tables) {
+		t->setPlayer(player);
 	}
 }
 

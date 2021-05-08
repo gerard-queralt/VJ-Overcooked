@@ -30,19 +30,32 @@ Level* LevelFactory::createLevel1(ShaderProgram texProgram)
 	pan->init(texProgram);
 	pan->setPosition(glm::vec3(5.f, 0.f, 0.f));
 	pan->setScale(2.f);
-	lvl->addEntity(pan);
+	lvl->addItem(pan);
 
 	Onion* onion = new Onion();
 	onion->init(texProgram);
 	onion->setPosition(glm::vec3(0.f, 0.f, 0.f));
 	onion->setScale(4.f);
-	lvl->addEntity(onion);
+	lvl->addItem(onion);
+
+	Table* t = new Table();
+	t->init(texProgram);
+	t->setPosition(glm::vec3(14.f, 0.f, 14.f));
+	t->setScale(1.f);
+	lvl->addTable(t);
 
 	CuttingTable* ct = new CuttingTable();
 	ct->init(texProgram);
-	ct->setPosition(glm::vec3(14.f, 0.f, 14.f));
+	ct->setPosition(glm::vec3(10.f, 0.f, 14.f));
 	ct->setScale(1.f);
-	lvl->addEntity(ct);
+	lvl->addTable(ct);
+
+	//Ceba hardcoded damunt de la taula de tallar
+	Onion* onion2 = new Onion();
+	onion2->init(texProgram);
+	onion2->setPosition(glm::vec3(10.f, 1.2f, 14.f));
+	onion2->setScale(4.f);
+	lvl->addItem(onion2);
 
 	return lvl;
 }

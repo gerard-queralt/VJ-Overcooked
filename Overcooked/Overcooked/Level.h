@@ -7,6 +7,7 @@
 #include "ShaderProgram.h"
 
 #include "Player.h"
+#include "Table.h"
 
 using namespace std;
 
@@ -23,13 +24,14 @@ public:
 	~Level();
 
 	void render() const;
-	void renderItems(ShaderProgram texProgram, glm::mat4 viewMatrix);
+	void renderEntities(ShaderProgram texProgram, glm::mat4 viewMatrix);
 	void update(int deltaTime);
 	void free();
 
 	glm::vec3 getSize();
 	
-	void addEntity(Entity* entity);
+	void addItem(Item* item);
+	void addTable(Table* table);
 	void setPlayer(Player* player);
 
 private:
@@ -42,7 +44,8 @@ private:
 	glm::vec3 size;
 	Texture floor, wall;
 
-	vector<Entity *> entities;
+	vector<Item *> items;
+	vector<Table* > tables;
 };
 
 

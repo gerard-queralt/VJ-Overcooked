@@ -102,7 +102,7 @@ void Scene::render()
 	level->render();
 
 	//Render items
-	level->renderItems(texProgram, viewMatrix);
+	level->renderEntities(texProgram, viewMatrix);
 
 	// Render player
 	player->render(texProgram, viewMatrix);

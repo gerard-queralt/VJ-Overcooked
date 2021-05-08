@@ -1,10 +1,10 @@
 #ifndef _CUTTING_TABLE_INCLUDE
 #define _CUTTING_TABLE_INCLUDE
 
-#include "Entity.h"
+#include "Table.h"
 
 class CuttingTable :
-	public Entity
+	public Table
 {
 public:
 	bool init(ShaderProgram &program);
