@@ -1,0 +1,95 @@
+﻿  Texture.cpp
+  ShaderProgram.cpp
+  Shader.cpp
+  Scene.cpp
+c:\users\albert\source\repos\gerard-queralt\vj-overcooked\overcooked\overcooked\scene.cpp(72): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\albert\source\repos\gerard-queralt\vj-overcooked\overcooked\overcooked\scene.cpp(190): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\albert\source\repos\gerard-queralt\vj-overcooked\overcooked\overcooked\scene.cpp(193): warning C4305: '-=': truncation from 'double' to 'float'
+c:\users\albert\source\repos\gerard-queralt\vj-overcooked\overcooked\overcooked\scene.cpp(196): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\albert\source\repos\gerard-queralt\vj-overcooked\overcooked\overcooked\scene.cpp(199): warning C4305: '-=': truncation from 'double' to 'float'
+  ParticleSystem.cpp
+  main.cpp
+  Level.cpp
+  Game.cpp
+  Billboard.cpp
+  AssimpModel.cpp
+c:\users\albert\source\repos\gerard-queralt\vj-overcooked\overcooked\overcooked\assimpmodel.cpp(84): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+  Generating Code...
+AssimpModel.obj : error LNK2019: unresolved external symbol "public: __cdecl Assimp::Importer::Importer(void)" (??0Importer@Assimp@@QEAA@XZ) referenced in function "public: bool __cdecl AssimpModel::loadFromFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,class ShaderProgram &)" (?loadFromFile@AssimpModel@@QEAA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEAVShaderProgram@@@Z)
+AssimpModel.obj : error LNK2019: unresolved external symbol "public: __cdecl Assimp::Importer::~Importer(void)" (??1Importer@Assimp@@QEAA@XZ) referenced in function "public: bool __cdecl AssimpModel::loadFromFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,class ShaderProgram &)" (?loadFromFile@AssimpModel@@QEAA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEAVShaderProgram@@@Z)
+AssimpModel.obj : error LNK2019: unresolved external symbol "public: struct aiScene const * __cdecl Assimp::Importer::ReadFile(char const *,unsigned int)" (?ReadFile@Importer@Assimp@@QEAAPEBUaiScene@@PEBDI@Z) referenced in function "public: bool __cdecl AssimpModel::loadFromFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,class ShaderProgram &)" (?loadFromFile@AssimpModel@@QEAA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEAVShaderProgram@@@Z)
+AssimpModel.obj : error LNK2019: unresolved external symbol "public: char const * __cdecl Assimp::Importer::GetErrorString(void)const " (?GetErrorString@Importer@Assimp@@QEBAPEBDXZ) referenced in function "public: bool __cdecl AssimpModel::loadFromFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,class ShaderProgram &)" (?loadFromFile@AssimpModel@@QEAA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEAVShaderProgram@@@Z)
+AssimpModel.obj : error LNK2019: unresolved external symbol aiGetMaterialTextureCount referenced in function "public: unsigned int __cdecl aiMaterial::GetTextureCount(enum aiTextureType)const " (?GetTextureCount@aiMaterial@@QEBAIW4aiTextureType@@@Z)
+AssimpModel.obj : error LNK2019: unresolved external symbol aiGetMaterialTexture referenced in function "public: enum aiReturn __cdecl aiMaterial::GetTexture(enum aiTextureType,unsigned int,struct aiString *,enum aiTextureMapping *,unsigned int *,float *,enum aiTextureOp *,enum aiTextureMapMode *)const " (?GetTexture@aiMaterial@@QEBA?AW4aiReturn@@W4aiTextureType@@IPEAUaiString@@PEAW4aiTextureMapping@@PEAIPEAMPEAW4aiTextureOp@@PEAW4aiTextureMapMode@@@Z)
+AssimpModel.obj : error LNK2001: unresolved external symbol __imp___glewBindBuffer
+Billboard.obj : error LNK2001: unresolved external symbol __imp___glewBindBuffer
+Level.obj : error LNK2001: unresolved external symbol __imp___glewBindBuffer
+AssimpModel.obj : error LNK2001: unresolved external symbol __imp___glewBufferData
+Billboard.obj : error LNK2001: unresolved external symbol __imp___glewBufferData
+Level.obj : error LNK2001: unresolved external symbol __imp___glewBufferData
+AssimpModel.obj : error LNK2001: unresolved external symbol __imp___glewGenBuffers
+Billboard.obj : error LNK2001: unresolved external symbol __imp___glewGenBuffers
+Level.obj : error LNK2001: unresolved external symbol __imp___glewGenBuffers
+AssimpModel.obj : error LNK2001: unresolved external symbol __imp___glewEnableVertexAttribArray
+Billboard.obj : error LNK2001: unresolved external symbol __imp___glewEnableVertexAttribArray
+Level.obj : error LNK2001: unresolved external symbol __imp___glewEnableVertexAttribArray
+AssimpModel.obj : error LNK2001: unresolved external symbol __imp___glewBindVertexArray
+Billboard.obj : error LNK2001: unresolved external symbol __imp___glewBindVertexArray
+Level.obj : error LNK2001: unresolved external symbol __imp___glewBindVertexArray
+AssimpModel.obj : error LNK2001: unresolved external symbol __imp___glewGenVertexArrays
+Billboard.obj : error LNK2001: unresolved external symbol __imp___glewGenVertexArrays
+Level.obj : error LNK2001: unresolved external symbol __imp___glewGenVertexArrays
+Billboard.obj : error LNK2001: unresolved external symbol __imp___glewBufferSubData
+Billboard.obj : error LNK2001: unresolved external symbol __imp___glewDeleteBuffers
+Level.obj : error LNK2001: unresolved external symbol __imp___glewDeleteBuffers
+Billboard.obj : error LNK2001: unresolved external symbol __imp___glewDeleteVertexArrays
+Level.obj : error LNK2001: unresolved external symbol __imp___glewDeleteVertexArrays
+main.obj : error LNK2019: unresolved external symbol __imp_glewInit referenced in function main
+main.obj : error LNK2019: unresolved external symbol __imp_glutInitWindowPosition referenced in function main
+main.obj : error LNK2019: unresolved external symbol __imp_glutInitWindowSize referenced in function main
+main.obj : error LNK2019: unresolved external symbol __imp_glutInitDisplayMode referenced in function main
+main.obj : error LNK2019: unresolved external symbol __imp_glutMainLoop referenced in function main
+main.obj : error LNK2019: unresolved external symbol __imp_glutPostRedisplay referenced in function "void __cdecl idleCallback(void)" (?idleCallback@@YAXXZ)
+main.obj : error LNK2019: unresolved external symbol __imp_glutSwapBuffers referenced in function "void __cdecl drawCallback(void)" (?drawCallback@@YAXXZ)
+main.obj : error LNK2019: unresolved external symbol __imp_glutIdleFunc referenced in function main
+main.obj : error LNK2019: unresolved external symbol __imp_glutKeyboardFunc referenced in function main
+main.obj : error LNK2019: unresolved external symbol __imp_glutSpecialFunc referenced in function main
+main.obj : error LNK2019: unresolved external symbol __imp_glutDisplayFunc referenced in function main
+main.obj : error LNK2019: unresolved external symbol __imp_glutMouseFunc referenced in function main
+main.obj : error LNK2019: unresolved external symbol __imp_glutMotionFunc referenced in function main
+main.obj : error LNK2019: unresolved external symbol __imp_glutKeyboardUpFunc referenced in function main
+main.obj : error LNK2019: unresolved external symbol __imp_glutSpecialUpFunc referenced in function main
+main.obj : error LNK2019: unresolved external symbol __imp_glutGet referenced in function "void __cdecl idleCallback(void)" (?idleCallback@@YAXXZ)
+main.obj : error LNK2019: unresolved external symbol __imp___glutInitWithExit referenced in function glutInit_ATEXIT_HACK
+main.obj : error LNK2019: unresolved external symbol __imp___glutCreateWindowWithExit referenced in function glutCreateWindow_ATEXIT_HACK
+main.obj : error LNK2001: unresolved external symbol __imp_glewExperimental
+Shader.obj : error LNK2001: unresolved external symbol __imp___glewCompileShader
+Shader.obj : error LNK2001: unresolved external symbol __imp___glewCreateShader
+Shader.obj : error LNK2001: unresolved external symbol __imp___glewDeleteShader
+Shader.obj : error LNK2001: unresolved external symbol __imp___glewGetShaderInfoLog
+Shader.obj : error LNK2001: unresolved external symbol __imp___glewGetShaderiv
+Shader.obj : error LNK2001: unresolved external symbol __imp___glewShaderSource
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewAttachShader
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewBindAttribLocation
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewCreateProgram
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewDeleteProgram
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewGetAttribLocation
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewGetProgramInfoLog
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewGetProgramiv
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewGetUniformLocation
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewLinkProgram
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewUniform1i
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewUniform2f
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewUniform3f
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewUniform4f
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewUniformMatrix3fv
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewUniformMatrix4fv
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewUseProgram
+ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewVertexAttribPointer
+Texture.obj : error LNK2019: unresolved external symbol SOIL_load_image referenced in function "public: bool __cdecl Texture::loadFromFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,enum PixelFormat)" (?loadFromFile@Texture@@QEAA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4PixelFormat@@@Z)
+Texture.obj : error LNK2001: unresolved external symbol __imp___glewGenerateMipmap
+..\libs\freeglut\lib\freeglut.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+..\libs\glew-1.13.0\lib\Release\Win32\glew32.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+..\libs\Simple OpenGL Image Library\projects\VC9\Debug\SOIL.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+..\libs\assimp\lib\assimp-vc120-mt.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+C:\Users\Albert\Source\Repos\gerard-queralt\VJ-Overcooked\Overcooked\x64\Debug\Overcooked.exe : fatal error LNK1120: 59 unresolved externals
