@@ -93,6 +93,9 @@
     <ClInclude Include="CuttingTable.h">
       <Filter>Header Files\Entities</Filter>
     </ClInclude>
+    <ClInclude Include="Onion.h">
+      <Filter>Header Files\Entities\Items\Food</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssimpModel.cpp">
@@ -148,6 +151,9 @@
     </ClCompile>
     <ClCompile Include="CuttingTable.cpp">
       <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Onion.cpp">
+      <Filter>Source Files\Entities\Items\Food</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

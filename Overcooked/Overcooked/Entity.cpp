@@ -66,8 +66,8 @@ std::vector<glm::vec3> Entity::getBoundingBox()
 	std::vector<glm::vec3> bbox = model->getBoundingBox();
 		
 	//l'escalem
-	bbox[0] *= scale/model->getHeight();
-	bbox[1] *= scale / model->getHeight();
+	bbox[0] *= scale; // model->getHeight();
+	bbox[1] *= scale; // model->getHeight();
 
 	//la desplacem a la posicio de l'entitat
 	bbox[0] += position;
@@ -90,5 +90,7 @@ bool Entity::inContactWithPlayer()
 {
 	std::vector<glm::vec3> bbox = getBoundingBox();
 	std::vector<glm::vec3> playerBbox = player->getBoundingBox();
-	return glm::all(glm::lessThanEqual(bbox[0], playerBbox[0])) && glm::all(glm::greaterThanEqual(bbox[1], playerBbox[1]));
+	bool en0InsidePlayer = glm::all(glm::greaterThanEqual(bbox[0], playerBbox[0])) && glm::all(glm::lessThanEqual(bbox[0], playerBbox[1]));
+	bool en1InsidePlayer = glm::all(glm::greaterThanEqual(bbox[1], playerBbox[0])) && glm::all(glm::lessThanEqual(bbox[1], playerBbox[1]));
+	return en0InsidePlayer || en1InsidePlayer;
 }
