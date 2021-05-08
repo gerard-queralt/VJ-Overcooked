@@ -8,6 +8,8 @@ class CuttingTable :
 {
 public:
 	bool init(ShaderProgram &program);
+
+	void update(int deltaTime);
 };
 
 #endif //_CUTTING_TABLE_INCLUDE

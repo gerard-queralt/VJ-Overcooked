@@ -10,10 +10,7 @@
 
 using namespace std;
 
-
 // Class Level renders a very simple room with textures
-
-class Item; //forward declaration
 
 class Level
 {
@@ -32,7 +29,7 @@ public:
 
 	glm::vec3 getSize();
 	
-	void addItem(Item* item);
+	void addEntity(Entity* entity);
 	void setPlayer(Player* player);
 
 private:
@@ -45,7 +42,7 @@ private:
 	glm::vec3 size;
 	Texture floor, wall;
 
-	vector<Item *> items;
+	vector<Entity *> entities;
 };
 
 

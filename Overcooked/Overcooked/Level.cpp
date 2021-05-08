@@ -2,10 +2,7 @@
 #include <vector>
 #include "Level.h"
 
-#include "Item.h"
-
 using namespace std;
-
 
 Level *Level::createLevel(const glm::vec3 &levelSize, ShaderProgram &program, const string &floorFile, const string &wallFile)
 {
@@ -53,15 +50,15 @@ void Level::render() const
 
 void Level::renderItems(ShaderProgram texProgram, glm::mat4 viewMatrix)
 {
-	for (Item* i : items) {
-		i->render(texProgram, viewMatrix);
+	for (Entity* e : entities) {
+		e->render(texProgram, viewMatrix);
 	}
 }
 
 void Level::update(int deltaTime)
 {
-	for (Item* i : items) {
-		i->update(deltaTime);
+	for (Entity* e : entities) {
+		e->update(deltaTime);
 	}
 }
 
@@ -79,15 +76,15 @@ glm::vec3 Level::getSize()
 	return size;
 }
 
-void Level::addItem(Item * item)
+void Level::addEntity(Entity * entity)
 {
-	items.push_back(item);
+	entities.push_back(entity);
 }
 
 void Level::setPlayer(Player * player)
 {
-	for (Item* i : items) {
-		i->setPlayer(player);
+	for (Entity* e : entities) {
+		e->setPlayer(player);
 	}
 }
 
