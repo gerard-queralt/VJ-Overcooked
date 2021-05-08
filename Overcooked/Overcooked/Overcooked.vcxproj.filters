@@ -37,6 +37,12 @@
     <Filter Include="Source Files\Entities\Items\Food">
       <UniqueIdentifier>{c6d09538-2518-4c82-990a-321570b313a3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Entities\Tables">
+      <UniqueIdentifier>{71e0fc90-89aa-4aa7-b56b-f0c3251dff32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entities\Tables">
+      <UniqueIdentifier>{575b1d94-3929-4692-a6f6-9fc0dbf9bb30}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssimpModel.h">
@@ -90,14 +96,14 @@
     <ClInclude Include="LevelFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CuttingTable.h">
-      <Filter>Header Files\Entities</Filter>
-    </ClInclude>
     <ClInclude Include="Onion.h">
       <Filter>Header Files\Entities\Items\Food</Filter>
     </ClInclude>
+    <ClInclude Include="CuttingTable.h">
+      <Filter>Header Files\Entities\Tables</Filter>
+    </ClInclude>
     <ClInclude Include="Table.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Entities\Tables</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -152,14 +158,14 @@
     <ClCompile Include="LevelFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CuttingTable.cpp">
-      <Filter>Source Files\Entities</Filter>
-    </ClCompile>
     <ClCompile Include="Onion.cpp">
       <Filter>Source Files\Entities\Items\Food</Filter>
     </ClCompile>
+    <ClCompile Include="CuttingTable.cpp">
+      <Filter>Source Files\Entities\Tables</Filter>
+    </ClCompile>
     <ClCompile Include="Table.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Entities\Tables</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
