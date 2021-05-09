@@ -14,7 +14,7 @@ void Entity::update(int deltaTime)
 {
 }
 
-void Entity::render(ShaderProgram & program, glm::mat4 viewMatrix) const
+void Entity::render(ShaderProgram & program, glm::mat4 viewMatrix)
 {
 	glm::mat4 modelMatrix;
 	glm::mat3 normalMatrix;

@@ -19,12 +19,17 @@ public:
 
 	void movePlayer(int dir);
 
-	void hold(Item* item);
+	bool hold(Item* item);
 	void dropHolding();
 
+	bool isCutting();
+
 private:
+	bool cutting = false;
+
 	Item *holding;
 	int holdDropCD = 0;
+	int startStopCutting = 0;
 };
 
 #endif // _PLAYER_INCLUDE

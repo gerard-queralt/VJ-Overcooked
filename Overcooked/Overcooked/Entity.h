@@ -12,7 +12,7 @@ public:
 	virtual bool init(ShaderProgram &program) = 0;
 	bool loadFromFile(const string &filename, ShaderProgram &program);
 	virtual void update(int deltaTime);
-	void render(ShaderProgram & program, glm::mat4 viewMatrix) const;
+	virtual void render(ShaderProgram & program, glm::mat4 viewMatrix);
 
 	float getHeight() const;
 	glm::vec3 getCenter() const;

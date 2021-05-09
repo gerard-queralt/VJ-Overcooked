@@ -4,3 +4,18 @@ bool Food::isFood()
 {
 	return true;
 }
+
+bool Food::isCut()
+{
+	return false;
+}
+
+bool Food::isCooked()
+{
+	return false;
+}
+
+bool Food::recipeDone()
+{
+	return false;
+}

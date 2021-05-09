@@ -2,7 +2,7 @@
 #include "Game.h"
 
 #define PLAYER_SPEED 0.2
-#define HOLD_DROP_INTERVAL 300
+#define ACTION_INTERVAL 300
 #define ROTATION_STEP 5.f
 
 bool Player::init(ShaderProgram & program)
@@ -14,15 +14,23 @@ bool Player::init(ShaderProgram & program)
 void Player::update(int deltaTime)
 {
 	holdDropCD -= deltaTime;
+	startStopCutting -= deltaTime;
 
-	if (Game::instance().getKey('w'))
-		movePlayer(FRONT);
-	if (Game::instance().getKey('s'))
-		movePlayer(BACK);
-	if (Game::instance().getKey('a'))
-		movePlayer(LEFT);
-	if (Game::instance().getKey('d'))
-		movePlayer(RIGHT);
+	if (!cutting) {
+		if (Game::instance().getKey('w'))
+			movePlayer(FRONT);
+		if (Game::instance().getKey('s'))
+			movePlayer(BACK);
+		if (Game::instance().getKey('a'))
+			movePlayer(LEFT);
+		if (Game::instance().getKey('d'))
+			movePlayer(RIGHT);
+	}
+
+	if (startStopCutting <= 0 && Game::instance().getKey('c') /*hauria de ser CTRL pero en GLUT no se pot*/) {
+		cutting = !cutting;
+		startStopCutting = ACTION_INTERVAL;
+	}
 
 	if (holding != NULL && Game::instance().getKey(' '))
 		dropHolding();
@@ -100,12 +108,14 @@ void Player::movePlayer(int dir)
 		holding->setRotation(getRotation());
 }
 
-void Player::hold(Item * item)
+bool Player::hold(Item * item)
 {
 	if (holdDropCD <= 0 && holding == NULL && Game::instance().getKey(' ')) {
 		holding = item;
-		holdDropCD = HOLD_DROP_INTERVAL;
+		holdDropCD = ACTION_INTERVAL;
+		return true;
 	}
+	return false;
 }
 
 void Player::dropHolding()
@@ -113,7 +123,12 @@ void Player::dropHolding()
 	if (holdDropCD <= 0) {
 		if (level->putItemOnTable(holding) != Level::FULL) {
 			holding = NULL;
-			holdDropCD = HOLD_DROP_INTERVAL;
+			holdDropCD = ACTION_INTERVAL;
 		}
 	}
+}
+
+bool Player::isCutting()
+{
+	return cutting;
 }

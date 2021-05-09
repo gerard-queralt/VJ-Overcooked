@@ -9,6 +9,7 @@ class Table :
 {
 public:
 	virtual bool init(ShaderProgram &program);
+	void update(int deltaTime);
 
 	bool setItem(Item* item);
 

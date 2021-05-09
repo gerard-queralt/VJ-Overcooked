@@ -8,6 +8,10 @@ class Food :
 {
 public:
 	bool isFood();
+
+	virtual bool isCut();
+	virtual bool isCooked();
+	virtual bool recipeDone();
 };
 
 #endif // _FOOD_INCLUDE

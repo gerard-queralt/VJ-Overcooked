@@ -8,6 +8,15 @@ bool Table::init(ShaderProgram & program)
 	return loadFromFile("models/EmptyTable.obj", program);
 }
 
+void Table::update(int deltaTime)
+{
+	if (this->item != NULL) {
+		this->item->update(deltaTime);
+		if (playerFacingThis() && player->hold(this->item))
+			this->item = NULL;
+	}
+}
+
 bool Table::setItem(Item * item)
 {
 	if (this->item == NULL) {
@@ -34,11 +43,12 @@ bool Table::collisionWithPlayer()
 	return inContactWithPlayer();
 }
 
-bool Table::playerFacingThis() //fem una trampeta
+bool Table::playerFacingThis() //fem una trampeta, no es definitu
 {
 	std::vector<glm::vec3> bbox = getBoundingBox();
 	std::vector<glm::vec3> playerBbox = player->getBoundingBox();
 
+	//trampeta
 	playerBbox[0] -= 0.1f;
 	playerBbox[1] += 0.1f;
 
