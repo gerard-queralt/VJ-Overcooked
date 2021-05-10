@@ -13,6 +13,8 @@ public:
 	void cut();
 	bool isCut();
 
+	string whatAmI();
+
 private:
 	bool cutBool = false;
 	bool updated = true;

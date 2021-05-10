@@ -105,6 +105,9 @@
     <ClInclude Include="Table.h">
       <Filter>Header Files\Entities\Tables</Filter>
     </ClInclude>
+    <ClInclude Include="Pot.h">
+      <Filter>Header Files\Entities\Items\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssimpModel.cpp">
@@ -166,6 +169,9 @@
     </ClCompile>
     <ClCompile Include="Table.cpp">
       <Filter>Source Files\Entities\Tables</Filter>
+    </ClCompile>
+    <ClCompile Include="Pot.cpp">
+      <Filter>Source Files\Entities\Items\Tools</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

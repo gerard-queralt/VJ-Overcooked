@@ -1,5 +1,6 @@
 #include "LevelFactory.h"
 #include "FryingPan.h"
+#include "Pot.h"
 #include "Onion.h"
 #include "CuttingTable.h"
 
@@ -51,6 +52,11 @@ Level* LevelFactory::createLevel1(ShaderProgram texProgram)
 	onion2->init(texProgram);
 	ct->setItem(onion2);
 	lvl->addItem(onion2);
+
+	Pot* pot = new Pot();
+	pot->init(texProgram);
+	pot->setPosition(glm::vec3(-5.f, 0.f, 0.f));
+	lvl->addItem(pot);
 
 	return lvl;
 }

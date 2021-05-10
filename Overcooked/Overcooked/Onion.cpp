@@ -26,3 +26,8 @@ bool Onion::isCut()
 {
 	return cutBool;
 }
+
+string Onion::whatAmI()
+{
+	return "Onion";
+}

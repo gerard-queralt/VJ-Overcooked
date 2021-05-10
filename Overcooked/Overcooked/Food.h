@@ -12,6 +12,8 @@ public:
 	virtual bool isCut();
 	virtual bool isCooked();
 	virtual bool recipeDone();
+
+	virtual string whatAmI() = 0;
 };
 
 #endif // _FOOD_INCLUDE
