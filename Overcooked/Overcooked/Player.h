@@ -26,6 +26,7 @@ public:
 
 	void checkStartStopCutting();
 	bool isCutting();
+	void stopCutting();
 
 private:
 	bool cutting = false;

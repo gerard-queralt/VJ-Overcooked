@@ -87,10 +87,12 @@ std::vector<glm::vec3> Entity::getBoundingBox()
 	bbox[1] *= scale; // model->getHeight();
 
 	//la rotem
+	/* DE MOMENT COMENTAT PERQUE BLOQUEJA EL MOVIMENT QUAN TOQUEM UNA PARET
 	bbox[0].x = bbox[0].x * cos(rotation * PI / 180) - bbox[0].z * sin(rotation * PI / 180);
 	bbox[0].z = bbox[0].z * cos(rotation * PI / 180) + bbox[0].x * sin(rotation * PI / 180);
 	bbox[1].x = bbox[1].x * cos(rotation * PI / 180) - bbox[1].z * sin(rotation * PI / 180);
 	bbox[1].z = bbox[1].z * cos(rotation * PI / 180) + bbox[1].x * sin(rotation * PI / 180);
+	*/
 
 	//la desplacem a la posicio de l'entitat
 	bbox[0] += position;

@@ -165,3 +165,9 @@ bool Player::isCutting()
 {
 	return cutting;
 }
+
+void Player::stopCutting()
+{
+	cutting = false;
+	startStopCutting = ACTION_INTERVAL;
+}
