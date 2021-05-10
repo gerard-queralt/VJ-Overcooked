@@ -63,21 +63,21 @@ std::vector<glm::vec3> Player::getFrontBBox()
 
 void Player::movePlayer(int dir)
 {
+	float rotation = getRotation();
 	switch (dir) {
 	case FRONT:
 		position.z += PLAYER_SPEED;
 		if(level->playerCollision(this))
 			position.z -= PLAYER_SPEED;
 		else {
-			float rotation = getRotation();
-			if (rotation != 0) {
-				if (rotation <= 180)
-					setRotation(rotation - ROTATION_STEP);
-				else
-					setRotation(rotation + ROTATION_STEP);
-			}
 			if (holding != NULL)
 				holding->setPosition(glm::vec3(holding->getPosition().x, holding->getPosition().y, holding->getPosition().z + PLAYER_SPEED));
+		}
+		if (rotation != 0) {
+			if (rotation <= 180)
+				setRotation(rotation - ROTATION_STEP);
+			else
+				setRotation(rotation + ROTATION_STEP);
 		}
 		break;
 	case BACK:
@@ -85,15 +85,14 @@ void Player::movePlayer(int dir)
 		if (level->playerCollision(this))
 			position.z += PLAYER_SPEED;
 		else {
-			float rotation = getRotation();
-			if (rotation != 180) {
-				if (rotation < 180)
-					setRotation(rotation + ROTATION_STEP);
-				else
-					setRotation(rotation - ROTATION_STEP);
-			}
 			if (holding != NULL)
 				holding->setPosition(glm::vec3(holding->getPosition().x, holding->getPosition().y, holding->getPosition().z - PLAYER_SPEED));
+		}
+		if (rotation != 180) {
+			if (rotation < 180)
+				setRotation(rotation + ROTATION_STEP);
+			else
+				setRotation(rotation - ROTATION_STEP);
 		}
 		break;
 	case LEFT:
@@ -101,15 +100,14 @@ void Player::movePlayer(int dir)
 		if (level->playerCollision(this))
 			position.x -= PLAYER_SPEED;
 		else {
-			float rotation = getRotation();
-			if (rotation != 90) {
-				if (rotation < 90 || rotation > 270)
-					setRotation(rotation + ROTATION_STEP);
-				else
-					setRotation(rotation - ROTATION_STEP);
-			}
 			if (holding != NULL)
 				holding->setPosition(glm::vec3(holding->getPosition().x + PLAYER_SPEED, holding->getPosition().y, holding->getPosition().z));
+		}
+		if (rotation != 90) {
+			if (rotation < 90 || rotation > 270)
+				setRotation(rotation + ROTATION_STEP);
+			else
+				setRotation(rotation - ROTATION_STEP);
 		}
 		break;
 	case RIGHT:
@@ -117,15 +115,14 @@ void Player::movePlayer(int dir)
 		if (level->playerCollision(this))
 			position.x += PLAYER_SPEED;
 		else {
-			float rotation = getRotation();
-			if (rotation != 270) {
-				if (rotation < 90 || rotation > 270)
-					setRotation(rotation - ROTATION_STEP);
-				else
-					setRotation(rotation + ROTATION_STEP);
-			}
 			if (holding != NULL)
 				holding->setPosition(glm::vec3(holding->getPosition().x - PLAYER_SPEED, holding->getPosition().y, holding->getPosition().z));
+		}
+		if (rotation != 270) {
+			if (rotation < 90 || rotation > 270)
+				setRotation(rotation - ROTATION_STEP);
+			else
+				setRotation(rotation + ROTATION_STEP);
 		}
 		break;
 	}
