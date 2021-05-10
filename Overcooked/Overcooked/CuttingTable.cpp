@@ -12,7 +12,9 @@ bool CuttingTable::init(ShaderProgram & program)
 void CuttingTable::update(int deltaTime)
 {
 	Table::update(deltaTime);
-	if (item != NULL && item->isFood() && !((Food*) item)->isCut()) {
+	if (playerFacingThis())
+		player->checkStartStopCutting();
+	if (item != NULL && item->isFood() && !((Food*) item)->isCut() && playerFacingThis() && player->isCutting()) {
 		((Onion*)item)->cut();
 		item->setPosition(glm::vec3(position.x, 1.2f, position.z));
 	}

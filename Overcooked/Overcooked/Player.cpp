@@ -1,7 +1,9 @@
 #include "Player.h"
 #include "Game.h"
 
-#define PLAYER_SPEED 0.2
+#define PI 3.14159f
+
+#define PLAYER_SPEED 0.2f
 #define ACTION_INTERVAL 300
 #define ROTATION_STEP 5.f
 
@@ -27,13 +29,36 @@ void Player::update(int deltaTime)
 			movePlayer(RIGHT);
 	}
 
-	if (startStopCutting <= 0 && Game::instance().getKey('c') /*hauria de ser CTRL pero en GLUT no se pot*/) {
-		cutting = !cutting;
-		startStopCutting = ACTION_INTERVAL;
-	}
-
 	if (holding != NULL && Game::instance().getKey(' '))
 		dropHolding();
+
+	//std::vector<glm::vec3> bbox = getBoundingBox();
+	//std::vector<glm::vec3> front = getFrontBBox();
+}
+
+std::vector<glm::vec3> Player::getFrontBBox()
+{
+	std::vector<glm::vec3> modelBbox = model->getBoundingBox();
+	std::vector<glm::vec3> bbox;
+	bbox.resize(2);
+	bbox[0] = glm::vec3(modelBbox[0].x, 0.f, modelBbox[1].z);
+	bbox[1] = glm::vec3(modelBbox[1].x, 0.f, modelBbox[1].z + 0.1f);
+
+	//l'escalem
+	bbox[0] *= scale; // model->getHeight();
+	bbox[1] *= scale; // model->getHeight();
+
+	//la rotem
+	bbox[0].x = bbox[0].x * cos(rotation * PI / 180) - bbox[0].z * sin(rotation * PI / 180);
+	bbox[0].z = bbox[0].z * cos(rotation * PI / 180) + bbox[0].x * sin(rotation * PI / 180);
+	bbox[1].x = bbox[1].x * cos(rotation * PI / 180) - bbox[1].z * sin(rotation * PI / 180);
+	bbox[1].z = bbox[1].z * cos(rotation * PI / 180) + bbox[1].x * sin(rotation * PI / 180);
+
+	//la desplacem a la posicio de l'entitat
+	bbox[0] += position;
+	bbox[1] += position;
+
+	return bbox;
 }
 
 void Player::movePlayer(int dir)
@@ -125,6 +150,14 @@ void Player::dropHolding()
 			holding = NULL;
 			holdDropCD = ACTION_INTERVAL;
 		}
+	}
+}
+
+void Player::checkStartStopCutting()
+{
+	if (startStopCutting <= 0 && Game::instance().getKey('c') /*hauria de ser CTRL pero en GLUT no se pot*/) {
+		cutting = !cutting;
+		startStopCutting = ACTION_INTERVAL;
 	}
 }
 

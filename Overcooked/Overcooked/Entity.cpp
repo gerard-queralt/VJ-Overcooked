@@ -86,9 +86,19 @@ std::vector<glm::vec3> Entity::getBoundingBox()
 	bbox[0] *= scale; // model->getHeight();
 	bbox[1] *= scale; // model->getHeight();
 
+	//la rotem
+	bbox[0].x = bbox[0].x * cos(rotation * PI / 180) - bbox[0].z * sin(rotation * PI / 180);
+	bbox[0].z = bbox[0].z * cos(rotation * PI / 180) + bbox[0].x * sin(rotation * PI / 180);
+	bbox[1].x = bbox[1].x * cos(rotation * PI / 180) - bbox[1].z * sin(rotation * PI / 180);
+	bbox[1].z = bbox[1].z * cos(rotation * PI / 180) + bbox[1].x * sin(rotation * PI / 180);
+
 	//la desplacem a la posicio de l'entitat
 	bbox[0] += position;
 	bbox[1] += position;
+
+	//ignorem la y
+	bbox[0].y = 0;
+	bbox[1].y = 0;
 
 	return bbox;
 }

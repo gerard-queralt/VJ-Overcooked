@@ -13,6 +13,8 @@ public:
 
 	void update(int deltaTime);
 
+	std::vector<glm::vec3> getFrontBBox();
+
 	enum PlayerDirections {
 		FRONT = 0, BACK, LEFT, RIGHT
 	};
@@ -22,6 +24,7 @@ public:
 	bool hold(Item* item);
 	void dropHolding();
 
+	void checkStartStopCutting();
 	bool isCutting();
 
 private:
