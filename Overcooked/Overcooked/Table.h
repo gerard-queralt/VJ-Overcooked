@@ -11,7 +11,7 @@ public:
 	virtual bool init(ShaderProgram &program);
 	void update(int deltaTime);
 
-	bool setItem(Item* item);
+	virtual bool setItem(Item* item);
 
 	bool collisionWithPlayer();
 

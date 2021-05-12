@@ -1,9 +1,9 @@
-#ifndef _FRYING_PAN_INCLUDE
-#define _FRYING_PAN_INCLUDE
+#ifndef _PLATE_INCLUDE
+#define _PLATE_INCLUDE
 
 #include "Tool.h"
 
-class FryingPan :
+class Plate :
 	public Tool
 {
 public:
@@ -19,4 +19,4 @@ private:
 	Food* food;
 };
 
-#endif // _FRYING_PAN_INCLUDE
+#endif //_PLATE_INCLUDE

@@ -14,13 +14,15 @@ public:
 
 	bool addFood(Food* food);
 
+	bool hasFood();
+
 private:
 	bool foodIsValid(Food* food);
 
+	void checkRecipe();
+
 private:
 	std::vector<Food*> foods;
-
-	bool updated = true;
 };
 
 #endif //_POT_INCLUDE

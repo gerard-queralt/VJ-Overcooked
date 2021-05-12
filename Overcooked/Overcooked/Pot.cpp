@@ -8,8 +8,15 @@ bool Pot::init(ShaderProgram & program)
 
 void Pot::render(ShaderProgram & program, glm::mat4 viewMatrix)
 {
-	if (!updated) {
-		updated = loadFromFile("models/SoupCookingPot.obj", program);
+	if (addedFood) {
+		addedFood = !loadFromFile("models/SoupCookingPot.obj", program);
+	}
+	if (cookedFood) {
+		cookedFood = !loadFromFile("models/EmptyCookingPot.obj", program); //tmp
+		checkRecipe();
+	}
+	if (burnedFood) {
+		burnedFood = !loadFromFile("models/SoupCookingPot.obj", program); //tmp
 	}
 	Entity::render(program, viewMatrix);
 }
@@ -26,7 +33,7 @@ bool Pot::addFood(Food * food)
 {
 	if (foods.size() < 4 && foodIsValid(food) && food->isCut()) {
 		if (foods.empty())
-			updated = false;
+			addedFood = true;
 		//food->setPosition(glm::vec3(position.x, position.y + model->getHeight() * scale, position.z));
 		food->setScale(0.f);
 		foods.push_back(food);
@@ -35,7 +42,16 @@ bool Pot::addFood(Food * food)
 	return false;
 }
 
+bool Pot::hasFood()
+{
+	return !foods.empty();
+}
+
 bool Pot::foodIsValid(Food * food)
 {
 	return food->whatAmI() == "Onion";
+}
+
+void Pot::checkRecipe()
+{
 }

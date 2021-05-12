@@ -108,6 +108,12 @@
     <ClInclude Include="Pot.h">
       <Filter>Header Files\Entities\Items\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="Stove.h">
+      <Filter>Header Files\Entities\Tables</Filter>
+    </ClInclude>
+    <ClInclude Include="Plate.h">
+      <Filter>Header Files\Entities\Items\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssimpModel.cpp">
@@ -171,6 +177,12 @@
       <Filter>Source Files\Entities\Tables</Filter>
     </ClCompile>
     <ClCompile Include="Pot.cpp">
+      <Filter>Source Files\Entities\Items\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Stove.cpp">
+      <Filter>Source Files\Entities\Tables</Filter>
+    </ClCompile>
+    <ClCompile Include="Plate.cpp">
       <Filter>Source Files\Entities\Items\Tools</Filter>
     </ClCompile>
   </ItemGroup>

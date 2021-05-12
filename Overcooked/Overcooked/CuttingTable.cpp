@@ -29,7 +29,7 @@ void CuttingTable::update(int deltaTime)
 	if (item != NULL && item->isFood() && !((Food*) item)->isCut() && playerFacingThis() && player->isCutting()) {
 		cuttingTime += deltaTime;
 		if (cuttingTime >= CUTTING_TIME) {
-			((Onion*)item)->cut();
+			((Food*)item)->cut();
 			cuttingTime = 0;
 			player->stopCutting();
 		}

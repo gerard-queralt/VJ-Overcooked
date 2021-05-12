@@ -9,6 +9,7 @@ class Food :
 public:
 	bool isFood();
 
+	virtual void cut() = 0;
 	virtual bool isCut();
 	virtual bool isCooked();
 	virtual bool recipeDone();

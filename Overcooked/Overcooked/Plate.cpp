@@ -1,12 +1,12 @@
-#include "FryingPan.h"
+#include "Plate.h"
 
-bool FryingPan::init(ShaderProgram & program)
+bool Plate::init(ShaderProgram & program)
 {
-	setScale(2.f);
-	return loadFromFile("models/pan.obj", program);
+	setScale(0.5f);
+	return loadFromFile("models/EmptyPlate.obj", program);
 }
 
-void FryingPan::setPosition(const glm::vec3 pos)
+void Plate::setPosition(const glm::vec3 pos)
 {
 	this->position = pos;
 	if (this->food != NULL) {
@@ -14,8 +14,7 @@ void FryingPan::setPosition(const glm::vec3 pos)
 	}
 }
 
-
-bool FryingPan::addFood(Food * food)
+bool Plate::addFood(Food * food)
 {
 	if (this->food == NULL) {
 		this->food = food;
@@ -25,7 +24,7 @@ bool FryingPan::addFood(Food * food)
 	return false;
 }
 
-bool FryingPan::hasFood()
+bool Plate::hasFood()
 {
 	return food != NULL;
 }

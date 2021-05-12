@@ -1,8 +1,10 @@
 #include "LevelFactory.h"
 #include "FryingPan.h"
 #include "Pot.h"
+#include "Plate.h"
 #include "Onion.h"
 #include "CuttingTable.h"
+#include "Stove.h"
 
 Level* LevelFactory::createLevel(int level, ShaderProgram texProgram)
 {
@@ -53,10 +55,21 @@ Level* LevelFactory::createLevel1(ShaderProgram texProgram)
 	ct->setItem(onion2);
 	lvl->addItem(onion2);
 
+	//Plat que posem a la taula buida
+	Plate* plate = new Plate();
+	plate->init(texProgram);
+	t->setItem(plate);
+	lvl->addItem(plate);
+
 	Pot* pot = new Pot();
 	pot->init(texProgram);
 	pot->setPosition(glm::vec3(-5.f, 0.f, 0.f));
 	lvl->addItem(pot);
+
+	Stove* stove = new Stove();
+	stove->init(texProgram);
+	stove->setPosition(glm::vec3(6.f, 0.f, 14.f));
+	lvl->addTable(stove);
 
 	return lvl;
 }
