@@ -23,6 +23,9 @@ protected:
 
 private:
 	int cookingTime = 0;
+
+	bool cookedUpdated = false;
+	bool burnedUpdated = false;
 };
 
 #endif // _TOOL_INCLUDE
