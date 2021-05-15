@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Game.h"
+#include "Tool.h"
 
 #define PI 3.14159f
 
@@ -132,10 +133,15 @@ void Player::movePlayer(int dir)
 
 bool Player::hold(Item * item)
 {
-	if (holdDropCD <= 0 && holding == NULL && Game::instance().getKey(' ')) {
-		holding = item;
-		holdDropCD = ACTION_INTERVAL;
-		return true;
+	if (holdDropCD <= 0 && Game::instance().getKey(' ')) {
+		if (holding == NULL) {
+			holding = item;
+			holdDropCD = ACTION_INTERVAL;
+			return true;
+		}
+		else if (!holding->isFood() && item->isFood()) {
+			return ((Tool*)holding)->addFood((Food*) item);
+		}
 	}
 	return false;
 }
@@ -167,4 +173,12 @@ void Player::stopCutting()
 {
 	cutting = false;
 	startStopCutting = ACTION_INTERVAL;
+}
+
+bool Player::holdingPlate()
+{
+	if (holding != NULL) {
+		return holding->whatAmI() == "Plate";
+	}
+	return false;
 }

@@ -1,4 +1,7 @@
 #include "Pot.h"
+#include "OnionSoup.h"
+
+#define TIME_SETBACK 1000
 
 bool Pot::init(ShaderProgram & program)
 {
@@ -9,14 +12,14 @@ bool Pot::init(ShaderProgram & program)
 void Pot::render(ShaderProgram & program, glm::mat4 viewMatrix)
 {
 	if (addedFood) {
-		addedFood = !loadFromFile("models/SoupCookingPot.obj", program);
+		addedFood = !loadFromFile("models/SoupCookingPotMiddleCooked.obj", program);
 	}
 	if (cookedFood) {
-		cookedFood = !loadFromFile("models/EmptyCookingPot.obj", program); //tmp
-		checkRecipe();
+		cookedFood = !loadFromFile("models/SoupCookingPot.obj", program);
+		if(!finished()) checkRecipe();
 	}
 	if (burnedFood) {
-		burnedFood = !loadFromFile("models/SoupCookingPot.obj", program); //tmp
+		burnedFood = !loadFromFile("models/BurnedSoupCookingPot.obj", program);
 	}
 	Entity::render(program, viewMatrix);
 }
@@ -37,6 +40,7 @@ bool Pot::addFood(Food * food)
 		//food->setPosition(glm::vec3(position.x, position.y + model->getHeight() * scale, position.z));
 		food->setScale(0.f);
 		foods.push_back(food);
+		cookingTime -= TIME_SETBACK;
 		return true;
 	}
 	return false;
@@ -47,6 +51,26 @@ bool Pot::hasFood()
 	return !foods.empty();
 }
 
+bool Pot::finished()
+{
+	return recipe != NULL;
+}
+
+Food * Pot::getFinishedRecipe()
+{
+	return recipe;
+}
+
+void Pot::empty()
+{
+	recipe = NULL;
+}
+
+string Pot::whatAmI()
+{
+	return "Pot";
+}
+
 bool Pot::foodIsValid(Food * food)
 {
 	return food->whatAmI() == "Onion";
@@ -54,4 +78,10 @@ bool Pot::foodIsValid(Food * food)
 
 void Pot::checkRecipe()
 {
+	if (foods.size() == 3) {
+		if (foods[0]->whatAmI() == "Onion" && foods[1]->whatAmI() == "Onion" && foods[2]->whatAmI() == "Onion") {
+			recipe = new OnionSoup();
+			foods.clear();
+		}
+	}
 }

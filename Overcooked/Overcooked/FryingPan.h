@@ -15,6 +15,8 @@ public:
 
 	bool hasFood();
 
+	string whatAmI();
+
 private:
 	Food* food;
 };

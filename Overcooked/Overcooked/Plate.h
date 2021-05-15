@@ -8,6 +8,7 @@ class Plate :
 {
 public:
 	bool init(ShaderProgram &program);
+	void render(ShaderProgram & program, glm::mat4 viewMatrix);
 
 	void setPosition(const glm::vec3 pos);
 
@@ -15,8 +16,12 @@ public:
 
 	bool hasFood();
 
+	string whatAmI();
+
 private:
 	Food* food;
+
+	bool onionSoup = false;
 };
 
 #endif //_PLATE_INCLUDE

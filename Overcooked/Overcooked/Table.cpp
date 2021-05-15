@@ -1,6 +1,7 @@
 #include "Table.h"
 #include "Player.h"
 #include "Tool.h"
+#include "Pot.h"
 
 bool Table::init(ShaderProgram & program)
 {
@@ -14,6 +15,16 @@ void Table::update(int deltaTime)
 		this->item->update(deltaTime);
 		if (playerFacingThis() && player->hold(this->item))
 			this->item = NULL;
+		else if (!this->item->isFood() &&
+			this->item->whatAmI() == "Pot" &&
+			((Pot*)(this->item))->finished() &&
+			playerFacingThis() &&
+			player->holdingPlate() &&
+			player->hold(((Pot*)(this->item))->getFinishedRecipe())) {
+			
+			((Pot*)(this->item))->empty();
+		}
+
 	}
 }
 

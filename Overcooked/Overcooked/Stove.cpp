@@ -6,7 +6,7 @@ bool Stove::init(ShaderProgram & program)
 	setScale(1.f);
 	working = Billboard::createBillboard(glm::vec2(1.f, 1.f), program, "images/tmpHourglass.png");
 	working->setType(BILLBOARD_Y_AXIS);
-	return loadFromFile("models/EmptyTable.obj", program);
+	return loadFromFile("models/Stove.obj", program);
 }
 
 void Stove::render(ShaderProgram & program, glm::mat4 viewMatrix)

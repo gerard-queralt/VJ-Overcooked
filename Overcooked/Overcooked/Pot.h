@@ -16,6 +16,12 @@ public:
 
 	bool hasFood();
 
+	bool finished();
+	Food* getFinishedRecipe();
+	void empty();
+
+	string whatAmI();
+
 private:
 	bool foodIsValid(Food* food);
 
@@ -23,6 +29,8 @@ private:
 
 private:
 	std::vector<Food*> foods;
+
+	Food* recipe;
 };
 
 #endif //_POT_INCLUDE

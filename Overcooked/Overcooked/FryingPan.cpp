@@ -29,3 +29,8 @@ bool FryingPan::hasFood()
 {
 	return food != NULL;
 }
+
+string FryingPan::whatAmI()
+{
+	return "FryingPan";
+}

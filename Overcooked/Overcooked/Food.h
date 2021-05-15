@@ -9,12 +9,10 @@ class Food :
 public:
 	bool isFood();
 
-	virtual void cut() = 0;
+	virtual void cut();
 	virtual bool isCut();
 	virtual bool isCooked();
 	virtual bool recipeDone();
-
-	virtual string whatAmI() = 0;
 };
 
 #endif // _FOOD_INCLUDE

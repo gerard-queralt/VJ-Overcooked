@@ -39,6 +39,11 @@ Level* LevelFactory::createLevel1(ShaderProgram texProgram)
 	onion->setPosition(glm::vec3(0.f, 0.f, 0.f));
 	lvl->addItem(onion);
 
+	onion = new Onion();
+	onion->init(texProgram);
+	onion->setPosition(glm::vec3(10.f, 0.f, 0.f));
+	lvl->addItem(onion);
+
 	Table* t = new Table();
 	t->init(texProgram);
 	t->setPosition(glm::vec3(14.f, 0.f, 14.f));

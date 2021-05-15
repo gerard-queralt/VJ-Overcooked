@@ -28,6 +28,8 @@ public:
 	bool isCutting();
 	void stopCutting();
 
+	bool holdingPlate();
+
 private:
 	bool cutting = false;
 

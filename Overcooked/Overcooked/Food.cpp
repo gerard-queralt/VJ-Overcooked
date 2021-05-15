@@ -5,6 +5,11 @@ bool Food::isFood()
 	return true;
 }
 
+void Food::cut()
+{
+	//do nothing
+}
+
 bool Food::isCut()
 {
 	return false;

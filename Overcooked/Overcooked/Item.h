@@ -10,6 +10,8 @@ public:
 	void update(int deltaTime);
 
 	virtual bool isFood() = 0;
+
+	virtual string whatAmI() = 0;
 };
 
 #endif // _ITEM_INCLUDE

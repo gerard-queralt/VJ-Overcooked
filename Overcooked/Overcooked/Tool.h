@@ -21,9 +21,9 @@ protected:
 	bool cookedFood = false;
 	bool burnedFood = false;
 
-private:
 	int cookingTime = 0;
 
+private:
 	bool cookedUpdated = false;
 	bool burnedUpdated = false;
 };

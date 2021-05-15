@@ -130,6 +130,7 @@
     <ClInclude Include="LevelFactory.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Onion.h" />
+    <ClInclude Include="OnionSoup.h" />
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="Plate.h" />
     <ClInclude Include="Player.h" />
@@ -155,6 +156,7 @@
     <ClCompile Include="LevelFactory.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Onion.cpp" />
+    <ClCompile Include="OnionSoup.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="Plate.cpp" />
     <ClCompile Include="Player.cpp" />
