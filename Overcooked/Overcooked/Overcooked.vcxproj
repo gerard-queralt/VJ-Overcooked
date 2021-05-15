@@ -142,6 +142,7 @@
     <ClInclude Include="Table.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Tool.h" />
+    <ClInclude Include="Trash.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssimpModel.cpp" />
@@ -168,6 +169,7 @@
     <ClCompile Include="Table.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Tool.cpp" />
+    <ClCompile Include="Trash.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

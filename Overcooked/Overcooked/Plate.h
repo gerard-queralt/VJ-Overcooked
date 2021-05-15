@@ -22,6 +22,7 @@ private:
 	Food* food;
 
 	bool onionSoup = false;
+	bool trash = false;
 };
 
 #endif //_PLATE_INCLUDE

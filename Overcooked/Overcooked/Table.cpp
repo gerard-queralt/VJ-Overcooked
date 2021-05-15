@@ -24,7 +24,6 @@ void Table::update(int deltaTime)
 			
 			((Pot*)(this->item))->empty();
 		}
-
 	}
 }
 

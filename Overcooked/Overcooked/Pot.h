@@ -31,6 +31,7 @@ private:
 	std::vector<Food*> foods;
 
 	Food* recipe;
+	bool emptied = false;
 };
 
 #endif //_POT_INCLUDE

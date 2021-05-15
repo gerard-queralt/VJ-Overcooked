@@ -117,6 +117,9 @@
     <ClInclude Include="OnionSoup.h">
       <Filter>Header Files\Entities\Items\Food</Filter>
     </ClInclude>
+    <ClInclude Include="Trash.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssimpModel.cpp">
@@ -190,6 +193,9 @@
     </ClCompile>
     <ClCompile Include="OnionSoup.cpp">
       <Filter>Source Files\Entities\Items\Food</Filter>
+    </ClCompile>
+    <ClCompile Include="Trash.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,8 +1,5 @@
 #include "Tool.h"
 
-#define COOKING_TIME 1000
-#define BURN_TIME COOKING_TIME + 300000000000
-
 void Tool::cookFood(int deltaTime)
 {
 	cookingTime += deltaTime;

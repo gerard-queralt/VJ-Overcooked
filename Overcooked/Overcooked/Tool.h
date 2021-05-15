@@ -16,6 +16,9 @@ public:
 
 	bool isFood();
 
+	#define COOKING_TIME 3000
+	#define BURN_TIME COOKING_TIME + 3000
+
 protected:
 	bool addedFood = false;
 	bool cookedFood = false;
