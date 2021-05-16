@@ -34,7 +34,7 @@ void CuttingTable::render(ShaderProgram & program, glm::mat4 viewMatrix)
 void CuttingTable::update(int deltaTime)
 {
 	Table::update(deltaTime);
-	if (playerFacingThis())
+	if (playerFacingThis() && !((Food*)item)->isCut())
 		player->checkStartStopCutting();
 	if (item != NULL && item->isFood() && !((Food*) item)->isCut() && playerFacingThis() && player->isCutting()) {
 		cuttingTime += deltaTime;

@@ -95,5 +95,8 @@ void Pot::checkRecipe()
 	else {
 		this->recipe = new Trash();
 	}
+	for (Food* f : foods) {
+		delete f;
+	}
 	foods.clear();
 }
