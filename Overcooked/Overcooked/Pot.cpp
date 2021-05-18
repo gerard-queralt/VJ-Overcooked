@@ -40,7 +40,7 @@ void Pot::setPosition(const glm::vec3 pos)
 
 bool Pot::addFood(Food * food)
 {
-	if (foods.size() < 4 && foodIsValid(food) && food->isCut() && cookingTime < BURN_TIME) {
+	if (foods.size() < 4 && foodIsValid(food) && cookingTime < COOKING_TIME) {
 		if (foods.empty())
 			addedFood = true;
 		//food->setPosition(glm::vec3(position.x, position.y + model->getHeight() * scale, position.z));
@@ -80,7 +80,7 @@ string Pot::whatAmI()
 
 bool Pot::foodIsValid(Food * food)
 {
-	return food->whatAmI() == "Onion";
+	return food->whatAmI() == "Onion" && food->isCut();
 }
 
 void Pot::checkRecipe()

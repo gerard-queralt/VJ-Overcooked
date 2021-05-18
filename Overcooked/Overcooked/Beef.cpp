@@ -2,7 +2,7 @@
 
 bool Beef::init(ShaderProgram & program)
 {
-	setScale(.25f);
+	setScale(.5f);
 	return loadFromFile("models/Beef.obj", program);
 }
 

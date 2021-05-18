@@ -18,6 +18,9 @@ public:
 	string whatAmI();
 
 private:
+	bool foodIsValid(Food* food);
+
+private:
 	Food* food;
 };
 

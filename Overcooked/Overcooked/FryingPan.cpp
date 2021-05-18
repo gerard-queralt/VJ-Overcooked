@@ -17,7 +17,7 @@ void FryingPan::setPosition(const glm::vec3 pos)
 
 bool FryingPan::addFood(Food * food)
 {
-	if (this->food == NULL) {
+	if (this->food == NULL && foodIsValid(food)) {
 		this->food = food;
 		this->food->setPosition(glm::vec3(position.x, position.y + model->getHeight() * scale, position.z));
 		return true;
@@ -33,4 +33,9 @@ bool FryingPan::hasFood()
 string FryingPan::whatAmI()
 {
 	return "FryingPan";
+}
+
+bool FryingPan::foodIsValid(Food * food)
+{
+	return food->whatAmI()=="Beef" && food->isCut();
 }

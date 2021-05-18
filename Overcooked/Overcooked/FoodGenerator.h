@@ -10,10 +10,10 @@ class FoodGenerator :
 public:
 	bool init(ShaderProgram &program);
 
-	void setFood(Food* food);
+	void setFood(string food);
 
 private:
-	Food* generates;
+	string generates;
 };
 
 #endif //_FOOD_GENERATOR_INCLUDE

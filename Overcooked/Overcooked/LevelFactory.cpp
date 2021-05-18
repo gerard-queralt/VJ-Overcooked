@@ -80,10 +80,15 @@ Level* LevelFactory::createLevel1(ShaderProgram texProgram)
 	lvl->addTable(stove);
 
 	FoodGenerator* fg = new FoodGenerator();
-	fg->setFood(new Beef());
+	fg->setFood("Beef");
 	fg->init(texProgram);
 	fg->setPosition(glm::vec3(2.f, 0.f, 14.f));
 	lvl->addTable(fg);
+
+	Beef* b = new Beef();
+	b->init(texProgram);
+	b->setPosition(glm::vec3(0.f, 0.f, -10.f));
+	lvl->addItem(b);
 
 	return lvl;
 }

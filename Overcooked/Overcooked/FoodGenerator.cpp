@@ -3,11 +3,11 @@
 bool FoodGenerator::init(ShaderProgram & program)
 {
 	setScale(1.f);
-	string path = "models/FoodPicker" + generates->whatAmI() + ".obj";
+	string path = "models/FoodPicker" + generates + ".obj";
 	return loadFromFile(path, program);
 }
 
-void FoodGenerator::setFood(Food * food)
+void FoodGenerator::setFood(string food)
 {
-	this->generates = food;
+	generates = food;
 }
