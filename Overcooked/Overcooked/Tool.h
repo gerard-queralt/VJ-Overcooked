@@ -16,6 +16,8 @@ public:
 
 	bool isFood();
 
+	int getCookingTime();
+
 	#define COOKING_TIME 5000
 	#define BURN_TIME COOKING_TIME + 10000
 

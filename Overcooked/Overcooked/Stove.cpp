@@ -11,6 +11,21 @@ bool Stove::init(ShaderProgram & program)
 
 void Stove::render(ShaderProgram & program, glm::mat4 viewMatrix)
 {
+	if (this->item != NULL && !item->isFood()) {
+		if (0 < ((Tool*) item)->getCookingTime() && ((Tool*)item)->getCookingTime() < COOKING_TIME) {
+			glm::mat4 modelMatrix;
+			glm::mat3 normalMatrix;
+			glm::vec3 obs = glm::vec3(0.f, 24.f, -30.f);
+
+			program.setUniform1b("bLighting", false);
+			modelMatrix = glm::mat4(1.0f);
+			program.setUniformMatrix4f("modelview", viewMatrix * modelMatrix);
+			normalMatrix = glm::transpose(glm::inverse(glm::mat3(viewMatrix * modelMatrix)));
+			program.setUniformMatrix3f("normalmatrix", normalMatrix);
+			working->render(glm::vec3(position.x, 1.f, position.z), obs);
+			program.setUniform1b("bLighting", true);
+		}
+	}
 	Entity::render(program, viewMatrix);
 }
 

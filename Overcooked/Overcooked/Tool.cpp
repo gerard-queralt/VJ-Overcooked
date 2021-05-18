@@ -17,3 +17,8 @@ bool Tool::isFood()
 {
 	return false;
 }
+
+int Tool::getCookingTime()
+{
+	return cookingTime;
+}
