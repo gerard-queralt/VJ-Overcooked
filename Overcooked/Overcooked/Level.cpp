@@ -87,6 +87,12 @@ void Level::addItem(Item * item)
 	items.push_back(item);
 }
 
+void Level::removeItem(Item * item)
+{
+	items.erase(std::remove(items.begin(), items.end(), item));
+	delete item;
+}
+
 void Level::addTable(Table * table)
 {
 	tables.push_back(table);

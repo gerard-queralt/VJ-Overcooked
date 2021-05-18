@@ -3,8 +3,10 @@
 #include "Pot.h"
 #include "Plate.h"
 #include "Onion.h"
+#include "Beef.h"
 #include "CuttingTable.h"
 #include "Stove.h"
+#include "FoodGenerator.h"
 
 Level* LevelFactory::createLevel(int level, ShaderProgram texProgram)
 {
@@ -69,12 +71,19 @@ Level* LevelFactory::createLevel1(ShaderProgram texProgram)
 	Pot* pot = new Pot();
 	pot->init(texProgram);
 	pot->setPosition(glm::vec3(-5.f, 0.f, 0.f));
+	pot->setLevel(lvl);
 	lvl->addItem(pot);
 
 	Stove* stove = new Stove();
 	stove->init(texProgram);
 	stove->setPosition(glm::vec3(6.f, 0.f, 14.f));
 	lvl->addTable(stove);
+
+	FoodGenerator* fg = new FoodGenerator();
+	fg->setFood(new Beef());
+	fg->init(texProgram);
+	fg->setPosition(glm::vec3(2.f, 0.f, 14.f));
+	lvl->addTable(fg);
 
 	return lvl;
 }

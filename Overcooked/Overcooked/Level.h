@@ -31,6 +31,7 @@ public:
 	glm::vec3 getSize();
 	
 	void addItem(Item* item);
+	void removeItem(Item* item);
 	void addTable(Table* table);
 	void setPlayer(Player* player);
 

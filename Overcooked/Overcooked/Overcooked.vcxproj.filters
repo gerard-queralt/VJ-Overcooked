@@ -117,8 +117,14 @@
     <ClInclude Include="OnionSoup.h">
       <Filter>Header Files\Entities\Items\Food</Filter>
     </ClInclude>
-    <ClInclude Include="Trash.h">
+    <ClInclude Include="FoodGenerator.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Trash.h">
+      <Filter>Header Files\Entities\Items\Food</Filter>
+    </ClInclude>
+    <ClInclude Include="Beef.h">
+      <Filter>Header Files\Entities\Items\Food</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -194,8 +200,14 @@
     <ClCompile Include="OnionSoup.cpp">
       <Filter>Source Files\Entities\Items\Food</Filter>
     </ClCompile>
-    <ClCompile Include="Trash.cpp">
+    <ClCompile Include="FoodGenerator.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Trash.cpp">
+      <Filter>Source Files\Entities\Items\Food</Filter>
+    </ClCompile>
+    <ClCompile Include="Beef.cpp">
+      <Filter>Source Files\Entities\Items\Food</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,6 +1,7 @@
 #include "Pot.h"
 #include "OnionSoup.h"
 #include "Trash.h"
+#include "Level.h"
 
 #define TIME_SETBACK 1000
 
@@ -95,8 +96,9 @@ void Pot::checkRecipe()
 	else {
 		this->recipe = new Trash();
 	}
-	for (Food* f : foods) {
-		delete f;
-	}
+	//no funciona
+	//for (Food* f : foods) {
+		//level->removeItem(f);
+	//}
 	foods.clear();
 }
