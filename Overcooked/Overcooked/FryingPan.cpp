@@ -2,8 +2,8 @@
 
 bool FryingPan::init(ShaderProgram & program)
 {
-	setScale(2.f);
-	return loadFromFile("models/pan.obj", program);
+	setScale(0.75f);
+	return loadFromFile("models/Pan.obj", program);
 }
 
 void FryingPan::setPosition(const glm::vec3 pos)
