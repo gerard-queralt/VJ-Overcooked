@@ -4,7 +4,7 @@
 o 
 
 # material
-mtllib TomatoeCutted.mtl
+mtllib TomatoCutted.mtl
 usemtl palette
 
 # normals
