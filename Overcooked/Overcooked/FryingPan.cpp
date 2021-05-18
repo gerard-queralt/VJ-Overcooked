@@ -1,9 +1,21 @@
 #include "FryingPan.h"
+#include "Beef.h"
 
 bool FryingPan::init(ShaderProgram & program)
 {
 	setScale(0.75f);
 	return loadFromFile("models/Pan.obj", program);
+}
+
+void FryingPan::update(int deltaTime)
+{
+	if (cookedFood) {
+		((Beef*)food)->cook();
+	}
+	if (burnedFood) {
+		//burn food
+	}
+	Item::update(deltaTime);
 }
 
 void FryingPan::setPosition(const glm::vec3 pos)
@@ -37,5 +49,5 @@ string FryingPan::whatAmI()
 
 bool FryingPan::foodIsValid(Food * food)
 {
-	return food->whatAmI()=="Beef" && food->isCut();
+	return food->whatAmI()=="Beef" && food->isCut() && !((Beef*) food)->isCooked();
 }

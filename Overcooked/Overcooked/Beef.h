@@ -13,11 +13,16 @@ public:
 	void cut();
 	bool isCut();
 
+	void cook();
+	bool isCooked();
+
 	string whatAmI();
 
 private:
 	bool cutBool = false;
-	bool updated = true;
+	bool cutUpdated = true;
+	bool cookedBool = false;
+	bool cookedUpdated = true;
 };
 
 #endif //_BEEF_INCLUDE

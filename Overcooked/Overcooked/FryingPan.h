@@ -8,6 +8,7 @@ class FryingPan :
 {
 public:
 	bool init(ShaderProgram &program);
+	void update(int deltaTime);
 
 	void setPosition(const glm::vec3 pos);
 
