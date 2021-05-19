@@ -126,6 +126,12 @@
     <ClInclude Include="FoodGenerator.h">
       <Filter>Header Files\Entities\Tables</Filter>
     </ClInclude>
+    <ClInclude Include="Bread.h">
+      <Filter>Header Files\Entities\Items\Food</Filter>
+    </ClInclude>
+    <ClInclude Include="Burger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssimpModel.cpp">
@@ -208,6 +214,12 @@
     </ClCompile>
     <ClCompile Include="FoodGenerator.cpp">
       <Filter>Source Files\Entities\Tables</Filter>
+    </ClCompile>
+    <ClCompile Include="Bread.cpp">
+      <Filter>Source Files\Entities\Items\Food</Filter>
+    </ClCompile>
+    <ClCompile Include="Burger.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

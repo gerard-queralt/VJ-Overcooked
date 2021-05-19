@@ -121,6 +121,8 @@
     <ClInclude Include="AssimpModel.h" />
     <ClInclude Include="Beef.h" />
     <ClInclude Include="Billboard.h" />
+    <ClInclude Include="Bread.h" />
+    <ClInclude Include="Burger.h" />
     <ClInclude Include="CuttingTable.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Food.h" />
@@ -150,6 +152,8 @@
     <ClCompile Include="AssimpModel.cpp" />
     <ClCompile Include="Beef.cpp" />
     <ClCompile Include="Billboard.cpp" />
+    <ClCompile Include="Bread.cpp" />
+    <ClCompile Include="Burger.cpp" />
     <ClCompile Include="CuttingTable.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Food.cpp" />

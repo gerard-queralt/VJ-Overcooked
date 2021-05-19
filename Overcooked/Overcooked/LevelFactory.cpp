@@ -7,6 +7,7 @@
 #include "CuttingTable.h"
 #include "Stove.h"
 #include "FoodGenerator.h"
+#include "Bread.h"
 
 Level* LevelFactory::createLevel(int level, ShaderProgram texProgram)
 {
@@ -67,6 +68,7 @@ Level* LevelFactory::createLevel1(ShaderProgram texProgram)
 	plate->init(texProgram);
 	t->setItem(plate);
 	lvl->addItem(plate);
+	plate->setLevel(lvl);
 
 	Pot* pot = new Pot();
 	pot->init(texProgram);
@@ -85,6 +87,11 @@ Level* LevelFactory::createLevel1(ShaderProgram texProgram)
 	fg->setPosition(glm::vec3(2.f, 0.f, 14.f));
 	fg->setLevel(lvl);
 	lvl->addTable(fg);
+
+	Bread* bread = new Bread();
+	bread->init(texProgram);
+	bread->setPosition(glm::vec3(-5.f, 0.f, 5.f));
+	lvl->addItem(bread);
 
 	return lvl;
 }

@@ -19,6 +19,13 @@ public:
 	string whatAmI();
 
 private:
+	bool assembleRecipe(Food* addedFood);
+
+	bool partOfBurgerRecipe(Food* food);
+
+private:
+	ShaderProgram program;
+
 	Food* food;
 
 	bool onionSoup = false;
