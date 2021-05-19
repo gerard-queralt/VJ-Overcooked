@@ -7,7 +7,7 @@ void Game::init()
 {
 	bPlay = true;
 	glEnable(GL_DEPTH_TEST);
-	glClearColor(0.f, 0.f, 0.f, 1.0f);
+	glClearColor(0.53f, 0.81f, 0.92f, 1.0f);
 	scene.init();
 }
 
