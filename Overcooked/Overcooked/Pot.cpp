@@ -48,7 +48,7 @@ bool Pot::addFood(Food * food)
 			if (cookingTime < 0)
 				cookingTime = 0;
 		}
-		//food->setPosition(glm::vec3(position.x, position.y + model->getHeight() * scale, position.z));
+		food->setPosition(glm::vec3(position.x, position.y + model->getHeight() * scale, position.z));
 		food->setScale(0.f);
 		foods.push_back(food);
 		return true;

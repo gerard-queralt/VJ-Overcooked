@@ -22,3 +22,12 @@ int Tool::getCookingTime()
 {
 	return cookingTime;
 }
+
+bool Tool::finished()
+{
+	return false;
+}
+
+void Tool::empty()
+{
+}

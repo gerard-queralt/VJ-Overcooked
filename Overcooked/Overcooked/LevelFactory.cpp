@@ -86,11 +86,6 @@ Level* LevelFactory::createLevel1(ShaderProgram texProgram)
 	fg->setLevel(lvl);
 	lvl->addTable(fg);
 
-	Beef* b = new Beef();
-	b->init(texProgram);
-	b->setPosition(glm::vec3(0.f, 0.f, -10.f));
-	lvl->addItem(b);
-
 	return lvl;
 }
 

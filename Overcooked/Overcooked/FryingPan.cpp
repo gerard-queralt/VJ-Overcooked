@@ -11,9 +11,11 @@ void FryingPan::update(int deltaTime)
 {
 	if (cookedFood) {
 		((Beef*)food)->cook();
+		cookedFood = false;
 	}
 	if (burnedFood) {
 		((Beef*)food)->burn();
+		burnedFood = false;
 	}
 	Item::update(deltaTime);
 }
@@ -40,6 +42,24 @@ bool FryingPan::addFood(Food * food)
 bool FryingPan::hasFood()
 {
 	return food != NULL;
+}
+
+bool FryingPan::finished()
+{
+	if (food != NULL) {
+		return ((Beef*)food)->isCooked();
+	}
+	return false;
+}
+
+Food * FryingPan::getFood()
+{
+	return food;
+}
+
+void FryingPan::empty()
+{
+	food = NULL;
 }
 
 string FryingPan::whatAmI()
