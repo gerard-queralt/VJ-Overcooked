@@ -81,7 +81,7 @@ void Stove::update(int deltaTime)
 bool Stove::setItem(Item * item)
 {
 	if (this->item == NULL && !item->isFood()) {
-		item->setPosition(glm::vec3(position.x, 1.2f, position.z));
+		item->setPosition(glm::vec3(position.x, 1.5f, position.z));
 		this->item = item;
 		return true;
 	}
