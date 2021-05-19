@@ -71,7 +71,7 @@ Level* LevelFactory::createLevel1(ShaderProgram texProgram)
 	Pot* pot = new Pot();
 	pot->init(texProgram);
 	pot->setPosition(glm::vec3(-5.f, 0.f, 0.f));
-	pot->setLevel(lvl);
+	//pot->setLevel(lvl);
 	lvl->addItem(pot);
 
 	Stove* stove = new Stove();
@@ -83,6 +83,7 @@ Level* LevelFactory::createLevel1(ShaderProgram texProgram)
 	fg->setFood("Beef");
 	fg->init(texProgram);
 	fg->setPosition(glm::vec3(2.f, 0.f, 14.f));
+	fg->setLevel(lvl);
 	lvl->addTable(fg);
 
 	Beef* b = new Beef();

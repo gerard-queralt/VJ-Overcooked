@@ -9,10 +9,13 @@ class FoodGenerator :
 {
 public:
 	bool init(ShaderProgram &program);
+	void update(int deltaTime);
 
 	void setFood(string food);
 
 private:
+	ShaderProgram program;
+
 	string generates;
 };
 
