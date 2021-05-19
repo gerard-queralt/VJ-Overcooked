@@ -12,7 +12,10 @@ void Beef::render(ShaderProgram & program, glm::mat4 viewMatrix)
 		cutUpdated = loadFromFile("models/RawBurger.obj", program);
 	}
 	if (!cookedUpdated) {
-		cookedUpdated = loadFromFile("models/chr_swordless.obj", program);
+		cookedUpdated = loadFromFile("models/Burger.obj", program);
+	}
+	if (!burnedUpdated) {
+		burnedUpdated = loadFromFile("models/BurnedBurger.obj", program);
 	}
 	Entity::render(program, viewMatrix);
 }
@@ -41,6 +44,19 @@ void Beef::cook()
 bool Beef::isCooked()
 {
 	return cookedBool;
+}
+
+void Beef::burn()
+{
+	if (!burnedBool) {
+		burnedBool = true;
+		burnedUpdated = false;
+	}
+}
+
+bool Beef::isBurned()
+{
+	return burnedBool;
 }
 
 string Beef::whatAmI()

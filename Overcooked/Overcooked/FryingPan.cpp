@@ -13,7 +13,7 @@ void FryingPan::update(int deltaTime)
 		((Beef*)food)->cook();
 	}
 	if (burnedFood) {
-		//burn food
+		((Beef*)food)->burn();
 	}
 	Item::update(deltaTime);
 }

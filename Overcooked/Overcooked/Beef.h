@@ -16,6 +16,9 @@ public:
 	void cook();
 	bool isCooked();
 
+	void burn();
+	bool isBurned();
+
 	string whatAmI();
 
 private:
@@ -23,6 +26,8 @@ private:
 	bool cutUpdated = true;
 	bool cookedBool = false;
 	bool cookedUpdated = true;
+	bool burnedBool = false;
+	bool burnedUpdated = true;
 };
 
 #endif //_BEEF_INCLUDE
