@@ -2,7 +2,7 @@
 #define _STOVE_INCLUDE
 
 #include "Table.h"
-#include "Billboard.h"
+#include "ParticleSystem.h"
 
 class Stove :
 	public Table
@@ -16,6 +16,7 @@ public:
 
 private:
 	Billboard* working;
+	ParticleSystem *particles;
 };
 
 #endif //_STOVE_INCLUDE

@@ -15,7 +15,6 @@ Scene::Scene()
 	level = NULL;
 	player = NULL;
 	billboard = NULL;
-	particles = NULL;
 }
 
 Scene::~Scene()
@@ -26,8 +25,6 @@ Scene::~Scene()
 		delete player;
 	if (billboard != NULL)
 		delete billboard;
-	if (particles != NULL)
-		delete particles;
 }
 
 
@@ -46,11 +43,11 @@ void Scene::init()
 	//billboard->setType(BILLBOARD_Y_AXIS);
 
 	// Initialize particle system
-	ParticleSystem::Particle particle;
-	particle.lifetime = 1e10f;
-	particles = new ParticleSystem();
-	particles->init(glm::vec2(0.5f, 0.5f), texProgram, "images/particle.png", 2.f);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+	//ParticleSystem::Particle particle;
+	//particle.lifetime = 1e10f;
+	//particles = new ParticleSystem();
+	//particles->init(glm::vec2(0.5f, 0.5f), texProgram, "images/particle.png", 2.f);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 
 	projection = glm::perspective(45.f / 180.f * PI, float(CAMERA_WIDTH) / float(CAMERA_HEIGHT), 0.1f, 100.f);
 	currentTime = 0.0f;
@@ -58,6 +55,7 @@ void Scene::init()
 
 void Scene::update(int deltaTime)
 {
+	/*
 	int nParticlesToSpawn = 20 * (int((currentTime + deltaTime) / 100.f) - int(currentTime / 100.f));
 	ParticleSystem::Particle particle;
 	float angle;
@@ -70,10 +68,10 @@ void Scene::update(int deltaTime)
 		particle.speed = 1.5f * glm::normalize(0.5f * particle.position + glm::vec3(0.f, 3.f, 0.f));
 		particles->addParticle(particle);
 	}
-
+	*/
 	currentTime += deltaTime;
 
-	particles->update(deltaTime / 1000.f);
+	//particles->update(deltaTime / 1000.f);
 
 	player->update(deltaTime);
 
@@ -120,6 +118,7 @@ void Scene::render()
 	*/
 
 	// Render particles
+	/*
 	glDepthMask(GL_FALSE);
 	glEnable(GL_BLEND);
 
@@ -131,6 +130,7 @@ void Scene::render()
 
 	glDisable(GL_BLEND);
 	glDepthMask(GL_TRUE);
+	*/
 }
 
 void Scene::initShaders()

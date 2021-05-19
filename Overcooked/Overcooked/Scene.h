@@ -35,7 +35,6 @@ private:
 	Level *level;
 	Player *player;
 	Billboard *billboard;
-	ParticleSystem *particles;
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
