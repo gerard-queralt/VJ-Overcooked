@@ -2,6 +2,7 @@
 
 #include "Level.h"
 #include "Beef.h"
+#include "Tomato.h"
 
 bool FoodGenerator::init(ShaderProgram & program)
 {
@@ -16,6 +17,9 @@ void FoodGenerator::update(int deltaTime)
 	if (this->item == NULL) {
 		if (generates == "Beef") {
 			item = new Beef();
+		}
+		else if (generates == "Tomato") {
+			item = new Tomato();
 		}
 		if (this->item != NULL) {
 			item->init(program);

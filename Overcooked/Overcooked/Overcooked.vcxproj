@@ -134,6 +134,8 @@
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelFactory.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Mushroom.h" />
+    <ClInclude Include="MushroomSoup.h" />
     <ClInclude Include="Number.h" />
     <ClInclude Include="Onion.h" />
     <ClInclude Include="OnionSoup.h" />
@@ -148,6 +150,8 @@
     <ClInclude Include="Stove.h" />
     <ClInclude Include="Table.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="Tomato.h" />
+    <ClInclude Include="TomatoSoup.h" />
     <ClInclude Include="Tool.h" />
     <ClInclude Include="Trash.h" />
   </ItemGroup>
@@ -167,6 +171,8 @@
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelFactory.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Mushroom.cpp" />
+    <ClCompile Include="MushroomSoup.cpp" />
     <ClCompile Include="Number.cpp" />
     <ClCompile Include="Onion.cpp" />
     <ClCompile Include="OnionSoup.cpp" />
@@ -181,6 +187,8 @@
     <ClCompile Include="Stove.cpp" />
     <ClCompile Include="Table.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="Tomato.cpp" />
+    <ClCompile Include="TomatoSoup.cpp" />
     <ClCompile Include="Tool.cpp" />
     <ClCompile Include="Trash.cpp" />
   </ItemGroup>

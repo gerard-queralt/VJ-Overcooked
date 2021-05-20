@@ -7,7 +7,8 @@ class Number
 {
 public:
 	void init(const glm::vec2 &pos, ShaderProgram &shaderProgram);
-	virtual void render();
+	void render();
+
 	void changeNumber(int n);
 
 private:

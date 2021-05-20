@@ -42,9 +42,20 @@ void Scene::init()
 	billboard = Billboard::createBillboard(glm::vec2(1.f, 1.f), texProgram, "images/tmpHourglass.png");
 	billboard->setType(BILLBOARD_CENTER);
 
-	for (int i = 0; i < 4; ++i) {
+	for (int i = 0; i < 2; ++i) {
 		Number* n = new Number();
-		n->init(glm::vec2(0.f + i * 26.f, 16.f), texProgram);
+		n->init(glm::vec2(float(CAMERA_WIDTH) - 26.f * (i+2), float(CAMERA_HEIGHT) - 26.f * 2.f), texProgram);
+		n->changeNumber(0);
+		timeSprites.push_back(n);
+	}
+
+	timeSeparatorSpritesheet.loadFromFile("images/colon.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	timeSeparator = Sprite::createSprite(glm::ivec2(26, 20), glm::vec2(1.f, 1.f), &timeSeparatorSpritesheet, &texProgram);
+	timeSeparator->setPosition(glm::vec2(float(CAMERA_WIDTH) - 26.f * (4), float(CAMERA_HEIGHT) - 26.f * 2.f));
+
+	for (int i = 2; i < 4; ++i) {
+		Number* n = new Number();
+		n->init(glm::vec2(float(CAMERA_WIDTH) - 26.f * (i + 3), float(CAMERA_HEIGHT) - 26.f * 2.f), texProgram);
 		n->changeNumber(0);
 		timeSprites.push_back(n);
 	}
@@ -84,6 +95,8 @@ void Scene::update(int deltaTime)
 	player->update(deltaTime);
 
 	level->update(deltaTime);
+
+	
 }
 
 void Scene::render()
@@ -123,6 +136,7 @@ void Scene::render()
 	for (int i = 0; i < timeSprites.size(); ++i) {
 		timeSprites[i]->render();
 	}
+	timeSeparator->render();
 
 	// Render billboard
 	//texProgram.setUniform1b("bLighting", false);

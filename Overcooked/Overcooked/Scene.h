@@ -37,6 +37,10 @@ private:
 	Player *player;
 	Billboard *billboard;
 	std::vector<Number*> timeSprites;
+	Sprite* timeSeparator;
+	Texture timeSeparatorSpritesheet;
+	int timeSeconds;
+	int timeMinutes;
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection, projection2D;
