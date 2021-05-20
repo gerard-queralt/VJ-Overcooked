@@ -32,6 +32,7 @@ private:
 
 	Food* recipe;
 	bool emptied = false;
+	bool tomatoSoup = false;
 };
 
 #endif //_POT_INCLUDE

@@ -29,6 +29,8 @@ private:
 	Food* food;
 
 	bool onionSoup = false;
+	bool tomatoSoup = false;
+	bool mushroomSoup = false;
 	bool trash = false;
 };
 

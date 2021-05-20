@@ -3,6 +3,8 @@
 #include "Pot.h"
 #include "Plate.h"
 #include "Onion.h"
+#include "Tomato.h"
+#include "Mushroom.h"
 #include "Beef.h"
 #include "CuttingTable.h"
 #include "Stove.h"
@@ -37,15 +39,15 @@ Level* LevelFactory::createLevel1(ShaderProgram texProgram)
 	pan->setPosition(glm::vec3(5.f, 0.f, 0.f));
 	lvl->addItem(pan);
 
-	Onion* onion = new Onion();
-	onion->init(texProgram);
-	onion->setPosition(glm::vec3(0.f, 0.f, 0.f));
-	lvl->addItem(onion);
+	Mushroom* mushroom = new Mushroom();
+	mushroom->init(texProgram);
+	mushroom->setPosition(glm::vec3(0.f, 0.f, 0.f));
+	lvl->addItem(mushroom);
 
-	onion = new Onion();
-	onion->init(texProgram);
-	onion->setPosition(glm::vec3(10.f, 0.f, 0.f));
-	lvl->addItem(onion);
+	mushroom = new Mushroom();
+	mushroom->init(texProgram);
+	mushroom->setPosition(glm::vec3(10.f, 0.f, 0.f));
+	lvl->addItem(mushroom);
 
 	Table* t = new Table();
 	t->init(texProgram);
@@ -58,10 +60,10 @@ Level* LevelFactory::createLevel1(ShaderProgram texProgram)
 	lvl->addTable(ct);
 
 	//Ceba que posem a la taula de tallar
-	Onion* onion2 = new Onion();
-	onion2->init(texProgram);
-	ct->setItem(onion2);
-	lvl->addItem(onion2);
+	Mushroom* mushroom2 = new Mushroom();
+	mushroom2->init(texProgram);
+	ct->setItem(mushroom2);
+	lvl->addItem(mushroom2);
 
 	//Plat que posem a la taula buida
 	Plate* plate = new Plate();
