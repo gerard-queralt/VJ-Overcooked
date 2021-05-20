@@ -13,8 +13,10 @@ bool Plate::init(ShaderProgram & program)
 
 void Plate::render(ShaderProgram & program, glm::mat4 viewMatrix)
 {
-	if (onionSoup)
-		onionSoup = !loadFromFile("models/SoupBowl.obj", program);
+	if (onionSoup || mushroomSoup)
+		mushroomSoup = onionSoup = !loadFromFile("models/SoupBowl.obj", program);
+	if (tomatoSoup)
+		tomatoSoup = !loadFromFile("models/TomatoSoupBowl.obj", program);
 	if(trash)
 		trash = !loadFromFile("models/BurnedSoupBowl.obj", program);
 	Entity::render(program, viewMatrix);
@@ -33,6 +35,16 @@ bool Plate::addFood(Food * food)
 	if (this->food == NULL) {
 		if (food->whatAmI() == "OnionSoup") {
 			onionSoup = true;
+			this->food = food;
+			return true;
+		}
+		else if (food->whatAmI() == "TomatoSoup") {
+			tomatoSoup = true;
+			this->food = food;
+			return true;
+		}
+		else if (food->whatAmI() == "MushroomSoup") {
+			mushroomSoup = true;
 			this->food = food;
 			return true;
 		}

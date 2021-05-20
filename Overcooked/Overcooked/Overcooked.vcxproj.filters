@@ -132,6 +132,18 @@
     <ClInclude Include="Burger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Mushroom.h">
+      <Filter>Header Files\Entities\Items\Food</Filter>
+    </ClInclude>
+    <ClInclude Include="MushroomSoup.h">
+      <Filter>Header Files\Entities\Items\Food</Filter>
+    </ClInclude>
+    <ClInclude Include="Tomato.h">
+      <Filter>Header Files\Entities\Items\Food</Filter>
+    </ClInclude>
+    <ClInclude Include="TomatoSoup.h">
+      <Filter>Header Files\Entities\Items\Food</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssimpModel.cpp">
@@ -220,6 +232,18 @@
     </ClCompile>
     <ClCompile Include="Burger.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Mushroom.cpp">
+      <Filter>Source Files\Entities\Items\Food</Filter>
+    </ClCompile>
+    <ClCompile Include="MushroomSoup.cpp">
+      <Filter>Source Files\Entities\Items\Food</Filter>
+    </ClCompile>
+    <ClCompile Include="Tomato.cpp">
+      <Filter>Source Files\Entities\Items\Food</Filter>
+    </ClCompile>
+    <ClCompile Include="TomatoSoup.cpp">
+      <Filter>Source Files\Entities\Items\Food</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

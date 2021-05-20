@@ -1,5 +1,7 @@
 #include "Pot.h"
 #include "OnionSoup.h"
+#include "TomatoSoup.h"
+#include "MushroomSoup.h"
 #include "Trash.h"
 #include "Level.h"
 
@@ -17,10 +19,24 @@ void Pot::render(ShaderProgram & program, glm::mat4 viewMatrix)
 		emptied = !loadFromFile("models/EmptyCookingPot.obj", program);
 	}
 	if (addedFood) {
-		addedFood = !loadFromFile("models/SoupCookingPotMiddleCooked.obj", program);
+		if (foods.size() > 0 && foods[0]->whatAmI() == "Tomato")
+			tomatoSoup = true;
+		if (tomatoSoup) {
+			addedFood = !loadFromFile("models/TomatoSoupCookingPotMiddleCooked.obj", program);
+		}
+		else {
+			addedFood = !loadFromFile("models/SoupCookingPotMiddleCooked.obj", program);
+		}
 	}
 	if (cookedFood) {
-		cookedFood = !loadFromFile("models/SoupCookingPot.obj", program);
+		if (foods.size() > 0 && foods[0]->whatAmI() == "Tomato")
+			tomatoSoup = true;
+		if (tomatoSoup) {
+			cookedFood = !loadFromFile("models/TomatoSoupCookingPot.obj", program);
+		}
+		else {
+			cookedFood = !loadFromFile("models/SoupCookingPot.obj", program);
+		}
 		checkRecipe();
 	}
 	if (burnedFood) {
@@ -89,7 +105,7 @@ string Pot::whatAmI()
 
 bool Pot::foodIsValid(Food * food)
 {
-	return food->whatAmI() == "Onion" && food->isCut();
+	return (food->whatAmI() == "Onion" && food->isCut()) || (food->whatAmI() == "Tomato" && food->isCut()) || (food->whatAmI() == "Mushroom" && food->isCut());
 }
 
 void Pot::checkRecipe()
@@ -98,6 +114,12 @@ void Pot::checkRecipe()
 		if (foods[0]->whatAmI() == "Onion" && foods[1]->whatAmI() == "Onion" && foods[2]->whatAmI() == "Onion") {
 			recipe = new OnionSoup();
 		}
+		else if (foods[0]->whatAmI() == "Tomato" && foods[1]->whatAmI() == "Tomato" && foods[2]->whatAmI() == "Tomato") {
+			recipe = new TomatoSoup();
+		}
+		else if (foods[0]->whatAmI() == "Mushroom" && foods[1]->whatAmI() == "Mushroom" && foods[2]->whatAmI() == "Mushroom") {
+			recipe = new MushroomSoup();
+		}
 		else {
 			this->recipe = new Trash();
 		}
@@ -105,4 +127,5 @@ void Pot::checkRecipe()
 	else {
 		this->recipe = new Trash();
 	}
+	tomatoSoup = false;
 }
