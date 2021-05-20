@@ -2,6 +2,7 @@
 
 uniform mat4 projection, modelview;
 uniform mat3 normalmatrix;
+uniform vec2 texCoordDispl;
 
 in vec3 position;
 in vec3 normal;
@@ -14,7 +15,7 @@ out vec2 texCoordFrag;
 void main()
 {
 	// Pass texture coordinates
-	texCoordFrag = texCoord;
+	texCoordFrag = texCoord + texCoordDispl;
 	
 	// Pass normal
 	normalFrag = normalmatrix * normal;

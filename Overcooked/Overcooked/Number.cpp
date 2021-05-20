@@ -3,7 +3,7 @@
 void Number::init(const glm::vec2 & pos, ShaderProgram & shaderProgram)
 {
 	spritesheet.loadFromFile("images/numbersSprites.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	sprite = Sprite::createSprite(glm::ivec2(26, 20), glm::vec2(0.1f, 1.f), &spritesheet, &shaderProgram);
+	sprite = Sprite::createSprite(glm::ivec2(26, 26), glm::vec2(0.1f, 1.f), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(10);
 
 	sprite->setAnimationSpeed(0, 8);

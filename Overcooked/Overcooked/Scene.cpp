@@ -45,7 +45,6 @@ void Scene::init()
 	for (int i = 0; i < 2; ++i) {
 		Number* n = new Number();
 		n->init(glm::vec2(float(CAMERA_WIDTH) - 26.f * (i+2), float(CAMERA_HEIGHT) - 26.f * 2.f), texProgram);
-		n->changeNumber(0);
 		timeSprites.push_back(n);
 	}
 
@@ -56,7 +55,6 @@ void Scene::init()
 	for (int i = 2; i < 4; ++i) {
 		Number* n = new Number();
 		n->init(glm::vec2(float(CAMERA_WIDTH) - 26.f * (i + 3), float(CAMERA_HEIGHT) - 26.f * 2.f), texProgram);
-		n->changeNumber(0);
 		timeSprites.push_back(n);
 	}
 
@@ -70,6 +68,8 @@ void Scene::init()
 	projection = glm::perspective(45.f / 180.f * PI, float(CAMERA_WIDTH) / float(CAMERA_HEIGHT), 0.1f, 100.f);
 	projection2D = glm::ortho(0.f, float(CAMERA_WIDTH), float(CAMERA_HEIGHT), 0.f);
 	currentTime = 0.0f;
+	timeSeconds = 0;
+	timeMinutes = 0;
 }
 
 void Scene::update(int deltaTime)
@@ -96,7 +96,13 @@ void Scene::update(int deltaTime)
 
 	level->update(deltaTime);
 
-	
+	timeSeconds = currentTime / 1000;
+	timeMinutes = timeSeconds / 60;
+	timeSeconds %= 60;
+	timeSprites[0]->changeNumber(timeSeconds % 10);
+	timeSprites[1]->changeNumber(timeSeconds / 10);
+	timeSprites[2]->changeNumber(timeMinutes % 10);
+	timeSprites[3]->changeNumber(timeMinutes / 10);
 }
 
 void Scene::render()
@@ -125,7 +131,7 @@ void Scene::render()
 	// Render player
 	player->render(texProgram, viewMatrix);
 
-
+	// Render HUD
 
 	texProgram.setUniformMatrix4f("projection", projection2D);
 	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
