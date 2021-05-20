@@ -8,6 +8,7 @@
 #include "AssimpModel.h"
 #include "Billboard.h"
 #include "ParticleSystem.h"
+#include "Number.h"
 
 #define CAMERA_WIDTH 640
 #define CAMERA_HEIGHT 480
@@ -35,9 +36,10 @@ private:
 	Level *level;
 	Player *player;
 	Billboard *billboard;
+	std::vector<Number*> timeSprites;
 	ShaderProgram texProgram;
 	float currentTime;
-	glm::mat4 projection;
+	glm::mat4 projection, projection2D;
 };
 
 

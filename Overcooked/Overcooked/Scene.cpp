@@ -39,8 +39,15 @@ void Scene::init()
 
 	level->setPlayer(player);
 
-	//billboard = Billboard::createBillboard(glm::vec2(1.f, 1.f), texProgram, "images/mushroom.png");
-	//billboard->setType(BILLBOARD_Y_AXIS);
+	billboard = Billboard::createBillboard(glm::vec2(1.f, 1.f), texProgram, "images/tmpHourglass.png");
+	billboard->setType(BILLBOARD_CENTER);
+
+	for (int i = 0; i < 4; ++i) {
+		Number* n = new Number();
+		n->init(glm::vec2(0.f + i * 26.f, 16.f), texProgram);
+		n->changeNumber(0);
+		timeSprites.push_back(n);
+	}
 
 	// Initialize particle system
 	//ParticleSystem::Particle particle;
@@ -50,6 +57,7 @@ void Scene::init()
 	//glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 
 	projection = glm::perspective(45.f / 180.f * PI, float(CAMERA_WIDTH) / float(CAMERA_HEIGHT), 0.1f, 100.f);
+	projection2D = glm::ortho(0.f, float(CAMERA_WIDTH), float(CAMERA_HEIGHT), 0.f);
 	currentTime = 0.0f;
 }
 
@@ -104,18 +112,29 @@ void Scene::render()
 	// Render player
 	player->render(texProgram, viewMatrix);
 
+
+
+	texProgram.setUniformMatrix4f("projection", projection2D);
+	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
+	glm::mat4 modelview = glm::mat4(1.0f);
+	texProgram.setUniformMatrix4f("modelview", modelview);
+	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
+
+	for (int i = 0; i < timeSprites.size(); ++i) {
+		timeSprites[i]->render();
+	}
+
 	// Render billboard
-	/*
-	texProgram.setUniform1b("bLighting", false);
-	modelMatrix = glm::mat4(1.0f);
-	texProgram.setUniformMatrix4f("modelview", viewMatrix * modelMatrix);
-	normalMatrix = glm::transpose(glm::inverse(glm::mat3(viewMatrix * modelMatrix)));
-	texProgram.setUniformMatrix3f("normalmatrix", normalMatrix);
-	billboard->render(glm::vec3(2.f, -1.5f, 0.f), obs);
-	billboard->render(glm::vec3(-2.f, -1.5f, 0.f), obs);
-	billboard->render(glm::vec3(0.f, -1.5f, 2.f), obs);
-	billboard->render(glm::vec3(0.f, -1.5f, -2.f), obs);
-	*/
+	//texProgram.setUniform1b("bLighting", false);
+	//modelMatrix = glm::mat4(1.0f);
+	//texProgram.setUniformMatrix4f("modelview", viewMatrix * modelMatrix);
+	//normalMatrix = glm::transpose(glm::inverse(glm::mat3(viewMatrix * modelMatrix)));
+	//texProgram.setUniformMatrix3f("normalmatrix", normalMatrix);
+	//billboard->render(glm::vec3(8.f, 10.f, -16.f), glm::vec3(8.f, 32.f, -21.f));
+	//billboard->render(glm::vec3(2.f, -1.5f, 0.f), obs);
+	//billboard->render(glm::vec3(-2.f, -1.5f, 0.f), obs);
+	//billboard->render(glm::vec3(0.f, -1.5f, 2.f), obs);
+	//billboard->render(glm::vec3(0.f, -1.5f, -2.f), obs);
 
 	// Render particles
 	/*

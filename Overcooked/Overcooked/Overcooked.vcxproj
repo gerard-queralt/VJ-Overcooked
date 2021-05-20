@@ -118,6 +118,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AnimKeyframes.h" />
     <ClInclude Include="AssimpModel.h" />
     <ClInclude Include="Beef.h" />
     <ClInclude Include="Billboard.h" />
@@ -133,6 +134,7 @@
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelFactory.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Number.h" />
     <ClInclude Include="Onion.h" />
     <ClInclude Include="OnionSoup.h" />
     <ClInclude Include="ParticleSystem.h" />
@@ -142,6 +144,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderProgram.h" />
+    <ClInclude Include="Sprite.h" />
     <ClInclude Include="Stove.h" />
     <ClInclude Include="Table.h" />
     <ClInclude Include="Texture.h" />
@@ -164,6 +167,7 @@
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelFactory.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Number.cpp" />
     <ClCompile Include="Onion.cpp" />
     <ClCompile Include="OnionSoup.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
@@ -173,6 +177,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
+    <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Stove.cpp" />
     <ClCompile Include="Table.cpp" />
     <ClCompile Include="Texture.cpp" />

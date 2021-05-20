@@ -43,6 +43,12 @@
     <Filter Include="Header Files\Entities\Tables">
       <UniqueIdentifier>{575b1d94-3929-4692-a6f6-9fc0dbf9bb30}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Sprites">
+      <UniqueIdentifier>{b0a24473-bf95-4144-b1f1-bcc0a1da012d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Sprites">
+      <UniqueIdentifier>{f293d044-c44d-438f-8ea2-6b2ec857b19c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssimpModel.h">
@@ -132,6 +138,15 @@
     <ClInclude Include="Burger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AnimKeyframes.h">
+      <Filter>Header Files\Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Header Files\Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="Number.h">
+      <Filter>Header Files\Sprites</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssimpModel.cpp">
@@ -220,6 +235,12 @@
     </ClCompile>
     <ClCompile Include="Burger.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Source Files\Sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="Number.cpp">
+      <Filter>Source Files\Sprites</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
