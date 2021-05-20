@@ -36,11 +36,15 @@ private:
 	Level *level;
 	Player *player;
 	Billboard *billboard;
+	
 	std::vector<Number*> timeSprites;
+	std::vector<Number*> pointsSprites;
 	Sprite* timeSeparator;
 	Texture timeSeparatorSpritesheet;
 	int timeSeconds;
 	int timeMinutes;
+	int points;
+	
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection, projection2D;

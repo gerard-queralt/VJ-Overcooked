@@ -58,6 +58,11 @@ void Scene::init()
 		timeSprites.push_back(n);
 	}
 
+	Number* n = new Number();
+	n->init(glm::vec2(26.f, float(CAMERA_HEIGHT) - 26.f * 2.f), texProgram);
+	n->changeNumber(0);
+	pointsSprites.push_back(n);
+
 	// Initialize particle system
 	//ParticleSystem::Particle particle;
 	//particle.lifetime = 1e10f;
@@ -143,6 +148,9 @@ void Scene::render()
 		timeSprites[i]->render();
 	}
 	timeSeparator->render();
+	for (int i = 0; i < pointsSprites.size(); ++i) {
+		pointsSprites[i]->render();
+	}
 
 	// Render billboard
 	//texProgram.setUniform1b("bLighting", false);
