@@ -120,6 +120,12 @@ bool Entity::inContactWithPlayer()
 	std::vector<glm::vec3> bbox = getBoundingBox();
 	std::vector<glm::vec3> playerBbox = player->getBoundingBox();
 
+	glm::vec3 eTopRight = glm::vec3(bbox[0].x, 0.f, bbox[1].z);
+	glm::vec3 eBotLeft = glm::vec3(bbox[1].x, 0.f, bbox[0].z);
+
+	glm::vec3 pTopRight = glm::vec3(playerBbox[0].x, 0.f, playerBbox[1].z);
+	glm::vec3 pBotLeft = glm::vec3(playerBbox[1].x, 0.f, playerBbox[0].z);
+
 	//ignorem la y
 	bbox[0].y = 0;
 	bbox[1].y = 0;
@@ -128,7 +134,11 @@ bool Entity::inContactWithPlayer()
 
 	bool en0InsidePlayer = glm::all(glm::greaterThanEqual(bbox[0], playerBbox[0])) && glm::all(glm::lessThanEqual(bbox[0], playerBbox[1]));
 	bool en1InsidePlayer = glm::all(glm::greaterThanEqual(bbox[1], playerBbox[0])) && glm::all(glm::lessThanEqual(bbox[1], playerBbox[1]));
+	bool enTRInsidePlayer = glm::all(glm::greaterThanEqual(eTopRight, playerBbox[0])) && glm::all(glm::lessThanEqual(eTopRight, playerBbox[1]));
+	bool enBLInsidePlayer = glm::all(glm::greaterThanEqual(eBotLeft, playerBbox[0])) && glm::all(glm::lessThanEqual(eBotLeft, playerBbox[1]));
 	bool p0InsideEntity = glm::all(glm::greaterThanEqual(playerBbox[0], bbox[0])) && glm::all(glm::lessThanEqual(playerBbox[0], bbox[1]));
 	bool p1InsideEntity = glm::all(glm::greaterThanEqual(playerBbox[1], bbox[0])) && glm::all(glm::lessThanEqual(playerBbox[1], bbox[1]));
-	return en0InsidePlayer || en1InsidePlayer || p0InsideEntity || p1InsideEntity;
+	bool pTRInsideEntity = glm::all(glm::greaterThanEqual(pTopRight, bbox[0])) && glm::all(glm::lessThanEqual(pTopRight, bbox[1]));
+	bool pBLInsideEntity = glm::all(glm::greaterThanEqual(pBotLeft, bbox[0])) && glm::all(glm::lessThanEqual(pBotLeft, bbox[1]));
+	return en0InsidePlayer || en1InsidePlayer || enTRInsidePlayer || enBLInsidePlayer || p0InsideEntity || p1InsideEntity || pTRInsideEntity || pBLInsideEntity;
 }
