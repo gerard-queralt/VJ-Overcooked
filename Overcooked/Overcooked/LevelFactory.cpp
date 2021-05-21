@@ -11,6 +11,7 @@
 #include "FoodGenerator.h"
 #include "Bread.h"
 #include "TrashCan.h"
+#include "Cheese.h"
 
 Level* LevelFactory::createLevel(int level, ShaderProgram texProgram)
 {
@@ -107,6 +108,11 @@ Level* LevelFactory::createLevel1(ShaderProgram texProgram)
 	tc->init(texProgram);
 	tc->setPosition(glm::vec3(-6.f, 0.f, 14.f));
 	lvl->addTable(tc);
+
+	Cheese* c = new Cheese();
+	c->init(texProgram);
+	c->setPosition(glm::vec3(-15.f, 0.f, -15.f));
+	lvl->addItem(c);
 
 	return lvl;
 }

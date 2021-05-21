@@ -34,15 +34,24 @@ bool Burger::addIngredient(Food * food)
 			if (hasTomato) {
 				return loadFromFile("models/BurgerBreadTomato.obj", program);
 			}
+			if (hasCheese) {
+				return loadFromFile("models/BurgerBreadCheese.obj", program);
+			}
 			return loadFromFile("models/BurgerBread.obj", program);
 		}
 		if (hasTomato) {
 			return loadFromFile("models/BurgerTomato.obj", program);
 		}
+		if (hasCheese) {
+			return loadFromFile("models/BurgerCheese.obj", program);
+		}
 	}
 	if (hasBread) {
 		if (hasTomato) {
 			return loadFromFile("models/BreadTomato.obj", program);
+		}
+		if (hasCheese) {
+			return loadFromFile("models/BreadCheese.obj", program);
 		}
 	}
 }

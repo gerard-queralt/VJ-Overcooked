@@ -43,13 +43,13 @@ void Table::update(int deltaTime)
 bool Table::setItem(Item * item)
 {
 	if (this->item == NULL) {
-		item->setPosition(glm::vec3(position.x, 1.3f, position.z));
+		item->setPosition(glm::vec3(position.x, 1.5f, position.z));
 		this->item = item;
 		return true;
 	}
 	else if (this->item->isFood() && !item->isFood()) {
 		if (((Tool*)item)->addFood((Food*) this->item)) {
-			item->setPosition(glm::vec3(position.x, 1.2f, position.z));
+			item->setPosition(glm::vec3(position.x, 1.5f, position.z));
 			this->item = item;
 			return true;
 		}
