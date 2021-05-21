@@ -20,14 +20,19 @@ bool Burger::addIngredient(Food * food)
 		hasBread = true;
 	}
 	else if (food->whatAmI() == "Tomato") {
-		if (hasTomato || hasCheese)
+		if (hasTomato || hasCheese || hasLettuce)
 			return false;
 		hasTomato = true;
 	}
 	else if (food->whatAmI() == "Cheese") {
-		if (hasTomato || hasCheese)
+		if (hasTomato || hasCheese || hasLettuce)
 			return false;
 		hasCheese = true;
+	}
+	else if (food->whatAmI() == "Lettuce") {
+		if (hasTomato || hasCheese || hasLettuce)
+			return false;
+		hasLettuce = true;
 	}
 	if (hasBeef) {
 		if (hasBread) {
@@ -37,6 +42,9 @@ bool Burger::addIngredient(Food * food)
 			if (hasCheese) {
 				return loadFromFile("models/BurgerBreadCheese.obj", program);
 			}
+			if (hasLettuce) {
+				return loadFromFile("models/BurgerBreadLettuce.obj", program);
+			}
 			return loadFromFile("models/BurgerBread.obj", program);
 		}
 		if (hasTomato) {
@@ -45,6 +53,9 @@ bool Burger::addIngredient(Food * food)
 		if (hasCheese) {
 			return loadFromFile("models/BurgerCheese.obj", program);
 		}
+		if (hasLettuce) {
+			return loadFromFile("models/BurgerLettuce.obj", program);
+		}
 	}
 	if (hasBread) {
 		if (hasTomato) {
@@ -52,6 +63,9 @@ bool Burger::addIngredient(Food * food)
 		}
 		if (hasCheese) {
 			return loadFromFile("models/BreadCheese.obj", program);
+		}
+		if (hasLettuce) {
+			return loadFromFile("models/BreadLettuce.obj", program);
 		}
 	}
 }

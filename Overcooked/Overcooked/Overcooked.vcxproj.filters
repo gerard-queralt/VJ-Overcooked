@@ -165,6 +165,12 @@
     <ClInclude Include="TrashCan.h">
       <Filter>Header Files\Entities\Tables</Filter>
     </ClInclude>
+    <ClInclude Include="Lettuce.h">
+      <Filter>Header Files\Entities\Items\Food</Filter>
+    </ClInclude>
+    <ClInclude Include="Salad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssimpModel.cpp">
@@ -277,6 +283,12 @@
     </ClCompile>
     <ClCompile Include="TrashCan.cpp">
       <Filter>Source Files\Entities\Tables</Filter>
+    </ClCompile>
+    <ClCompile Include="Lettuce.cpp">
+      <Filter>Source Files\Entities\Items\Food</Filter>
+    </ClCompile>
+    <ClCompile Include="Salad.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

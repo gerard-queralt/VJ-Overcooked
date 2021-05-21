@@ -12,6 +12,7 @@
 #include "Bread.h"
 #include "TrashCan.h"
 #include "Cheese.h"
+#include "Lettuce.h"
 
 Level* LevelFactory::createLevel(int level, ShaderProgram texProgram)
 {
@@ -113,6 +114,11 @@ Level* LevelFactory::createLevel1(ShaderProgram texProgram)
 	c->init(texProgram);
 	c->setPosition(glm::vec3(-15.f, 0.f, -15.f));
 	lvl->addItem(c);
+
+	Lettuce* l = new Lettuce();
+	l->init(texProgram);
+	l->setPosition(glm::vec3(-10.f, 0.f, -10.f));
+	lvl->addItem(l);
 
 	return lvl;
 }

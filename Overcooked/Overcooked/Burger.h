@@ -20,6 +20,7 @@ private:
 	bool hasBread = false;
 	bool hasTomato = false;
 	bool hasCheese = false;
+	bool hasLettuce = false;
 };
 
 #endif //_BURGER_INCLUDE

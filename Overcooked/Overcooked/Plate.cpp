@@ -3,6 +3,7 @@
 
 #include "Beef.h"
 #include "Burger.h"
+#include "Salad.h"
 
 bool Plate::init(ShaderProgram & program)
 {
@@ -84,7 +85,7 @@ string Plate::whatAmI()
 
 bool Plate::assembleRecipe(Food* addedFood)
 {
-	if (partOfBurgerRecipe(food) && partOfBurgerRecipe(addedFood)) {
+	if ((partOfBurgerRecipe(food) && (addedFood->whatAmI() == "Beef" || addedFood->whatAmI() == "Bread")) || (partOfBurgerRecipe(addedFood) && (food->whatAmI() == "Beef" || food->whatAmI() == "Bread"))) {
 		//hauriem de destruir el mejar
 		food->setScale(0.f);
 		food->setPosition(glm::vec3(100.f, 0.f, 100.f));
@@ -105,6 +106,18 @@ bool Plate::assembleRecipe(Food* addedFood)
 			addedFood->setPosition(glm::vec3(100.f, 0.f, 100.f));
 		}
 	}
+	else if (((food->whatAmI() == "Tomato" && addedFood->whatAmI() == "Lettuce") || (food->whatAmI() == "Lettuce" && addedFood->whatAmI() == "Tomato")) && food->isCut() && addedFood->isCut()) {
+		//hauriem de destruir el mejar
+		food->setScale(0.f);
+		food->setPosition(glm::vec3(100.f, 0.f, 100.f));
+		addedFood->setScale(0.f);
+		addedFood->setPosition(glm::vec3(100.f, 0.f, 100.f));
+		food = new Salad();
+		food->init(program);
+		food->setPosition(glm::vec3(position.x, position.y + model->getHeight() * scale, position.z));
+		food->setPlayer(player);
+		level->addItem(food);
+	}
 	return false;
 }
 
@@ -113,5 +126,6 @@ bool Plate::partOfBurgerRecipe(Food * food)
 	return food->whatAmI() == "Bread" 
 		|| (food->whatAmI() == "Beef" && ((Beef*) food)->isCooked()) 
 		|| (food->whatAmI() == "Tomato" && food->isCut())
-		|| (food->whatAmI() == "Cheese" && food->isCut());
+		|| (food->whatAmI() == "Cheese" && food->isCut())
+		|| (food->whatAmI() == "Lettuce" && food->isCut());
 }
