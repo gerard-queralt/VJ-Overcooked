@@ -73,8 +73,8 @@ void Scene::init()
 	projection = glm::perspective(45.f / 180.f * PI, float(CAMERA_WIDTH) / float(CAMERA_HEIGHT), 0.1f, 100.f);
 	projection2D = glm::ortho(0.f, float(CAMERA_WIDTH), float(CAMERA_HEIGHT), 0.f);
 	currentTime = 0.0f;
-	timeSeconds = 0;
-	timeMinutes = 0;
+	timeSeconds = 30;
+	timeMinutes = 1;
 }
 
 void Scene::update(int deltaTime)
@@ -101,9 +101,14 @@ void Scene::update(int deltaTime)
 
 	level->update(deltaTime);
 
-	timeSeconds = currentTime / 1000;
-	timeMinutes = timeSeconds / 60;
-	timeSeconds %= 60;
+	timeSeconds = 30 - (int(currentTime) / 1000) % 60;
+	if (timeSeconds < 0) {
+		timeSeconds += 60;
+		--timeMinutes;
+	}
+	if (timeMinutes < 0) {
+		timeMinutes = 0; //acaba la partida
+	}
 	timeSprites[0]->changeNumber(timeSeconds % 10);
 	timeSprites[1]->changeNumber(timeSeconds / 10);
 	timeSprites[2]->changeNumber(timeMinutes % 10);
