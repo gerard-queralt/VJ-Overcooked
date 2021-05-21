@@ -28,6 +28,7 @@ bool Tool::finished()
 	return false;
 }
 
-void Tool::empty()
+Food * Tool::getFood()
 {
+	return NULL;
 }

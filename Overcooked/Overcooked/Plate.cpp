@@ -67,6 +67,16 @@ bool Plate::hasFood()
 	return food != NULL;
 }
 
+Food * Plate::getFood()
+{
+	return food;
+}
+
+void Plate::empty()
+{
+	food = NULL;
+}
+
 string Plate::whatAmI()
 {
 	return "Plate";

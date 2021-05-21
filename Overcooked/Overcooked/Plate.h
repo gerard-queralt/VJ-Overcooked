@@ -16,6 +16,9 @@ public:
 
 	bool hasFood();
 
+	Food* getFood();
+	void empty();
+
 	string whatAmI();
 
 private:
