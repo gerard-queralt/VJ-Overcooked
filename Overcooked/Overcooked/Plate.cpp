@@ -87,17 +87,31 @@ bool Plate::assembleRecipe(Food* addedFood)
 	if (partOfBurgerRecipe(food) && partOfBurgerRecipe(addedFood)) {
 		//hauriem de destruir el mejar
 		food->setScale(0.f);
+		food->setPosition(glm::vec3(100.f, 0.f, 100.f));
 		addedFood->setScale(0.f);
-		food = new Burger();
-		food->init(program);
+		addedFood->setPosition(glm::vec3(100.f, 0.f, 100.f));
+		Burger* burger = new Burger();
+		burger->init(program);
+		burger->addIngredient(food);
+		burger->addIngredient(addedFood);
+		food = burger;
 		food->setPosition(glm::vec3(position.x, position.y + model->getHeight() * scale, position.z));
 		food->setPlayer(player);
 		level->addItem(food);
+	}
+	else if (food->whatAmI() == "Burger" && partOfBurgerRecipe(addedFood)) {
+		if (((Burger*)food)->addIngredient(addedFood)) {
+			addedFood->setScale(0.f);
+			addedFood->setPosition(glm::vec3(100.f, 0.f, 100.f));
+		}
 	}
 	return false;
 }
 
 bool Plate::partOfBurgerRecipe(Food * food)
 {
-	return food->whatAmI() == "Bread" || (food->whatAmI() == "Beef" && ((Beef*) food)->isCooked());
+	return food->whatAmI() == "Bread" 
+		|| (food->whatAmI() == "Beef" && ((Beef*) food)->isCooked()) 
+		|| (food->whatAmI() == "Tomato" && food->isCut())
+		|| (food->whatAmI() == "Cheese" && food->isCut());
 }

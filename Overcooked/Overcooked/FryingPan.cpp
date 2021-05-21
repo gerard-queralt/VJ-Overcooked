@@ -60,6 +60,7 @@ Food * FryingPan::getFood()
 void FryingPan::empty()
 {
 	food = NULL;
+	cookingTime = 0;
 }
 
 string FryingPan::whatAmI()
