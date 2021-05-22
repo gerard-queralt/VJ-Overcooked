@@ -55,8 +55,14 @@ bool Table::setItem(Item * item)
 		}
 	}
 	else if (!this->item->isFood() && item->isFood()) {
-		((Tool*) this->item)->addFood((Food*)item);
-		return true;
+		return ((Tool*) this->item)->addFood((Food*)item);
+	}
+	else if (!this->item->isFood() && !item->isFood()) {
+		if (((Tool*)item)->hasFood()) {
+			((Tool*) this->item)->addFood(((Tool*)item)->getFood());
+			((Tool*)item)->empty();
+		}
+		return false;
 	}
 	return false;
 }
