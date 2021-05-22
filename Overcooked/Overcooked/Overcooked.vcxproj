@@ -126,6 +126,7 @@
     <ClInclude Include="Burger.h" />
     <ClInclude Include="Cheese.h" />
     <ClInclude Include="CuttingTable.h" />
+    <ClInclude Include="DeliveryConveyor.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Food.h" />
     <ClInclude Include="FoodGenerator.h" />
@@ -167,6 +168,7 @@
     <ClCompile Include="Burger.cpp" />
     <ClCompile Include="Cheese.cpp" />
     <ClCompile Include="CuttingTable.cpp" />
+    <ClCompile Include="DeliveryConveyor.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Food.cpp" />
     <ClCompile Include="FoodGenerator.cpp" />

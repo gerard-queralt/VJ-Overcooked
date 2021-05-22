@@ -13,6 +13,7 @@
 #include "TrashCan.h"
 #include "Cheese.h"
 #include "Lettuce.h"
+#include "DeliveryConveyor.h"
 
 Level* LevelFactory::createLevel(int level, ShaderProgram texProgram)
 {
@@ -119,6 +120,14 @@ Level* LevelFactory::createLevel1(ShaderProgram texProgram)
 	l->init(texProgram);
 	l->setPosition(glm::vec3(-10.f, 0.f, -10.f));
 	lvl->addItem(l);
+
+	DeliveryConveyor* dc = new DeliveryConveyor();
+	dc->init(texProgram);
+	dc->setRotation(90.f);
+	dc->setPosition(glm::vec3(-14.f, 0.f, 8.f));
+	//dc->setPosition(glm::vec3(0.f, 0.f, 0.f));
+	dc->setLevel(lvl);
+	lvl->addTable(dc);
 
 	return lvl;
 }

@@ -75,6 +75,8 @@ Food * Plate::getFood()
 
 void Plate::empty()
 {
+	food->setScale(0.f);
+	food->setPosition(glm::vec3(100.f, 0.f, 100.f));
 	food = NULL;
 }
 

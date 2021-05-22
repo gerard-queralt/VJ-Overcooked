@@ -140,6 +140,19 @@ Level::PutItemResult Level::putItemOnTable(Item * item)
 	return NOT_TOUCHING;
 }
 
+bool Level::deliver(Food * food)
+{
+	if (food->whatAmI() == "OnionSoup"
+		|| food->whatAmI() == "MushroomSoup"
+		|| food->whatAmI() == "TomatoSoup"
+		|| food->whatAmI() == "Burger"
+		|| food->whatAmI() == "Salad") {
+
+		return true;
+	}
+	return false;
+}
+
 void Level::prepareArrays(ShaderProgram &program)
 {
 	vector<float> vertices;

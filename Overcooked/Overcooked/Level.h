@@ -8,6 +8,7 @@
 
 #include "Player.h"
 #include "Table.h"
+#include "Food.h"
 
 using namespace std;
 
@@ -41,6 +42,8 @@ public:
 		NOT_TOUCHING = 0, FULL, SUCCESS
 	};
 	PutItemResult putItemOnTable(Item* item);
+
+	bool deliver(Food* food);
 
 private:
 	void prepareArrays(ShaderProgram &program);
