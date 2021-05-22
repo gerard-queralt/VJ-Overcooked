@@ -166,6 +166,11 @@ int Level::getPoints()
 	return curPoints;
 }
 
+int Level::getPointsRequired()
+{
+	return pointsReq;
+}
+
 bool Level::deliver(Food * food)
 {
 	if (food->whatAmI() == "OnionSoup"

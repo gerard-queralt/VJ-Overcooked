@@ -63,6 +63,17 @@ void Scene::init()
 	n->changeNumber(0);
 	pointsSprites.push_back(n);
 
+	timeTextSpritesheet.loadFromFile("images/time!.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	timeText = Sprite::createSprite(glm::ivec2(160, 32), glm::vec2(1.f, 1.f), &timeTextSpritesheet, &texProgram);
+	timeText->setPosition(glm::vec2(7.5f * 32.f, 7.f * 32.f));
+
+	winTextSpritesheet.loadFromFile("images/win.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	winText = Sprite::createSprite(glm::ivec2(96, 32), glm::vec2(1.f, 1.f), &winTextSpritesheet, &texProgram);
+	winText->setPosition(glm::vec2(8.5f * 32.f, 8.5f * 32.f));
+	loseTextSpritesheet.loadFromFile("images/lose.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	loseText = Sprite::createSprite(glm::ivec2(128, 32), glm::vec2(1.f, 1.f), &loseTextSpritesheet, &texProgram);
+	loseText->setPosition(glm::vec2(8.f * 32.f, 8.5f * 32.f));
+
 	// Initialize particle system
 	//ParticleSystem::Particle particle;
 	//particle.lifetime = 1e10f;
@@ -107,12 +118,14 @@ void Scene::update(int deltaTime)
 		--timeMinutes;
 	}
 	if (timeMinutes < 0) {
-		timeMinutes = 0; //acaba la partida
+		timeUp = true;
 	}
-	timeSprites[0]->changeNumber(timeSeconds % 10);
-	timeSprites[1]->changeNumber(timeSeconds / 10);
-	timeSprites[2]->changeNumber(timeMinutes % 10);
-	timeSprites[3]->changeNumber(timeMinutes / 10);
+	else {
+		timeSprites[0]->changeNumber(timeSeconds % 10);
+		timeSprites[1]->changeNumber(timeSeconds / 10);
+		timeSprites[2]->changeNumber(timeMinutes % 10);
+		timeSprites[3]->changeNumber(timeMinutes / 10);
+	}
 
 	int points = level->getPoints();
 	if (points > 0) {
@@ -171,6 +184,14 @@ void Scene::render()
 	timeSeparator->render();
 	for (int i = pointsSprites.size() - 1; i >= 0; --i) {
 		pointsSprites[i]->render();
+	}
+
+	if (timeUp) {
+		timeText->render();
+		if (level->getPoints() >= level->getPointsRequired())
+			winText->render();
+		else
+			loseText->render();
 	}
 
 	// Render billboard

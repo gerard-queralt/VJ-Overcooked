@@ -48,6 +48,7 @@ public:
 	int getMinutes();
 	int getSeconds();
 	int getPoints();
+	int getPointsRequired();
 
 	bool deliver(Food* food);
 

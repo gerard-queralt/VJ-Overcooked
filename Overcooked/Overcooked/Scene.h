@@ -44,6 +44,14 @@ private:
 	int timeSeconds;
 	int timeMinutes;
 	int secondsIncrement = 0;
+
+	Sprite* timeText;
+	Texture timeTextSpritesheet;
+	Sprite* winText;
+	Texture winTextSpritesheet;
+	Sprite* loseText;
+	Texture loseTextSpritesheet;
+	bool timeUp = false;
 	
 	ShaderProgram texProgram;
 	float currentTime;
