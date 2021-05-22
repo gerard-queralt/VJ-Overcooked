@@ -64,7 +64,7 @@ bool Pot::addFood(Food * food)
 			if (cookingTime < 0)
 				cookingTime = 0;
 		}
-		food->setPosition(glm::vec3(position.x, position.y + model->getHeight() * scale, position.z));
+		food->setPosition(glm::vec3(100.f, 0.f, 100.f));
 		food->setScale(0.f);
 		foods.push_back(food);
 		return true;
@@ -96,6 +96,8 @@ void Pot::empty()
 	//level->removeItem(f);
 	//}
 	foods.clear();
+	foods.resize(0);
+	cookingTime = 0;
 }
 
 string Pot::whatAmI()

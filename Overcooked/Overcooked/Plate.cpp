@@ -14,6 +14,9 @@ bool Plate::init(ShaderProgram & program)
 
 void Plate::render(ShaderProgram & program, glm::mat4 viewMatrix)
 {
+	if (emptied) {
+		emptied = !loadFromFile("models/EmptyPlate.obj", program);
+	}
 	if (onionSoup || mushroomSoup)
 		mushroomSoup = onionSoup = !loadFromFile("models/SoupBowl.obj", program);
 	if (tomatoSoup)
@@ -78,6 +81,7 @@ void Plate::empty()
 	food->setScale(0.f);
 	food->setPosition(glm::vec3(100.f, 0.f, 100.f));
 	food = NULL;
+	emptied = true;
 }
 
 string Plate::whatAmI()

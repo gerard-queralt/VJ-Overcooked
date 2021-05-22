@@ -31,6 +31,7 @@ private:
 
 	Food* food;
 
+	bool emptied = false;
 	bool onionSoup = false;
 	bool tomatoSoup = false;
 	bool mushroomSoup = false;
