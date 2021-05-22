@@ -43,7 +43,7 @@ private:
 	Texture timeSeparatorSpritesheet;
 	int timeSeconds;
 	int timeMinutes;
-	int points;
+	int secondsIncrement = 0;
 	
 	ShaderProgram texProgram;
 	float currentTime;

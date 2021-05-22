@@ -140,6 +140,32 @@ Level::PutItemResult Level::putItemOnTable(Item * item)
 	return NOT_TOUCHING;
 }
 
+void Level::setTime(int minutes, int seconds)
+{
+	timeMinutes = minutes;
+	timeSeconds = seconds;
+}
+
+void Level::setPoints(int points)
+{
+	pointsReq = points;
+}
+
+int Level::getMinutes()
+{
+	return timeMinutes;
+}
+
+int Level::getSeconds()
+{
+	return timeSeconds;
+}
+
+int Level::getPoints()
+{
+	return curPoints;
+}
+
 bool Level::deliver(Food * food)
 {
 	if (food->whatAmI() == "OnionSoup"
@@ -148,6 +174,7 @@ bool Level::deliver(Food * food)
 		|| food->whatAmI() == "Burger"
 		|| food->whatAmI() == "Salad") {
 
+		curPoints += 150;
 		return true;
 	}
 	return false;

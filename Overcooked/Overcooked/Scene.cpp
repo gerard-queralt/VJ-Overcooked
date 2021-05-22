@@ -73,8 +73,7 @@ void Scene::init()
 	projection = glm::perspective(45.f / 180.f * PI, float(CAMERA_WIDTH) / float(CAMERA_HEIGHT), 0.1f, 100.f);
 	projection2D = glm::ortho(0.f, float(CAMERA_WIDTH), float(CAMERA_HEIGHT), 0.f);
 	currentTime = 0.0f;
-	timeSeconds = 30;
-	timeMinutes = 1;
+	timeMinutes = level->getMinutes();
 }
 
 void Scene::update(int deltaTime)
@@ -101,8 +100,9 @@ void Scene::update(int deltaTime)
 
 	level->update(deltaTime);
 
-	timeSeconds = 30 - (int(currentTime) / 1000) % 60;
+	timeSeconds = level->getSeconds() - (int(currentTime) / 1000) % 60 + secondsIncrement;
 	if (timeSeconds < 0) {
+		secondsIncrement += 60;
 		timeSeconds += 60;
 		--timeMinutes;
 	}
@@ -113,6 +113,21 @@ void Scene::update(int deltaTime)
 	timeSprites[1]->changeNumber(timeSeconds / 10);
 	timeSprites[2]->changeNumber(timeMinutes % 10);
 	timeSprites[3]->changeNumber(timeMinutes / 10);
+
+	int points = level->getPoints();
+	if (points > 0) {
+		pointsSprites.clear();
+		while (points > 0) {
+			for (int p = 0; p < pointsSprites.size(); ++p) {
+				pointsSprites[p]->setPosition(glm::vec2(26.f * (pointsSprites.size() - p + 1), float(CAMERA_HEIGHT) - 26.f * 2.f));
+			}
+			Number* n = new Number();
+			n->init(glm::vec2(26.f, float(CAMERA_HEIGHT) - 26.f * 2.f), texProgram);
+			n->changeNumber(points % 10);
+			pointsSprites.push_back(n);
+			points /= 10;
+		}
+	}
 }
 
 void Scene::render()
@@ -124,6 +139,7 @@ void Scene::render()
 	texProgram.setUniform1b("bLighting", true);
 	texProgram.setUniformMatrix4f("projection", projection);
 	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
+	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 
 	glm::vec3 obs = glm::vec3(0.f, 32.f, -21.f);
 	viewMatrix = glm::lookAt(obs, glm::vec3(0.f, 0.f, -(180.f * PI/180)), glm::vec3(0.f, 1.f, 0.f));
@@ -153,7 +169,7 @@ void Scene::render()
 		timeSprites[i]->render();
 	}
 	timeSeparator->render();
-	for (int i = 0; i < pointsSprites.size(); ++i) {
+	for (int i = pointsSprites.size() - 1; i >= 0; --i) {
 		pointsSprites[i]->render();
 	}
 

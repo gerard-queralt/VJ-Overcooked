@@ -43,6 +43,12 @@ public:
 	};
 	PutItemResult putItemOnTable(Item* item);
 
+	void setTime(int minutes, int seconds);
+	void setPoints(int points);
+	int getMinutes();
+	int getSeconds();
+	int getPoints();
+
 	bool deliver(Food* food);
 
 private:
@@ -57,6 +63,11 @@ private:
 
 	vector<Item *> items;
 	vector<Table* > tables;
+
+	int timeSeconds;
+	int timeMinutes;
+	int pointsReq;
+	int curPoints = 0;
 };
 
 

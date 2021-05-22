@@ -45,6 +45,12 @@ void Number::render()
 	sprite->render();
 }
 
+void Number::setPosition(const glm::vec2 & pos)
+{
+	position = pos;
+	sprite->setPosition(position);
+}
+
 void Number::changeNumber(int n)
 {
 	sprite->changeAnimation(n);

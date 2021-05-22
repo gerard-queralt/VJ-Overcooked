@@ -37,6 +37,7 @@ Level* LevelFactory::createLevel(int level, ShaderProgram texProgram)
 Level* LevelFactory::createLevel1(ShaderProgram texProgram)
 {
 	Level *lvl = Level::createLevel(glm::vec3(32, 4, 32), texProgram, "images/floor1.png", "images/wall1.png");
+	lvl->setTime(10, 10);
 	
 	FryingPan* pan = new FryingPan();
 	pan->init(texProgram);

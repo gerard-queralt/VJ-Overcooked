@@ -96,7 +96,6 @@ void Pot::empty()
 	//level->removeItem(f);
 	//}
 	foods.clear();
-	foods.resize(0);
 	cookingTime = 0;
 }
 

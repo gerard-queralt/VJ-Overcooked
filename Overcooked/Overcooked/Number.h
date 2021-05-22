@@ -9,6 +9,8 @@ public:
 	void init(const glm::vec2 &pos, ShaderProgram &shaderProgram);
 	void render();
 
+	void setPosition(const glm::vec2 &pos);
+
 	void changeNumber(int n);
 
 private:
