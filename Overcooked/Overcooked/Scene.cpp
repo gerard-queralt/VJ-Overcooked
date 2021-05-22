@@ -75,11 +75,13 @@ void Scene::init()
 	loseText->setPosition(glm::vec2(8.f * 32.f, 8.5f * 32.f));
 
 	// Initialize particle system
-	//ParticleSystem::Particle particle;
-	//particle.lifetime = 1e10f;
-	//particles = new ParticleSystem();
-	//particles->init(glm::vec2(0.5f, 0.5f), texProgram, "images/particle.png", 2.f);
-	//glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+	/*
+	ParticleSystem::Particle particle;
+	particle.lifetime = 1e10f;
+	particles = new ParticleSystem();
+	particles->init(glm::vec2(1.f, 1.f), texProgram, "images/fire.png", 2.f);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+	*/
 
 	projection = glm::perspective(45.f / 180.f * PI, float(CAMERA_WIDTH) / float(CAMERA_HEIGHT), 0.1f, 100.f);
 	projection2D = glm::ortho(0.f, float(CAMERA_WIDTH), float(CAMERA_HEIGHT), 0.f);
@@ -103,6 +105,7 @@ void Scene::update(int deltaTime)
 		particles->addParticle(particle);
 	}
 	*/
+
 	currentTime += deltaTime;
 
 	//particles->update(deltaTime / 1000.f);
@@ -170,30 +173,6 @@ void Scene::render()
 	// Render player
 	player->render(texProgram, viewMatrix);
 
-	// Render HUD
-
-	texProgram.setUniformMatrix4f("projection", projection2D);
-	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
-	glm::mat4 modelview = glm::mat4(1.0f);
-	texProgram.setUniformMatrix4f("modelview", modelview);
-	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
-
-	for (int i = 0; i < timeSprites.size(); ++i) {
-		timeSprites[i]->render();
-	}
-	timeSeparator->render();
-	for (int i = pointsSprites.size() - 1; i >= 0; --i) {
-		pointsSprites[i]->render();
-	}
-
-	if (timeUp) {
-		timeText->render();
-		if (level->getPoints() >= level->getPointsRequired())
-			winText->render();
-		else
-			loseText->render();
-	}
-
 	// Render billboard
 	//texProgram.setUniform1b("bLighting", false);
 	//modelMatrix = glm::mat4(1.0f);
@@ -220,6 +199,29 @@ void Scene::render()
 	glDisable(GL_BLEND);
 	glDepthMask(GL_TRUE);
 	*/
+	// Render HUD
+
+	texProgram.setUniformMatrix4f("projection", projection2D);
+	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
+	glm::mat4 modelview = glm::mat4(1.0f);
+	texProgram.setUniformMatrix4f("modelview", modelview);
+	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
+
+	for (int i = 0; i < timeSprites.size(); ++i) {
+		timeSprites[i]->render();
+	}
+	timeSeparator->render();
+	for (int i = pointsSprites.size() - 1; i >= 0; --i) {
+		pointsSprites[i]->render();
+	}
+
+	if (timeUp) {
+		timeText->render();
+		if (level->getPoints() >= level->getPointsRequired())
+			winText->render();
+		else
+			loseText->render();
+	}
 }
 
 void Scene::initShaders()

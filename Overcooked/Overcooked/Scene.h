@@ -36,6 +36,7 @@ private:
 	Level *level;
 	Player *player;
 	Billboard *billboard;
+	//ParticleSystem *particles;
 	
 	std::vector<Number*> timeSprites;
 	std::vector<Number*> pointsSprites;
