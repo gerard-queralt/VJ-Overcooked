@@ -122,42 +122,60 @@ bool Entity::inContactWithPlayer()
 
 	//rotem la bbox de l'entitat
 
-	//rotem respecte el 0,0
-	bbox[0] -= position;
-	bbox[1] -= position;
+		//rotem respecte el 0,0
+		bbox[0] -= position;
+		bbox[1] -= position;
 
-	float xPrime = bbox[0].x * cos(rotation * PI / 180) - bbox[0].z * sin(rotation * PI / 180);
-	float zPrime = bbox[0].z * cos(rotation * PI / 180) + bbox[0].x * sin(rotation * PI / 180);
-	bbox[0].x = xPrime;
-	bbox[0].z = zPrime;
-	xPrime = bbox[1].x * cos(rotation * PI / 180) - bbox[1].z * sin(rotation * PI / 180);
-	zPrime = bbox[1].z * cos(rotation * PI / 180) + bbox[1].x * sin(rotation * PI / 180);
-	bbox[1].x = xPrime;
-	bbox[1].z = zPrime;
+		float xPrime = bbox[0].x * cos(rotation * PI / 180) - bbox[0].z * sin(rotation * PI / 180);
+		float zPrime = bbox[0].z * cos(rotation * PI / 180) + bbox[0].x * sin(rotation * PI / 180);
+		bbox[0].x = xPrime;
+		bbox[0].z = zPrime;
+		xPrime = bbox[1].x * cos(rotation * PI / 180) - bbox[1].z * sin(rotation * PI / 180);
+		zPrime = bbox[1].z * cos(rotation * PI / 180) + bbox[1].x * sin(rotation * PI / 180);
+		bbox[1].x = xPrime;
+		bbox[1].z = zPrime;
 
-	//tornem a la posicio
-	bbox[0] += position;
-	bbox[1] += position;
+		//tornem a la posicio
+		bbox[0] += position;
+		bbox[1] += position;
 
-	glm::vec3 eTopRight = glm::vec3(bbox[0].x, 0.f, bbox[1].z);
-	glm::vec3 eBotLeft = glm::vec3(bbox[1].x, 0.f, bbox[0].z);
+		glm::vec3 eTopRight = glm::vec3(bbox[0].x, 0.f, bbox[1].z);
+		glm::vec3 eBotLeft = glm::vec3(bbox[1].x, 0.f, bbox[0].z);
 
-	glm::vec3 pTopRight = glm::vec3(playerBbox[0].x, 0.f, playerBbox[1].z);
-	glm::vec3 pBotLeft = glm::vec3(playerBbox[1].x, 0.f, playerBbox[0].z);
+		glm::vec3 pTopRight = glm::vec3(playerBbox[0].x, 0.f, playerBbox[1].z);
+		glm::vec3 pBotLeft = glm::vec3(playerBbox[1].x, 0.f, playerBbox[0].z);
 
-	//ignorem la y
-	bbox[0].y = 0;
-	bbox[1].y = 0;
-	playerBbox[0].y = 0;
-	playerBbox[1].y = 0;
+		//ignorem la y
+		bbox[0].y = 0;
+		bbox[1].y = 0;
+		playerBbox[0].y = 0;
+		playerBbox[1].y = 0;
 
-	//reajustem quin punt es quin, de manera que bbox[0] es el punt de baix a la dreta
-	glm::vec3 bbox0aux = bbox[0];
-	glm::vec3 bbox1aux = bbox[1];
-	bbox[0] = eBotLeft;
-	bbox[1] = eTopRight;
-	eBotLeft = bbox0aux;
-	eTopRight = bbox1aux;
+		//reajustem quin punt es quin, de manera que bbox[0] es sempre el punt de baix a la dreta
+		if (rotation >= 45.f && rotation < 135.f) {
+			glm::vec3 bbox0aux = bbox[0];
+			glm::vec3 bbox1aux = bbox[1];
+			bbox[0] = eBotLeft;
+			bbox[1] = eTopRight;
+			eBotLeft = bbox0aux;
+			eTopRight = bbox1aux;
+		}
+		else if (rotation >= 135.f && rotation < 225.f) {
+			glm::vec3 bbox0aux = bbox[0];
+			glm::vec3 BLaux = eBotLeft;
+			bbox[0] = bbox[1];
+			bbox[1] = bbox0aux;
+			eBotLeft = eTopRight;
+			eTopRight = BLaux;
+		}
+		else if (rotation >= 225.f && rotation < 315.f) {
+			glm::vec3 bbox0aux = bbox[0];
+			glm::vec3 bbox1aux = bbox[1];
+			bbox[0] = eTopRight;
+			bbox[1] = eBotLeft;
+			eBotLeft = bbox0aux;
+			eTopRight = bbox1aux;
+		}
 
 	bool en0InsidePlayer = glm::all(glm::greaterThanEqual(bbox[0], playerBbox[0])) && glm::all(glm::lessThanEqual(bbox[0], playerBbox[1]));
 	bool en1InsidePlayer = glm::all(glm::greaterThanEqual(bbox[1], playerBbox[0])) && glm::all(glm::lessThanEqual(bbox[1], playerBbox[1]));

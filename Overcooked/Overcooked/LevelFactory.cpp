@@ -125,7 +125,6 @@ Level* LevelFactory::createLevel1(ShaderProgram texProgram)
 	dc->init(texProgram);
 	dc->setRotation(90.f);
 	dc->setPosition(glm::vec3(-14.f, 0.f, 8.f));
-	//dc->setPosition(glm::vec3(0.f, 0.f, 0.f));
 	dc->setLevel(lvl);
 	lvl->addTable(dc);
 
