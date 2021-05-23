@@ -22,19 +22,22 @@ bool Stove::init(ShaderProgram & program)
 
 void Stove::render(ShaderProgram & program, glm::mat4 viewMatrix)
 {
+	Entity::render(program, viewMatrix);
 	if (this->item != NULL && !item->isFood()) {
-		if (0 < ((Tool*) item)->getCookingTime() && ((Tool*)item)->getCookingTime() < COOKING_TIME) {
+		if (0 < ((Tool*) item)->getCookingTime()) {
 			glm::mat4 modelMatrix;
 			glm::mat3 normalMatrix;
 			glm::vec3 obs = glm::vec3(0.f, 32.f, -21.f);
 
-			//render billboard
-			program.setUniform1b("bLighting", false);
-			modelMatrix = glm::mat4(1.0f);
-			program.setUniformMatrix4f("modelview", viewMatrix * modelMatrix);
-			normalMatrix = glm::transpose(glm::inverse(glm::mat3(viewMatrix * modelMatrix)));
-			program.setUniformMatrix3f("normalmatrix", normalMatrix);
-			working->render(glm::vec3(position.x, 1.f, position.z), obs);
+			if (((Tool*)item)->getCookingTime() < COOKING_TIME) {
+				//render billboard
+				program.setUniform1b("bLighting", false);
+				modelMatrix = glm::mat4(1.0f);
+				program.setUniformMatrix4f("modelview", viewMatrix * modelMatrix);
+				normalMatrix = glm::transpose(glm::inverse(glm::mat3(viewMatrix * modelMatrix)));
+				program.setUniformMatrix3f("normalmatrix", normalMatrix);
+				working->render(glm::vec3(position.x, 1.f, position.z), obs);
+			}
 
 			//render particles
 			glDepthMask(GL_FALSE);
@@ -52,7 +55,6 @@ void Stove::render(ShaderProgram & program, glm::mat4 viewMatrix)
 			program.setUniform1b("bLighting", true);
 		}
 	}
-	Entity::render(program, viewMatrix);
 }
 
 void Stove::update(int deltaTime)
@@ -66,11 +68,11 @@ void Stove::update(int deltaTime)
 	ParticleSystem::Particle particle;
 	float angle;
 
-	particle.lifetime = 1.4f;
+	particle.lifetime = 0.1f;
 	for (int i = 0; i < nParticlesToSpawn; i++)
 	{
 		angle = 2.f * PI * (i + float(rand()) / RAND_MAX) / nParticlesToSpawn;
-		particle.position = glm::vec3(cos(angle), -1.75f + 1.5f, sin(angle));
+		particle.position = glm::vec3(cos(angle), -1.75f + 1.2f, sin(angle));
 		particle.position += position;
 		particle.speed = 1.5f * glm::normalize(0.5f * particle.position + glm::vec3(0.f, 3.f, 0.f));
 		particles->addParticle(particle);
