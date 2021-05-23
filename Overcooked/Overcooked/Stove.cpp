@@ -3,12 +3,18 @@
 
 #define PI 3.14159f
 
+#define FLASH_TIME 10
+
 bool Stove::init(ShaderProgram & program)
 {
 	setScale(1.f);
 
 	working = Billboard::createBillboard(glm::vec2(1.f, 1.f), program, "images/tmpHourglass.png");
 	working->setType(BILLBOARD_Y_AXIS);
+
+	fireHazard = Billboard::createBillboard(glm::vec2(1.f, 1.f), program, "images/fireHazard.png");
+	fireHazard->setType(BILLBOARD_Y_AXIS);
+	fireHazardFlashTime = FLASH_TIME;
 
 	// Initialize particle system
 	ParticleSystem::Particle particle;
@@ -28,15 +34,34 @@ void Stove::render(ShaderProgram & program, glm::mat4 viewMatrix)
 			glm::mat4 modelMatrix;
 			glm::mat3 normalMatrix;
 			glm::vec3 obs = glm::vec3(0.f, 32.f, -21.f);
+			program.setUniform1b("bLighting", false);
 
 			if (((Tool*)item)->getCookingTime() < COOKING_TIME) {
 				//render billboard
-				program.setUniform1b("bLighting", false);
 				modelMatrix = glm::mat4(1.0f);
 				program.setUniformMatrix4f("modelview", viewMatrix * modelMatrix);
 				normalMatrix = glm::transpose(glm::inverse(glm::mat3(viewMatrix * modelMatrix)));
 				program.setUniformMatrix3f("normalmatrix", normalMatrix);
-				working->render(glm::vec3(position.x, 1.f, position.z), obs);
+				working->render(glm::vec3(position.x, 2.f, position.z), obs);
+			}
+			else if (((Tool*)item)->getCookingTime() - COOKING_TIME >= (BURN_TIME - COOKING_TIME) / 2 && ((Tool*)item)->getCookingTime() < BURN_TIME) {
+				if (fireHazardFlashTime >= FLASH_TIME) {
+					//render billboard
+					modelMatrix = glm::mat4(1.0f);
+					program.setUniformMatrix4f("modelview", viewMatrix * modelMatrix);
+					normalMatrix = glm::transpose(glm::inverse(glm::mat3(viewMatrix * modelMatrix)));
+					program.setUniformMatrix3f("normalmatrix", normalMatrix);
+					fireHazard->render(glm::vec3(position.x, 2.f, position.z), obs);
+
+					if (fireHazardFlashTime == FLASH_TIME * 2) {
+						fireHazardFlashTime = 0;
+					}
+					else {
+						++fireHazardFlashTime;
+					}
+				}
+				else
+					++fireHazardFlashTime;
 			}
 
 			//render particles

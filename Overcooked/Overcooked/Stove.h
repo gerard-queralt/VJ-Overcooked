@@ -16,6 +16,8 @@ public:
 
 private:
 	Billboard* working;
+	Billboard* fireHazard;
+	int fireHazardFlashTime;
 	ParticleSystem *particles;
 };
 

@@ -196,7 +196,7 @@ void Player::movePlayer(int dir)
 
 bool Player::hold(Item * item)
 {
-	if (holdDropCD <= 0 && Game::instance().getKey(' ')) {
+	if (holdDropCD <= 0 && !cutting && Game::instance().getKey(' ')) {
 		if (holding == NULL) {
 			holding = item;
 			
