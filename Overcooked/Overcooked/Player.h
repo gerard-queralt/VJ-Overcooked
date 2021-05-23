@@ -2,6 +2,7 @@
 #define _PLAYER_INCLUDE
 
 #include "Item.h"
+#include "ParticleSystem.h"
 
 class Entity;
 
@@ -10,7 +11,7 @@ class Player :
 {
 public:
 	bool init(ShaderProgram &program);
-
+	void render(ShaderProgram & program, glm::mat4 viewMatrix);
 	void update(int deltaTime);
 
 	std::vector<glm::vec3> getFrontBBox();
@@ -31,6 +32,9 @@ public:
 	bool holdingPlate();
 
 private:
+	ParticleSystem *particles;
+	bool walking = false;
+
 	bool cutting = false;
 
 	Item *holding;

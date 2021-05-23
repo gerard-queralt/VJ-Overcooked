@@ -11,7 +11,40 @@
 bool Player::init(ShaderProgram & program)
 {
 	setScale(2.f);
+
+	// Initialize particle system
+	ParticleSystem::Particle particle;
+	particle.lifetime = 1e10f;
+	particles = new ParticleSystem();
+	particles->init(glm::vec2(0.5f, 0.5f), program, "images/dust.png", 2.f);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+
 	return loadFromFile("models/chr_swordless.obj", program);
+}
+
+void Player::render(ShaderProgram & program, glm::mat4 viewMatrix)
+{
+	Entity::render(program, viewMatrix);
+	if (walking) {
+		//render particles
+		glm::mat4 modelMatrix;
+		glm::mat3 normalMatrix;
+		glm::vec3 obs = glm::vec3(0.f, 32.f, -21.f);
+
+		glDepthMask(GL_FALSE);
+		glEnable(GL_BLEND);
+
+		modelMatrix = glm::mat4(1.0f);
+		program.setUniformMatrix4f("modelview", viewMatrix * modelMatrix);
+		normalMatrix = glm::transpose(glm::inverse(glm::mat3(viewMatrix * modelMatrix)));
+		program.setUniformMatrix3f("normalmatrix", normalMatrix);
+		program.setUniform2f("texCoordDispl", 0.f, 0.f);
+		particles->render(obs);
+
+		glDisable(GL_BLEND);
+		glDepthMask(GL_TRUE);
+		program.setUniform1b("bLighting", true);
+	}
 }
 
 void Player::update(int deltaTime)
@@ -19,22 +52,44 @@ void Player::update(int deltaTime)
 	holdDropCD -= deltaTime;
 	startStopCutting -= deltaTime;
 
+	bool walkingInupt = false;
 	if (!cutting) {
-		if (Game::instance().getKey('w'))
+		if (Game::instance().getKey('w') || Game::instance().getKey('W')) {
 			movePlayer(FRONT);
-		if (Game::instance().getKey('s'))
+			walkingInupt = true;
+		}
+		if (Game::instance().getKey('s') || Game::instance().getKey('S')) {
 			movePlayer(BACK);
-		if (Game::instance().getKey('a'))
+			walkingInupt = true;
+		}
+		if (Game::instance().getKey('a') || Game::instance().getKey('A')) {
 			movePlayer(LEFT);
-		if (Game::instance().getKey('d'))
+			walkingInupt = true;
+		}
+		if (Game::instance().getKey('d') || Game::instance().getKey('D')) {
 			movePlayer(RIGHT);
+			walkingInupt = true;
+		}
 	}
+	walking = walkingInupt;
 
 	if (holding != NULL && Game::instance().getKey(' '))
 		dropHolding();
 
-	//std::vector<glm::vec3> bbox = getBoundingBox();
-	//std::vector<glm::vec3> front = getFrontBBox();
+	int nParticlesToSpawn = 5;
+	ParticleSystem::Particle particle;
+	float angle;
+
+	particle.lifetime = 0.2f;
+	for (int i = 0; i < nParticlesToSpawn; i++)
+	{
+		angle = 2.f * PI * (i + float(rand()) / RAND_MAX) / nParticlesToSpawn;
+		particle.position = glm::vec3(cos(angle), -1.75f, sin(angle));
+		particle.position += position;
+		particle.speed = 1.5f * glm::normalize(0.5f * particle.position + glm::vec3(0.f, 3.f, 0.f));
+		particles->addParticle(particle);
+	}
+	particles->update(deltaTime / 1000.f);
 }
 
 std::vector<glm::vec3> Player::getFrontBBox()
@@ -50,10 +105,14 @@ std::vector<glm::vec3> Player::getFrontBBox()
 	bbox[1] *= scale; // model->getHeight();
 
 	//la rotem
-	bbox[0].x = bbox[0].x * cos(rotation * PI / 180) - bbox[0].z * sin(rotation * PI / 180);
-	bbox[0].z = bbox[0].z * cos(rotation * PI / 180) + bbox[0].x * sin(rotation * PI / 180);
-	bbox[1].x = bbox[1].x * cos(rotation * PI / 180) - bbox[1].z * sin(rotation * PI / 180);
-	bbox[1].z = bbox[1].z * cos(rotation * PI / 180) + bbox[1].x * sin(rotation * PI / 180);
+	float xPrime = bbox[0].x * cos(rotation * PI / 180) - bbox[0].z * sin(rotation * PI / 180);
+	float zPrime = bbox[0].z * cos(rotation * PI / 180) + bbox[0].x * sin(rotation * PI / 180);
+	bbox[0].x = xPrime;
+	bbox[0].z = zPrime;
+	xPrime = bbox[1].x * cos(rotation * PI / 180) - bbox[1].z * sin(rotation * PI / 180);
+	zPrime = bbox[1].z * cos(rotation * PI / 180) + bbox[1].x * sin(rotation * PI / 180);
+	bbox[1].x = xPrime;
+	bbox[1].z = zPrime;
 
 	//la desplacem a la posicio de l'entitat
 	bbox[0] += position;
@@ -129,6 +188,7 @@ void Player::movePlayer(int dir)
 	}
 	if (holding != NULL)
 		holding->setRotation(getRotation());
+	walking = true;
 }
 
 bool Player::hold(Item * item)

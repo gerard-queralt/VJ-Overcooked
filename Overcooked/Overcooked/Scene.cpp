@@ -74,15 +74,6 @@ void Scene::init()
 	loseText = Sprite::createSprite(glm::ivec2(128, 32), glm::vec2(1.f, 1.f), &loseTextSpritesheet, &texProgram);
 	loseText->setPosition(glm::vec2(8.f * 32.f, 8.5f * 32.f));
 
-	// Initialize particle system
-	/*
-	ParticleSystem::Particle particle;
-	particle.lifetime = 1e10f;
-	particles = new ParticleSystem();
-	particles->init(glm::vec2(1.f, 1.f), texProgram, "images/fire.png", 2.f);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-	*/
-
 	projection = glm::perspective(45.f / 180.f * PI, float(CAMERA_WIDTH) / float(CAMERA_HEIGHT), 0.1f, 100.f);
 	projection2D = glm::ortho(0.f, float(CAMERA_WIDTH), float(CAMERA_HEIGHT), 0.f);
 	currentTime = 0.0f;
@@ -91,24 +82,7 @@ void Scene::init()
 
 void Scene::update(int deltaTime)
 {
-	/*
-	int nParticlesToSpawn = 20 * (int((currentTime + deltaTime) / 100.f) - int(currentTime / 100.f));
-	ParticleSystem::Particle particle;
-	float angle;
-
-	particle.lifetime = 1.4f;
-	for (int i = 0; i < nParticlesToSpawn; i++)
-	{
-		angle = 2.f * PI * (i + float(rand()) / RAND_MAX) / nParticlesToSpawn;
-		particle.position = glm::vec3(cos(angle), -1.75f, sin(angle));
-		particle.speed = 1.5f * glm::normalize(0.5f * particle.position + glm::vec3(0.f, 3.f, 0.f));
-		particles->addParticle(particle);
-	}
-	*/
-
 	currentTime += deltaTime;
-
-	//particles->update(deltaTime / 1000.f);
 
 	player->update(deltaTime);
 
@@ -173,32 +147,6 @@ void Scene::render()
 	// Render player
 	player->render(texProgram, viewMatrix);
 
-	// Render billboard
-	//texProgram.setUniform1b("bLighting", false);
-	//modelMatrix = glm::mat4(1.0f);
-	//texProgram.setUniformMatrix4f("modelview", viewMatrix * modelMatrix);
-	//normalMatrix = glm::transpose(glm::inverse(glm::mat3(viewMatrix * modelMatrix)));
-	//texProgram.setUniformMatrix3f("normalmatrix", normalMatrix);
-	//billboard->render(glm::vec3(8.f, 10.f, -16.f), glm::vec3(8.f, 32.f, -21.f));
-	//billboard->render(glm::vec3(2.f, -1.5f, 0.f), obs);
-	//billboard->render(glm::vec3(-2.f, -1.5f, 0.f), obs);
-	//billboard->render(glm::vec3(0.f, -1.5f, 2.f), obs);
-	//billboard->render(glm::vec3(0.f, -1.5f, -2.f), obs);
-
-	// Render particles
-	/*
-	glDepthMask(GL_FALSE);
-	glEnable(GL_BLEND);
-
-	modelMatrix = glm::mat4(1.0f);
-	texProgram.setUniformMatrix4f("modelview", viewMatrix * modelMatrix);
-	normalMatrix = glm::transpose(glm::inverse(glm::mat3(viewMatrix * modelMatrix)));
-	texProgram.setUniformMatrix3f("normalmatrix", normalMatrix);
-	particles->render(obs);
-
-	glDisable(GL_BLEND);
-	glDepthMask(GL_TRUE);
-	*/
 	// Render HUD
 
 	texProgram.setUniformMatrix4f("projection", projection2D);
