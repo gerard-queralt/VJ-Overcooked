@@ -65,6 +65,9 @@ void Stove::update(int deltaTime)
 	}
 
 	int nParticlesToSpawn = 5;
+	if (item != NULL && ((Tool*)item)->getCookingTime() >= BURN_TIME) {
+		nParticlesToSpawn *= 2;
+	}
 	ParticleSystem::Particle particle;
 	float angle;
 
@@ -72,7 +75,14 @@ void Stove::update(int deltaTime)
 	for (int i = 0; i < nParticlesToSpawn; i++)
 	{
 		angle = 2.f * PI * (i + float(rand()) / RAND_MAX) / nParticlesToSpawn;
-		particle.position = glm::vec3(cos(angle), -1.75f + 1.2f, sin(angle));
+		float extraX = 0.f;
+		float extraZ = 0.f;
+		if (item != NULL && ((Tool*)item)->getCookingTime() >= BURN_TIME) {
+			extraX = -1.f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (1.f - -1.f)));
+			extraZ = -1.f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (1.f - -1.f)));
+			particle.lifetime = 0.5f;
+		}
+		particle.position = glm::vec3(cos(angle) + extraX, -1.75f + 1.2f, sin(angle) + extraZ);
 		particle.position += position;
 		particle.speed = 1.5f * glm::normalize(0.5f * particle.position + glm::vec3(0.f, 3.f, 0.f));
 		particles->addParticle(particle);

@@ -76,15 +76,17 @@ void Player::update(int deltaTime)
 	if (holding != NULL && Game::instance().getKey(' '))
 		dropHolding();
 
-	int nParticlesToSpawn = 5;
+	int nParticlesToSpawn = 3;
 	ParticleSystem::Particle particle;
-	float angle;
 
-	particle.lifetime = 0.2f;
+	particle.lifetime = 0.1f;
 	for (int i = 0; i < nParticlesToSpawn; i++)
 	{
-		angle = 2.f * PI * (i + float(rand()) / RAND_MAX) / nParticlesToSpawn;
-		particle.position = glm::vec3(cos(angle), -1.75f, sin(angle));
+		float z = -2.f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (0.1f - -2.f)));
+		float x = -0.5f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (0.5f - -0.5f)));
+		float xPrime = x * cos(rotation * PI / 180) - z * sin(rotation * PI / 180);
+		float zPrime = z * cos(rotation * PI / 180) + x * sin(rotation * PI / 180);
+		particle.position = glm::vec3(- xPrime, -1.75f, zPrime);
 		particle.position += position;
 		particle.speed = 1.5f * glm::normalize(0.5f * particle.position + glm::vec3(0.f, 3.f, 0.f));
 		particles->addParticle(particle);
@@ -98,7 +100,7 @@ std::vector<glm::vec3> Player::getFrontBBox()
 	std::vector<glm::vec3> bbox;
 	bbox.resize(2);
 	bbox[0] = glm::vec3(modelBbox[0].x, 0.f, modelBbox[1].z);
-	bbox[1] = glm::vec3(modelBbox[1].x, 0.f, modelBbox[1].z + 0.1f);
+	bbox[1] = glm::vec3(modelBbox[1].x, 0.f, modelBbox[1].z + 0.5f);
 
 	//l'escalem
 	bbox[0] *= scale; // model->getHeight();
@@ -186,8 +188,9 @@ void Player::movePlayer(int dir)
 		}
 		break;
 	}
-	if (holding != NULL)
-		holding->setRotation(getRotation());
+	if (holding != NULL) {
+		adjustItemPosition();
+	}
 	walking = true;
 }
 
@@ -196,6 +199,9 @@ bool Player::hold(Item * item)
 	if (holdDropCD <= 0 && Game::instance().getKey(' ')) {
 		if (holding == NULL) {
 			holding = item;
+			
+			adjustItemPosition();
+			
 			holdDropCD = ACTION_INTERVAL;
 			return true;
 		}
@@ -241,4 +247,16 @@ bool Player::holdingPlate()
 		return holding->whatAmI() == "Plate";
 	}
 	return false;
+}
+
+void Player::adjustItemPosition()
+{
+	glm::vec3 itemPosition = glm::vec3(0.f, 1.5f, 2.f);
+	float xPrime = itemPosition.x * cos(rotation * PI / 180) - itemPosition.z * sin(rotation * PI / 180);
+	float zPrime = itemPosition.z * cos(rotation * PI / 180) + itemPosition.x * sin(rotation * PI / 180);
+	itemPosition.x = xPrime * -1;
+	itemPosition.z = zPrime;
+	itemPosition += position;
+	holding->setPosition(glm::vec3(itemPosition));
+	holding->setRotation(getRotation());
 }

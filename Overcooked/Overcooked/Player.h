@@ -32,6 +32,9 @@ public:
 	bool holdingPlate();
 
 private:
+	void adjustItemPosition();
+
+private:
 	ParticleSystem *particles;
 	bool walking = false;
 
