@@ -105,11 +105,13 @@ bool Plate::assembleRecipe(Food* addedFood)
 		food->setPosition(glm::vec3(position.x, position.y + model->getHeight() * scale, position.z));
 		food->setPlayer(player);
 		level->addItem(food);
+		return true;
 	}
 	else if (food->whatAmI() == "Burger" && partOfBurgerRecipe(addedFood)) {
 		if (((Burger*)food)->addIngredient(addedFood)) {
 			addedFood->setScale(0.f);
 			addedFood->setPosition(glm::vec3(100.f, 0.f, 100.f));
+			return true;
 		}
 	}
 	else if (((food->whatAmI() == "Tomato" && addedFood->whatAmI() == "Lettuce") || (food->whatAmI() == "Lettuce" && addedFood->whatAmI() == "Tomato")) && food->isCut() && addedFood->isCut()) {
@@ -123,6 +125,7 @@ bool Plate::assembleRecipe(Food* addedFood)
 		food->setPosition(glm::vec3(position.x, position.y + model->getHeight() * scale, position.z));
 		food->setPlayer(player);
 		level->addItem(food);
+		return true;
 	}
 	return false;
 }

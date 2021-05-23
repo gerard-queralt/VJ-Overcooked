@@ -33,7 +33,7 @@ void Stove::render(ShaderProgram & program, glm::mat4 viewMatrix)
 		if (0 < ((Tool*) item)->getCookingTime()) {
 			glm::mat4 modelMatrix;
 			glm::mat3 normalMatrix;
-			glm::vec3 obs = glm::vec3(0.f, 32.f, -21.f);
+			glm::vec3 obs = glm::vec3(0.f, 36.f, -24.f);
 			program.setUniform1b("bLighting", false);
 
 			if (((Tool*)item)->getCookingTime() < COOKING_TIME) {
@@ -117,7 +117,7 @@ void Stove::update(int deltaTime)
 
 bool Stove::setItem(Item * item)
 {
-	if (this->item == NULL && !item->isFood()) {
+	if (this->item == NULL && !item->isFood() && (item->whatAmI() == "FryingPan" || item->whatAmI() == "Pot")) {
 		item->setPosition(glm::vec3(position.x, 1.5f, position.z));
 		this->item = item;
 		return true;

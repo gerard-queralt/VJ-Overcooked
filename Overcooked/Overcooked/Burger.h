@@ -13,6 +13,11 @@ public:
 
 	string whatAmI();
 
+	enum Toppings {
+		NOTHING = 0, CHEESE, TOMATO, LETTUCE, UNFINISHED
+	};
+	Toppings getTopping();
+
 private:
 	ShaderProgram program;
 

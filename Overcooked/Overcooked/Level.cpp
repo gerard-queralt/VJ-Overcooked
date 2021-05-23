@@ -1,6 +1,18 @@
 #include <iostream>
 #include <vector>
 #include "Level.h"
+#include "Plate.h"
+#include "OnionSoup.h"
+#include "Onion.h"
+#include "TomatoSoup.h"
+#include "Tomato.h"
+#include "MushroomSoup.h"
+#include "Mushroom.h"
+#include "Salad.h"
+#include "Lettuce.h"
+#include "Burger.h"
+#include "Beef.h"
+#include "Bread.h"
 
 using namespace std;
 
@@ -20,6 +32,7 @@ Level::Level(const glm::vec3 &levelSize, ShaderProgram &program, const string &f
 	if(!wall.loadFromFile(wallFile.c_str(), TEXTURE_PIXEL_FORMAT_RGB))
 		cout << "Could not load wall texture!!!" << endl;
 	prepareArrays(program);
+	this->program = program;
 }
 
 Level::~Level()
@@ -56,6 +69,11 @@ void Level::renderEntities(ShaderProgram texProgram, glm::mat4 viewMatrix)
 	for (Table* t : tables) {
 		t->render(texProgram, viewMatrix);
 	}
+	for (std::vector<Item*> recipe : pendingRecipes) {
+		for (Item* i : recipe) {
+			i->render(texProgram, viewMatrix);
+		}
+	}
 }
 
 void Level::update(int deltaTime)
@@ -65,6 +83,9 @@ void Level::update(int deltaTime)
 	}
 	for (Table* t : tables) {
 		t->update(deltaTime);
+	}
+	if (pendingRecipes.size() < 6) {
+		askRandomRecipe();
 	}
 }
 
@@ -140,6 +161,11 @@ Level::PutItemResult Level::putItemOnTable(Item * item)
 	return NOT_TOUCHING;
 }
 
+void Level::addPossibleRecipe(PossibleRecipes recipe)
+{
+	recipes.push_back(recipe);
+}
+
 void Level::setTime(int minutes, int seconds)
 {
 	timeMinutes = minutes;
@@ -179,7 +205,45 @@ bool Level::deliver(Food * food)
 		|| food->whatAmI() == "Burger"
 		|| food->whatAmI() == "Salad") {
 
-		curPoints += 150;
+		PossibleRecipes recipe = UNKNOWN;
+		if (food->whatAmI() == "OnionSoup") {
+			recipe = ONION_SOUP;
+		}
+		else if (food->whatAmI() == "MushroomSoup") {
+			recipe = MUSHROOM_SOUP;
+		}
+		else if (food->whatAmI() == "TomatoSoup") {
+			recipe = TOMATO_SOUP;
+		}
+		else if (food->whatAmI() == "Salad") {
+			recipe = SALAD;
+		}
+		else if (food->whatAmI() == "BURGER") {
+			switch (((Burger*)food)->getTopping()) {
+			case Burger::NOTHING:
+				recipe = BURGER;
+				break;
+			case Burger::CHEESE:
+				recipe = BURGER_CHEESE;
+				break;
+			case Burger::TOMATO:
+				recipe = BURGER_TOMATO;
+				break;
+			case Burger::LETTUCE:
+				recipe = BURGER_LETTUCE;
+				break;
+			default:
+				break;
+			}
+		}
+
+		for (PossibleRecipes r : recipes) {
+			if (r == recipe) {
+				curPoints += 150;
+				break;
+			}
+		}
+
 		return true;
 	}
 	return false;
@@ -292,6 +356,50 @@ void Level::prepareArrays(ShaderProgram &program)
 	posLocation[1] = program.bindVertexAttribute("position", 3, 8*sizeof(float), 0);
 	normalLocation[1] = program.bindVertexAttribute("normal", 3, 8 * sizeof(float), (void *)(3 * sizeof(float)));
 	texCoordLocation[1] = program.bindVertexAttribute("texCoord", 2, 8 * sizeof(float), (void *)(6 * sizeof(float)));
+}
+
+void Level::askRandomRecipe()
+{
+	int randomRecipe = (rand() % static_cast<int>(recipes.size()));
+	PossibleRecipes recipe = recipes[randomRecipe];
+	switch (recipe)
+	{
+	case Level::ONION_SOUP:
+	{
+		std::vector<Item*> recipeModels;
+		Plate* plate = new Plate();
+		plate->init(program);
+		plate->addFood(new OnionSoup());
+		plate->setPosition(glm::vec3(23.5f - pendingRecipes.size() * 7.f, 5.f, 16.f));
+		recipeModels.push_back(plate);
+		for (int o = 0; o < 3; ++o) {
+			Onion* onion = new Onion();
+			onion->init(program);
+			onion->setPosition(glm::vec3(25.f - 2.f * o - pendingRecipes.size() * 7.f, 5.f, 13.5f));
+			recipeModels.push_back(onion);
+		}
+		pendingRecipes.push_back(recipeModels);
+		break;
+	}
+	case Level::TOMATO_SOUP:
+		break;
+	case Level::MUSHROOM_SOUP:
+		break;
+	case Level::SALAD:
+		break;
+	case Level::BURGER:
+		break;
+	case Level::BURGER_CHEESE:
+		break;
+	case Level::BURGER_TOMATO:
+		break;
+	case Level::BURGER_LETTUCE:
+		break;
+	case Level::UNKNOWN:
+		break;
+	default:
+		break;
+	}
 }
 
 

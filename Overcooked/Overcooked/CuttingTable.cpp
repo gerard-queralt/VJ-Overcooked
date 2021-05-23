@@ -18,7 +18,7 @@ void CuttingTable::render(ShaderProgram & program, glm::mat4 viewMatrix)
 	if (0 < cuttingTime && cuttingTime < CUTTING_TIME) {
 		glm::mat4 modelMatrix;
 		glm::mat3 normalMatrix;
-		glm::vec3 obs = glm::vec3(0.f, 24.f, -30.f);
+		glm::vec3 obs = glm::vec3(0.f, 36.f, -24.f);
 
 		program.setUniform1b("bLighting", false);
 		modelMatrix = glm::mat4(1.0f);

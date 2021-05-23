@@ -29,7 +29,7 @@ void Player::render(ShaderProgram & program, glm::mat4 viewMatrix)
 		//render particles
 		glm::mat4 modelMatrix;
 		glm::mat3 normalMatrix;
-		glm::vec3 obs = glm::vec3(0.f, 32.f, -21.f);
+		glm::vec3 obs = glm::vec3(0.f, 36.f, -24.f);
 
 		glDepthMask(GL_FALSE);
 		glEnable(GL_BLEND);
