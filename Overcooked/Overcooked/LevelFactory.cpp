@@ -39,7 +39,14 @@ Level* LevelFactory::createLevel1(ShaderProgram texProgram)
 	Level *lvl = Level::createLevel(glm::vec3(32, 4, 32), texProgram, "images/floor1.png", "images/wall1.png");
 	lvl->setTime(1, 30);
 	lvl->setPoints(150);
-	lvl->addPossibleRecipe(Level::ONION_SOUP);
+	//lvl->addPossibleRecipe(Level::ONION_SOUP);
+	//lvl->addPossibleRecipe(Level::TOMATO_SOUP);
+	//lvl->addPossibleRecipe(Level::MUSHROOM_SOUP);
+	//lvl->addPossibleRecipe(Level::BURGER_CHEESE);
+	//lvl->addPossibleRecipe(Level::BURGER_TOMATO);
+	//lvl->addPossibleRecipe(Level::BURGER_LETTUCE);
+	lvl->addPossibleRecipe(Level::BURGER);
+	lvl->addPossibleRecipe(Level::SALAD);
 	
 	FryingPan* pan = new FryingPan();
 	pan->init(texProgram);

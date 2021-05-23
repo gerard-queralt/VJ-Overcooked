@@ -13,6 +13,7 @@
 #include "Burger.h"
 #include "Beef.h"
 #include "Bread.h"
+#include "Cheese.h"
 
 using namespace std;
 
@@ -382,21 +383,175 @@ void Level::askRandomRecipe()
 		break;
 	}
 	case Level::TOMATO_SOUP:
+	{
+		std::vector<Item*> recipeModels;
+		Plate* plate = new Plate();
+		plate->init(program);
+		plate->addFood(new TomatoSoup());
+		plate->setPosition(glm::vec3(23.5f - pendingRecipes.size() * 7.f, 5.f, 18.5f));
+		recipeModels.push_back(plate);
+		for (int t = 0; t < 3; ++t) {
+			Tomato* tomato = new Tomato();
+			tomato->init(program);
+			tomato->setPosition(glm::vec3(25.f - 2.f * t - pendingRecipes.size() * 7.f, 5.f, 16.f));
+			recipeModels.push_back(tomato);
+		}
+		pendingRecipes.push_back(recipeModels);
 		break;
+	}
 	case Level::MUSHROOM_SOUP:
+	{
+		std::vector<Item*> recipeModels;
+		Plate* plate = new Plate();
+		plate->init(program);
+		plate->addFood(new MushroomSoup());
+		plate->setPosition(glm::vec3(23.5f - pendingRecipes.size() * 7.f, 5.f, 18.5f));
+		recipeModels.push_back(plate);
+		for (int m = 0; m < 3; ++m) {
+			Mushroom* mushroom = new Mushroom();
+			mushroom->init(program);
+			mushroom->setPosition(glm::vec3(25.f - 2.f * m - pendingRecipes.size() * 7.f, 5.f, 16.f));
+			recipeModels.push_back(mushroom);
+		}
+		pendingRecipes.push_back(recipeModels);
 		break;
+	}
 	case Level::SALAD:
+	{
+		std::vector<Item*> recipeModels;
+		Tomato* tomato = new Tomato();
+		tomato->init(program);
+		Lettuce* lettuce = new Lettuce();
+		lettuce->init(program);
+		Salad* salad = new Salad();
+		salad->init(program);
+
+		salad->setPosition(glm::vec3(23.5f - pendingRecipes.size() * 7.f, 5.f, 18.5f));
+		recipeModels.push_back(salad);
+		lettuce->setPosition(glm::vec3(24.5f - pendingRecipes.size() * 7.f, 5.f, 16.f));
+		recipeModels.push_back(lettuce);
+		tomato->setPosition(glm::vec3(24.5f - 2.f - pendingRecipes.size() * 7.f, 5.f, 16.f));
+		recipeModels.push_back(tomato);
+		pendingRecipes.push_back(recipeModels);
 		break;
+	}
 	case Level::BURGER:
+	{
+		std::vector<Item*> recipeModels;
+		Bread* bread = new Bread();
+		bread->init(program);
+		Beef* beef = new Beef();
+		beef->init(program);
+		Burger* burger = new Burger();
+		burger->init(program);
+		burger->addIngredient(bread);
+		Beef* cookedBeef = new Beef();
+		cookedBeef->cut();
+		cookedBeef->cook();
+		burger->addIngredient(cookedBeef);
+
+		burger->setPosition(glm::vec3(23.5f - pendingRecipes.size() * 7.f, 5.f, 18.5f));
+		recipeModels.push_back(burger);
+		bread->setPosition(glm::vec3(24.5f - pendingRecipes.size() * 7.f, 5.f, 16.f));
+		recipeModels.push_back(bread);
+		beef->setPosition(glm::vec3(24.5f - 2.f - pendingRecipes.size() * 7.f, 5.f, 16.f));
+		recipeModels.push_back(beef);
+		pendingRecipes.push_back(recipeModels);
 		break;
+	}
 	case Level::BURGER_CHEESE:
+	{
+		std::vector<Item*> recipeModels;
+		Bread* bread = new Bread();
+		bread->init(program);
+		Beef* beef = new Beef();
+		beef->init(program);
+		Cheese* cheese = new Cheese();
+		cheese->init(program);
+		Burger* burger = new Burger();
+		burger->init(program);
+		burger->addIngredient(bread);
+		Beef* cookedBeef = new Beef();
+		cookedBeef->cut();
+		cookedBeef->cook();
+		burger->addIngredient(cookedBeef);
+		Cheese* cutCheese = new Cheese();
+		cutCheese->cut();
+		burger->addIngredient(cutCheese);
+		
+		burger->setPosition(glm::vec3(23.5f - pendingRecipes.size() * 7.f, 5.f, 18.5f));
+		recipeModels.push_back(burger);
+		bread->setPosition(glm::vec3(25.f - pendingRecipes.size() * 7.f, 5.f, 16.f));
+		recipeModels.push_back(bread);
+		beef->setPosition(glm::vec3(25.f - 2.f - pendingRecipes.size() * 7.f, 5.f, 16.f));
+		recipeModels.push_back(beef);
+		cheese->setPosition(glm::vec3(25.f - 4.f - pendingRecipes.size() * 7.f, 5.f, 16.f));
+		recipeModels.push_back(cheese);
+		pendingRecipes.push_back(recipeModels);
 		break;
+	}
 	case Level::BURGER_TOMATO:
+	{
+		std::vector<Item*> recipeModels;
+		Bread* bread = new Bread();
+		bread->init(program);
+		Beef* beef = new Beef();
+		beef->init(program);
+		Tomato* tomato = new Tomato();
+		tomato->init(program);
+		Burger* burger = new Burger();
+		burger->init(program);
+		burger->addIngredient(bread);
+		Beef* cookedBeef = new Beef();
+		cookedBeef->cut();
+		cookedBeef->cook();
+		burger->addIngredient(cookedBeef);
+		Tomato* cutTomato = new Tomato();
+		cutTomato->cut();
+		burger->addIngredient(cutTomato);
+
+		burger->setPosition(glm::vec3(23.5f - pendingRecipes.size() * 7.f, 5.f, 18.5f));
+		recipeModels.push_back(burger);
+		bread->setPosition(glm::vec3(25.f - pendingRecipes.size() * 7.f, 5.f, 16.f));
+		recipeModels.push_back(bread);
+		beef->setPosition(glm::vec3(25.f - 2.f - pendingRecipes.size() * 7.f, 5.f, 16.f));
+		recipeModels.push_back(beef);
+		tomato->setPosition(glm::vec3(25.f - 4.f - pendingRecipes.size() * 7.f, 5.f, 16.f));
+		recipeModels.push_back(tomato);
+		pendingRecipes.push_back(recipeModels);
 		break;
+	}
 	case Level::BURGER_LETTUCE:
+	{
+		std::vector<Item*> recipeModels;
+		Bread* bread = new Bread();
+		bread->init(program);
+		Beef* beef = new Beef();
+		beef->init(program);
+		Lettuce* lettuce = new Lettuce();
+		lettuce->init(program);
+		Burger* burger = new Burger();
+		burger->init(program);
+		burger->addIngredient(bread);
+		Beef* cookedBeef = new Beef();
+		cookedBeef->cut();
+		cookedBeef->cook();
+		burger->addIngredient(cookedBeef);
+		Lettuce* cutLettuce = new Lettuce();
+		cutLettuce->cut();
+		burger->addIngredient(cutLettuce);
+
+		burger->setPosition(glm::vec3(23.5f - pendingRecipes.size() * 7.f, 5.f, 18.5f));
+		recipeModels.push_back(burger);
+		bread->setPosition(glm::vec3(25.f - pendingRecipes.size() * 7.f, 5.f, 16.f));
+		recipeModels.push_back(bread);
+		beef->setPosition(glm::vec3(25.f - 2.f - pendingRecipes.size() * 7.f, 5.f, 16.f));
+		recipeModels.push_back(beef);
+		lettuce->setPosition(glm::vec3(25.f - 4.f - pendingRecipes.size() * 7.f, 5.f, 16.f));
+		recipeModels.push_back(lettuce);
+		pendingRecipes.push_back(recipeModels);
 		break;
-	case Level::UNKNOWN:
-		break;
+	}
 	default:
 		break;
 	}

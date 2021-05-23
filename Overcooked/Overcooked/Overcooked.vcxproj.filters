@@ -168,14 +168,14 @@
     <ClInclude Include="Lettuce.h">
       <Filter>Header Files\Entities\Items\Food</Filter>
     </ClInclude>
-    <ClInclude Include="Salad.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DeliveryConveyor.h">
       <Filter>Header Files\Entities\Tables</Filter>
     </ClInclude>
+    <ClInclude Include="Salad.h">
+      <Filter>Header Files\Entities\Items\Food</Filter>
+    </ClInclude>
     <ClInclude Include="Extinguisher.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Entities\Items\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -293,14 +293,14 @@
     <ClCompile Include="Lettuce.cpp">
       <Filter>Source Files\Entities\Items\Food</Filter>
     </ClCompile>
-    <ClCompile Include="Salad.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DeliveryConveyor.cpp">
       <Filter>Source Files\Entities\Tables</Filter>
     </ClCompile>
     <ClCompile Include="Extinguisher.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Entities\Items\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Salad.cpp">
+      <Filter>Source Files\Entities\Items\Food</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
