@@ -85,7 +85,7 @@ void Level::update(int deltaTime)
 	for (Table* t : tables) {
 		t->update(deltaTime);
 	}
-	if (pendingRecipes.size() < 6) {
+	if (pendingRecipes.size() < 3) {
 		askRandomRecipe();
 	}
 }
@@ -206,6 +206,7 @@ bool Level::deliver(Food * food)
 		|| food->whatAmI() == "Burger"
 		|| food->whatAmI() == "Salad") {
 
+		/*
 		PossibleRecipes recipe = UNKNOWN;
 		if (food->whatAmI() == "OnionSoup") {
 			recipe = ONION_SOUP;
@@ -237,11 +238,42 @@ bool Level::deliver(Food * food)
 				break;
 			}
 		}
+		*/
 
-		for (PossibleRecipes r : recipes) {
-			if (r == recipe) {
-				curPoints += 150;
-				break;
+		int pos = 0;
+		bool correct = false;
+		while (pos < pendingRecipes.size() && !correct) {
+			Item* current = pendingRecipes[pos][0];
+			if (!current->isFood()) { //Sopes, on el primer element es el plat
+				Food* r = ((Plate*)current)->getFood();
+				if (food->whatAmI() == r->whatAmI()) {
+					correct = true;
+				}
+			}
+			else { //Ensalada i hamburguesa
+				if (food->whatAmI() == current->whatAmI()) {
+					if (food->whatAmI() == "Salad" || ((Burger*)food)->getTopping() == ((Burger*)current)->getTopping()) {
+						correct = true;
+					}
+				}
+			}
+			++pos;
+		}
+		if (correct) {
+			curPoints += 150;
+			pendingRecipes.erase(pendingRecipes.begin() + pos - 1);
+			for (int i = pos; i < pendingRecipes.size(); ++i) {
+				pendingRecipes[pos][0]->setPosition(glm::vec3(23.5f + (i - 1) * 7.f, 5.f, 18.5f));
+				if (pendingRecipes[pos].size() == 4) { // tres ingredients
+					for (int j = 0; j < 3; ++j) {
+						pendingRecipes[pos][j+1]->setPosition(glm::vec3(25.f - 2.f * j + (i - 1) * 7.f, 5.f, 16.f));
+					}
+				}
+				else { // dos ingredients
+					for (int j = 0; j < 2; ++j) {
+						pendingRecipes[pos][j + 1]->setPosition(glm::vec3(24.5f - j * 2.f + (i - 1) * 7.f, 5.f, 16.f));
+					}
+				}
 			}
 		}
 
