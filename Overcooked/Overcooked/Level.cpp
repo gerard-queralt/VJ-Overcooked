@@ -370,12 +370,12 @@ void Level::askRandomRecipe()
 		Plate* plate = new Plate();
 		plate->init(program);
 		plate->addFood(new OnionSoup());
-		plate->setPosition(glm::vec3(23.5f - pendingRecipes.size() * 7.f, 5.f, 16.f));
+		plate->setPosition(glm::vec3(23.5f - pendingRecipes.size() * 7.f, 5.f, 18.5f));
 		recipeModels.push_back(plate);
 		for (int o = 0; o < 3; ++o) {
 			Onion* onion = new Onion();
 			onion->init(program);
-			onion->setPosition(glm::vec3(25.f - 2.f * o - pendingRecipes.size() * 7.f, 5.f, 13.5f));
+			onion->setPosition(glm::vec3(25.f - 2.f * o - pendingRecipes.size() * 7.f, 5.f, 16.f));
 			recipeModels.push_back(onion);
 		}
 		pendingRecipes.push_back(recipeModels);
