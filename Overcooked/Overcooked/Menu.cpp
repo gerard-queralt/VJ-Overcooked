@@ -31,7 +31,9 @@ void Menu::goUp()
 		if (type == MAIN)
 			currentPosition = 2;
 		if (type == LEVEL)
-			currentPosition = 4;
+			currentPosition = 5;
+		if (type == PAUSE)
+			currentPosition = 2;
 	}
 	changePosition();
 }
@@ -41,7 +43,9 @@ void Menu::goDown()
 	++currentPosition;
 	if (type == MAIN && currentPosition > 2)
 		currentPosition = 0;
-	if (type == LEVEL && currentPosition > 4)
+	if (type == LEVEL && currentPosition > 5)
+		currentPosition = 0;
+	if(type == PAUSE && currentPosition > 2)
 		currentPosition = 0;
 	changePosition();
 }
@@ -85,6 +89,20 @@ void Menu::changePosition()
 		case 3: setPosition(glm::vec2(12.25f * 32.f, 8.4f * 32.f));
 			break;
 		case 4: setPosition(glm::vec2(12.25f * 32.f, 9.45f * 32.f));
+			break;
+		case 5: setPosition(glm::vec2(12.25f * 32.f, 10.5f * 32.f));
+		default:
+			break;
+		}
+		break;
+	case Menu::PAUSE:
+		switch (currentPosition)
+		{
+		case 0: setPosition(glm::vec2(12.75f * 32.f, 6.8f * 32.f));
+			break;
+		case 1: setPosition(glm::vec2(14.75f * 32.f, 7.9f * 32.f));
+			break;
+		case 2: setPosition(glm::vec2(11.25f * 32.f, 9.05f * 32.f));
 			break;
 		default:
 			break;

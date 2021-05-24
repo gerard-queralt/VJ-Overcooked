@@ -51,6 +51,10 @@ void Scene::init()
 	levelMenu = Sprite::createSprite(glm::ivec2(CAMERA_WIDTH, CAMERA_HEIGHT), glm::vec2(1.f, 1.f), &levelMenuSpriteSheet, &texProgram);
 	levelMenu->setPosition(glm::vec2(0.f, 0.f));
 
+	pauseMenuSpriteSheet.loadFromFile("images/PauseMenu.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	pauseMenu = Sprite::createSprite(glm::ivec2(CAMERA_WIDTH, CAMERA_HEIGHT), glm::vec2(1.f, 1.f), &pauseMenuSpriteSheet, &texProgram);
+	pauseMenu->setPosition(glm::vec2(0.f, 0.f));
+
 	arrow = new Menu();
 	arrow->init(texProgram);
 	arrow->setType(Menu::MAIN);
@@ -140,6 +144,11 @@ void Scene::update(int deltaTime)
 		}
 		if (inputCd >= INPUT_CD && Game::instance().getKey(27)) {
 			currentState = PAUSED;
+			arrow->setType(Menu::PAUSE);
+		}
+		else
+		{
+			inputCd += deltaTime;
 		}
 	}
 	else {
@@ -158,8 +167,9 @@ void Scene::update(int deltaTime)
 				case Menu::MAIN:
 					switch (arrow->getPosition())
 					{
-					case 0: currentState = LEVELMENU;
+					case 0: { currentState = LEVELMENU;
 						arrow->setType(Menu::LEVEL);
+					}
 						break;
 					case 1:
 						break;
@@ -184,6 +194,9 @@ void Scene::update(int deltaTime)
 						createLevel(arrow->getPosition() + 1);
 						currentState = PLAYING;
 						break;
+					case 5:
+						currentState = MAINMENU;
+						arrow->setType(Menu::MAIN);
 					default:
 						break;
 					}
@@ -193,7 +206,9 @@ void Scene::update(int deltaTime)
 					{
 					case 0: currentState = PLAYING;
 						break;
-					case 1: currentState = MAINMENU;
+					case 1: { currentState = MAINMENU;
+						arrow->setType(Menu::MAIN);
+					}
 						break;
 					case 2: Game::instance().exit();
 						break;
@@ -255,7 +270,7 @@ void Scene::render()
 
 	if (currentState == PAUSED) {
 		arrow->render();
-		//pauseMenu->render();
+		pauseMenu->render();
 	}
 
 	if (currentState == PLAYING || currentState == PAUSED) {
