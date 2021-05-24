@@ -91,6 +91,11 @@ void Pot::empty()
 {
 	recipe = NULL;
 	emptied = true;
+	cookedFood = false;
+	cookedUpdated = false;
+	burnedFood = false;
+	burnedUpdated = false;
+	tomatoSoup = false;
 	//no funciona
 	//for (Food* f : foods) {
 	//level->removeItem(f);
@@ -129,4 +134,5 @@ void Pot::checkRecipe()
 		this->recipe = new Trash();
 	}
 	tomatoSoup = false;
+	//foods.clear();
 }

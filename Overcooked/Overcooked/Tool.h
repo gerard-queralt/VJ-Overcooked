@@ -26,15 +26,12 @@ public:
 	#define BURN_TIME COOKING_TIME + 10000
 
 protected:
-	bool addedFood = false;
 	bool cookedFood = false;
 	bool burnedFood = false;
-
-	int cookingTime = 0;
-
-private:
 	bool cookedUpdated = false;
 	bool burnedUpdated = false;
+
+	int cookingTime = 0;	
 };
 
 #endif // _TOOL_INCLUDE

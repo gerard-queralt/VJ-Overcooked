@@ -31,6 +31,7 @@ private:
 	std::vector<Food*> foods;
 
 	Food* recipe;
+	bool addedFood = false;
 	bool emptied = false;
 	bool tomatoSoup = false;
 };
