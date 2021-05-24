@@ -57,6 +57,9 @@ private:
 	Texture mainMenuSpriteSheet;
 	Sprite* levelMenu;
 	Texture levelMenuSpriteSheet;
+	Sprite* pauseMenu;
+	Texture pauseMenuSpriteSheet;
+
 	Menu *arrow;
 	int inputCd;
 
