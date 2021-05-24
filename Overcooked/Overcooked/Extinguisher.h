@@ -8,8 +8,15 @@ class Extinguisher :
 {
 public:
 	bool init(ShaderProgram &program);
+	void render(ShaderProgram & program, glm::mat4 viewMatrix);
+
+	void use();
+	void stop();
 
 	string whatAmI();
+
+private:
+	bool inUse;
 };
 
 #endif // _EXTINGUISHER_INCLUDE

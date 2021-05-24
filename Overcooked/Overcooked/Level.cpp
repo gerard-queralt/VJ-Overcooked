@@ -34,6 +34,8 @@ Level::Level(const glm::vec3 &levelSize, ShaderProgram &program, const string &f
 		cout << "Could not load wall texture!!!" << endl;
 	prepareArrays(program);
 	this->program = program;
+
+	debug = true;
 }
 
 Level::~Level()
@@ -85,8 +87,57 @@ void Level::update(int deltaTime)
 	for (Table* t : tables) {
 		t->update(deltaTime);
 	}
-	if (pendingRecipes.size() < 3) {
-		askRandomRecipe();
+	if (debug) {
+		debug = false;
+
+		std::vector<Item*> recipeModels;
+		Plate* plate = new Plate();
+		plate->init(program);
+		plate->addFood(new TomatoSoup());
+		plate->setPosition(glm::vec3(23.5f - pendingRecipes.size() * 7.f, 5.f, 18.5f));
+		recipeModels.push_back(plate);
+		for (int t = 0; t < 3; ++t) {
+			Tomato* tomato = new Tomato();
+			tomato->init(program);
+			tomato->setPosition(glm::vec3(25.f - 2.f * t - pendingRecipes.size() * 7.f, 5.f, 16.f));
+			recipeModels.push_back(tomato);
+		}
+		pendingRecipes.push_back(recipeModels);
+
+		recipeModels.clear();
+		Bread* bread = new Bread();
+		bread->init(program);
+		Beef* beef = new Beef();
+		beef->init(program);
+		Burger* burger = new Burger();
+		burger->init(program);
+		burger->addIngredient(bread);
+		Beef* cookedBeef = new Beef();
+		cookedBeef->cut();
+		cookedBeef->cook();
+		burger->addIngredient(cookedBeef);
+
+		burger->setPosition(glm::vec3(23.5f - pendingRecipes.size() * 7.f, 5.f, 18.5f));
+		recipeModels.push_back(burger);
+		bread->setPosition(glm::vec3(24.5f - pendingRecipes.size() * 7.f, 5.f, 16.f));
+		recipeModels.push_back(bread);
+		beef->setPosition(glm::vec3(24.5f - 2.f - pendingRecipes.size() * 7.f, 5.f, 16.f));
+		recipeModels.push_back(beef);
+		pendingRecipes.push_back(recipeModels);
+
+		recipeModels.clear();
+		plate = new Plate();
+		plate->init(program);
+		plate->addFood(new MushroomSoup());
+		plate->setPosition(glm::vec3(23.5f - pendingRecipes.size() * 7.f, 5.f, 18.5f));
+		recipeModels.push_back(plate);
+		for (int m = 0; m < 3; ++m) {
+			Mushroom* mushroom = new Mushroom();
+			mushroom->init(program);
+			mushroom->setPosition(glm::vec3(25.f - 2.f * m - pendingRecipes.size() * 7.f, 5.f, 16.f));
+			recipeModels.push_back(mushroom);
+		}
+		pendingRecipes.push_back(recipeModels);
 	}
 }
 
@@ -206,40 +257,6 @@ bool Level::deliver(Food * food)
 		|| food->whatAmI() == "Burger"
 		|| food->whatAmI() == "Salad") {
 
-		/*
-		PossibleRecipes recipe = UNKNOWN;
-		if (food->whatAmI() == "OnionSoup") {
-			recipe = ONION_SOUP;
-		}
-		else if (food->whatAmI() == "MushroomSoup") {
-			recipe = MUSHROOM_SOUP;
-		}
-		else if (food->whatAmI() == "TomatoSoup") {
-			recipe = TOMATO_SOUP;
-		}
-		else if (food->whatAmI() == "Salad") {
-			recipe = SALAD;
-		}
-		else if (food->whatAmI() == "BURGER") {
-			switch (((Burger*)food)->getTopping()) {
-			case Burger::NOTHING:
-				recipe = BURGER;
-				break;
-			case Burger::CHEESE:
-				recipe = BURGER_CHEESE;
-				break;
-			case Burger::TOMATO:
-				recipe = BURGER_TOMATO;
-				break;
-			case Burger::LETTUCE:
-				recipe = BURGER_LETTUCE;
-				break;
-			default:
-				break;
-			}
-		}
-		*/
-
 		int pos = 0;
 		bool correct = false;
 		while (pos < pendingRecipes.size() && !correct) {
@@ -261,17 +278,18 @@ bool Level::deliver(Food * food)
 		}
 		if (correct) {
 			curPoints += 150;
-			pendingRecipes.erase(pendingRecipes.begin() + pos - 1);
+			--pos;
+			pendingRecipes.erase(pendingRecipes.begin() + pos);
 			for (int i = pos; i < pendingRecipes.size(); ++i) {
-				pendingRecipes[pos][0]->setPosition(glm::vec3(23.5f + (i - 1) * 7.f, 5.f, 18.5f));
+				pendingRecipes[pos][0]->setPosition(glm::vec3(23.5f - i * 7.f, 5.f, 18.5f));
 				if (pendingRecipes[pos].size() == 4) { // tres ingredients
 					for (int j = 0; j < 3; ++j) {
-						pendingRecipes[pos][j+1]->setPosition(glm::vec3(25.f - 2.f * j + (i - 1) * 7.f, 5.f, 16.f));
+						pendingRecipes[pos][j+1]->setPosition(glm::vec3(25.f - 2.f * j - i * 7.f, 5.f, 16.f));
 					}
 				}
 				else { // dos ingredients
 					for (int j = 0; j < 2; ++j) {
-						pendingRecipes[pos][j + 1]->setPosition(glm::vec3(24.5f - j * 2.f + (i - 1) * 7.f, 5.f, 16.f));
+						pendingRecipes[pos][j + 1]->setPosition(glm::vec3(24.5f - j * 2.f - i * 7.f, 5.f, 16.f));
 					}
 				}
 			}

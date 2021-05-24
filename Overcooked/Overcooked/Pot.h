@@ -17,7 +17,7 @@ public:
 	bool hasFood();
 
 	bool finished();
-	Food* getFinishedRecipe();
+	Food* getFood();
 	void empty();
 
 	string whatAmI();

@@ -82,7 +82,7 @@ bool Pot::finished()
 	return recipe != NULL;
 }
 
-Food * Pot::getFinishedRecipe()
+Food * Pot::getFood()
 {
 	return recipe;
 }
