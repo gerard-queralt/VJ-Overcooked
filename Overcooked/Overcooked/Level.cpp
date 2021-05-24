@@ -1,6 +1,19 @@
 #include <iostream>
 #include <vector>
 #include "Level.h"
+#include "Plate.h"
+#include "OnionSoup.h"
+#include "Onion.h"
+#include "TomatoSoup.h"
+#include "Tomato.h"
+#include "MushroomSoup.h"
+#include "Mushroom.h"
+#include "Salad.h"
+#include "Lettuce.h"
+#include "Burger.h"
+#include "Beef.h"
+#include "Bread.h"
+#include "Cheese.h"
 
 using namespace std;
 
@@ -20,6 +33,7 @@ Level::Level(const glm::vec3 &levelSize, ShaderProgram &program, const string &f
 	if(!wall.loadFromFile(wallFile.c_str(), TEXTURE_PIXEL_FORMAT_RGB))
 		cout << "Could not load wall texture!!!" << endl;
 	prepareArrays(program);
+	this->program = program;
 }
 
 Level::~Level()
@@ -56,6 +70,11 @@ void Level::renderEntities(ShaderProgram texProgram, glm::mat4 viewMatrix)
 	for (Table* t : tables) {
 		t->render(texProgram, viewMatrix);
 	}
+	for (std::vector<Item*> recipe : pendingRecipes) {
+		for (Item* i : recipe) {
+			i->render(texProgram, viewMatrix);
+		}
+	}
 }
 
 void Level::update(int deltaTime)
@@ -65,6 +84,9 @@ void Level::update(int deltaTime)
 	}
 	for (Table* t : tables) {
 		t->update(deltaTime);
+	}
+	if (pendingRecipes.size() < 3) {
+		askRandomRecipe();
 	}
 }
 
@@ -140,6 +162,11 @@ Level::PutItemResult Level::putItemOnTable(Item * item)
 	return NOT_TOUCHING;
 }
 
+void Level::addPossibleRecipe(PossibleRecipes recipe)
+{
+	recipes.push_back(recipe);
+}
+
 void Level::setTime(int minutes, int seconds)
 {
 	timeMinutes = minutes;
@@ -179,7 +206,77 @@ bool Level::deliver(Food * food)
 		|| food->whatAmI() == "Burger"
 		|| food->whatAmI() == "Salad") {
 
-		curPoints += 150;
+		/*
+		PossibleRecipes recipe = UNKNOWN;
+		if (food->whatAmI() == "OnionSoup") {
+			recipe = ONION_SOUP;
+		}
+		else if (food->whatAmI() == "MushroomSoup") {
+			recipe = MUSHROOM_SOUP;
+		}
+		else if (food->whatAmI() == "TomatoSoup") {
+			recipe = TOMATO_SOUP;
+		}
+		else if (food->whatAmI() == "Salad") {
+			recipe = SALAD;
+		}
+		else if (food->whatAmI() == "BURGER") {
+			switch (((Burger*)food)->getTopping()) {
+			case Burger::NOTHING:
+				recipe = BURGER;
+				break;
+			case Burger::CHEESE:
+				recipe = BURGER_CHEESE;
+				break;
+			case Burger::TOMATO:
+				recipe = BURGER_TOMATO;
+				break;
+			case Burger::LETTUCE:
+				recipe = BURGER_LETTUCE;
+				break;
+			default:
+				break;
+			}
+		}
+		*/
+
+		int pos = 0;
+		bool correct = false;
+		while (pos < pendingRecipes.size() && !correct) {
+			Item* current = pendingRecipes[pos][0];
+			if (!current->isFood()) { //Sopes, on el primer element es el plat
+				Food* r = ((Plate*)current)->getFood();
+				if (food->whatAmI() == r->whatAmI()) {
+					correct = true;
+				}
+			}
+			else { //Ensalada i hamburguesa
+				if (food->whatAmI() == current->whatAmI()) {
+					if (food->whatAmI() == "Salad" || ((Burger*)food)->getTopping() == ((Burger*)current)->getTopping()) {
+						correct = true;
+					}
+				}
+			}
+			++pos;
+		}
+		if (correct) {
+			curPoints += 150;
+			pendingRecipes.erase(pendingRecipes.begin() + pos - 1);
+			for (int i = pos; i < pendingRecipes.size(); ++i) {
+				pendingRecipes[pos][0]->setPosition(glm::vec3(23.5f + (i - 1) * 7.f, 5.f, 18.5f));
+				if (pendingRecipes[pos].size() == 4) { // tres ingredients
+					for (int j = 0; j < 3; ++j) {
+						pendingRecipes[pos][j+1]->setPosition(glm::vec3(25.f - 2.f * j + (i - 1) * 7.f, 5.f, 16.f));
+					}
+				}
+				else { // dos ingredients
+					for (int j = 0; j < 2; ++j) {
+						pendingRecipes[pos][j + 1]->setPosition(glm::vec3(24.5f - j * 2.f + (i - 1) * 7.f, 5.f, 16.f));
+					}
+				}
+			}
+		}
+
 		return true;
 	}
 	return false;
@@ -292,6 +389,204 @@ void Level::prepareArrays(ShaderProgram &program)
 	posLocation[1] = program.bindVertexAttribute("position", 3, 8*sizeof(float), 0);
 	normalLocation[1] = program.bindVertexAttribute("normal", 3, 8 * sizeof(float), (void *)(3 * sizeof(float)));
 	texCoordLocation[1] = program.bindVertexAttribute("texCoord", 2, 8 * sizeof(float), (void *)(6 * sizeof(float)));
+}
+
+void Level::askRandomRecipe()
+{
+	int randomRecipe = (rand() % static_cast<int>(recipes.size()));
+	PossibleRecipes recipe = recipes[randomRecipe];
+	switch (recipe)
+	{
+	case Level::ONION_SOUP:
+	{
+		std::vector<Item*> recipeModels;
+		Plate* plate = new Plate();
+		plate->init(program);
+		plate->addFood(new OnionSoup());
+		plate->setPosition(glm::vec3(23.5f - pendingRecipes.size() * 7.f, 5.f, 18.5f));
+		recipeModels.push_back(plate);
+		for (int o = 0; o < 3; ++o) {
+			Onion* onion = new Onion();
+			onion->init(program);
+			onion->setPosition(glm::vec3(25.f - 2.f * o - pendingRecipes.size() * 7.f, 5.f, 16.f));
+			recipeModels.push_back(onion);
+		}
+		pendingRecipes.push_back(recipeModels);
+		break;
+	}
+	case Level::TOMATO_SOUP:
+	{
+		std::vector<Item*> recipeModels;
+		Plate* plate = new Plate();
+		plate->init(program);
+		plate->addFood(new TomatoSoup());
+		plate->setPosition(glm::vec3(23.5f - pendingRecipes.size() * 7.f, 5.f, 18.5f));
+		recipeModels.push_back(plate);
+		for (int t = 0; t < 3; ++t) {
+			Tomato* tomato = new Tomato();
+			tomato->init(program);
+			tomato->setPosition(glm::vec3(25.f - 2.f * t - pendingRecipes.size() * 7.f, 5.f, 16.f));
+			recipeModels.push_back(tomato);
+		}
+		pendingRecipes.push_back(recipeModels);
+		break;
+	}
+	case Level::MUSHROOM_SOUP:
+	{
+		std::vector<Item*> recipeModels;
+		Plate* plate = new Plate();
+		plate->init(program);
+		plate->addFood(new MushroomSoup());
+		plate->setPosition(glm::vec3(23.5f - pendingRecipes.size() * 7.f, 5.f, 18.5f));
+		recipeModels.push_back(plate);
+		for (int m = 0; m < 3; ++m) {
+			Mushroom* mushroom = new Mushroom();
+			mushroom->init(program);
+			mushroom->setPosition(glm::vec3(25.f - 2.f * m - pendingRecipes.size() * 7.f, 5.f, 16.f));
+			recipeModels.push_back(mushroom);
+		}
+		pendingRecipes.push_back(recipeModels);
+		break;
+	}
+	case Level::SALAD:
+	{
+		std::vector<Item*> recipeModels;
+		Tomato* tomato = new Tomato();
+		tomato->init(program);
+		Lettuce* lettuce = new Lettuce();
+		lettuce->init(program);
+		Salad* salad = new Salad();
+		salad->init(program);
+
+		salad->setPosition(glm::vec3(23.5f - pendingRecipes.size() * 7.f, 5.f, 18.5f));
+		recipeModels.push_back(salad);
+		lettuce->setPosition(glm::vec3(24.5f - pendingRecipes.size() * 7.f, 5.f, 16.f));
+		recipeModels.push_back(lettuce);
+		tomato->setPosition(glm::vec3(24.5f - 2.f - pendingRecipes.size() * 7.f, 5.f, 16.f));
+		recipeModels.push_back(tomato);
+		pendingRecipes.push_back(recipeModels);
+		break;
+	}
+	case Level::BURGER:
+	{
+		std::vector<Item*> recipeModels;
+		Bread* bread = new Bread();
+		bread->init(program);
+		Beef* beef = new Beef();
+		beef->init(program);
+		Burger* burger = new Burger();
+		burger->init(program);
+		burger->addIngredient(bread);
+		Beef* cookedBeef = new Beef();
+		cookedBeef->cut();
+		cookedBeef->cook();
+		burger->addIngredient(cookedBeef);
+
+		burger->setPosition(glm::vec3(23.5f - pendingRecipes.size() * 7.f, 5.f, 18.5f));
+		recipeModels.push_back(burger);
+		bread->setPosition(glm::vec3(24.5f - pendingRecipes.size() * 7.f, 5.f, 16.f));
+		recipeModels.push_back(bread);
+		beef->setPosition(glm::vec3(24.5f - 2.f - pendingRecipes.size() * 7.f, 5.f, 16.f));
+		recipeModels.push_back(beef);
+		pendingRecipes.push_back(recipeModels);
+		break;
+	}
+	case Level::BURGER_CHEESE:
+	{
+		std::vector<Item*> recipeModels;
+		Bread* bread = new Bread();
+		bread->init(program);
+		Beef* beef = new Beef();
+		beef->init(program);
+		Cheese* cheese = new Cheese();
+		cheese->init(program);
+		Burger* burger = new Burger();
+		burger->init(program);
+		burger->addIngredient(bread);
+		Beef* cookedBeef = new Beef();
+		cookedBeef->cut();
+		cookedBeef->cook();
+		burger->addIngredient(cookedBeef);
+		Cheese* cutCheese = new Cheese();
+		cutCheese->cut();
+		burger->addIngredient(cutCheese);
+		
+		burger->setPosition(glm::vec3(23.5f - pendingRecipes.size() * 7.f, 5.f, 18.5f));
+		recipeModels.push_back(burger);
+		bread->setPosition(glm::vec3(25.f - pendingRecipes.size() * 7.f, 5.f, 16.f));
+		recipeModels.push_back(bread);
+		beef->setPosition(glm::vec3(25.f - 2.f - pendingRecipes.size() * 7.f, 5.f, 16.f));
+		recipeModels.push_back(beef);
+		cheese->setPosition(glm::vec3(25.f - 4.f - pendingRecipes.size() * 7.f, 5.f, 16.f));
+		recipeModels.push_back(cheese);
+		pendingRecipes.push_back(recipeModels);
+		break;
+	}
+	case Level::BURGER_TOMATO:
+	{
+		std::vector<Item*> recipeModels;
+		Bread* bread = new Bread();
+		bread->init(program);
+		Beef* beef = new Beef();
+		beef->init(program);
+		Tomato* tomato = new Tomato();
+		tomato->init(program);
+		Burger* burger = new Burger();
+		burger->init(program);
+		burger->addIngredient(bread);
+		Beef* cookedBeef = new Beef();
+		cookedBeef->cut();
+		cookedBeef->cook();
+		burger->addIngredient(cookedBeef);
+		Tomato* cutTomato = new Tomato();
+		cutTomato->cut();
+		burger->addIngredient(cutTomato);
+
+		burger->setPosition(glm::vec3(23.5f - pendingRecipes.size() * 7.f, 5.f, 18.5f));
+		recipeModels.push_back(burger);
+		bread->setPosition(glm::vec3(25.f - pendingRecipes.size() * 7.f, 5.f, 16.f));
+		recipeModels.push_back(bread);
+		beef->setPosition(glm::vec3(25.f - 2.f - pendingRecipes.size() * 7.f, 5.f, 16.f));
+		recipeModels.push_back(beef);
+		tomato->setPosition(glm::vec3(25.f - 4.f - pendingRecipes.size() * 7.f, 5.f, 16.f));
+		recipeModels.push_back(tomato);
+		pendingRecipes.push_back(recipeModels);
+		break;
+	}
+	case Level::BURGER_LETTUCE:
+	{
+		std::vector<Item*> recipeModels;
+		Bread* bread = new Bread();
+		bread->init(program);
+		Beef* beef = new Beef();
+		beef->init(program);
+		Lettuce* lettuce = new Lettuce();
+		lettuce->init(program);
+		Burger* burger = new Burger();
+		burger->init(program);
+		burger->addIngredient(bread);
+		Beef* cookedBeef = new Beef();
+		cookedBeef->cut();
+		cookedBeef->cook();
+		burger->addIngredient(cookedBeef);
+		Lettuce* cutLettuce = new Lettuce();
+		cutLettuce->cut();
+		burger->addIngredient(cutLettuce);
+
+		burger->setPosition(glm::vec3(23.5f - pendingRecipes.size() * 7.f, 5.f, 18.5f));
+		recipeModels.push_back(burger);
+		bread->setPosition(glm::vec3(25.f - pendingRecipes.size() * 7.f, 5.f, 16.f));
+		recipeModels.push_back(bread);
+		beef->setPosition(glm::vec3(25.f - 2.f - pendingRecipes.size() * 7.f, 5.f, 16.f));
+		recipeModels.push_back(beef);
+		lettuce->setPosition(glm::vec3(25.f - 4.f - pendingRecipes.size() * 7.f, 5.f, 16.f));
+		recipeModels.push_back(lettuce);
+		pendingRecipes.push_back(recipeModels);
+		break;
+	}
+	default:
+		break;
+	}
 }
 
 

@@ -74,3 +74,17 @@ string Burger::whatAmI()
 {
 	return "Burger";
 }
+
+Burger::Toppings Burger::getTopping()
+{
+	if (hasBeef && hasBread) {
+		if (hasCheese)
+			return CHEESE;
+		if (hasTomato)
+			return TOMATO;
+		if (hasLettuce)
+			return LETTUCE;
+		return NOTHING;
+	}
+	return UNFINISHED;
+}

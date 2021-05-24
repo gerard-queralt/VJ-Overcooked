@@ -43,6 +43,11 @@ public:
 	};
 	PutItemResult putItemOnTable(Item* item);
 
+	enum PossibleRecipes {
+		ONION_SOUP = 0, TOMATO_SOUP, MUSHROOM_SOUP, SALAD, BURGER, BURGER_CHEESE, BURGER_TOMATO, BURGER_LETTUCE, UNKNOWN
+	};
+
+	void addPossibleRecipe(PossibleRecipes recipe);
 	void setTime(int minutes, int seconds);
 	void setPoints(int points);
 	int getMinutes();
@@ -52,8 +57,11 @@ public:
 
 	bool deliver(Food* food);
 
+
 private:
 	void prepareArrays(ShaderProgram &program);
+
+	void askRandomRecipe();
 
 private:
 	GLuint vao[2];
@@ -65,6 +73,9 @@ private:
 	vector<Item *> items;
 	vector<Table* > tables;
 
+	ShaderProgram program;
+	std::vector<PossibleRecipes> recipes;
+	std::vector<std::vector<Item*> > pendingRecipes; //array on cada fila representa una recepta, la primera columna la recepta finalitzada i la resta els ingredients
 	int timeSeconds;
 	int timeMinutes;
 	int pointsReq;

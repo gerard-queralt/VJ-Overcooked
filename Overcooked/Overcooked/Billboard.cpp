@@ -17,6 +17,7 @@ Billboard::Billboard(const glm::vec2 &quadSize, ShaderProgram &program, const st
 	if (!texture.loadFromFile(textureFile.c_str(), TEXTURE_PIXEL_FORMAT_RGBA))
 		cout << "Could not load billboard texture!!!" << endl;
 	texture.setMagFilter(GL_NEAREST);
+	texture.setMinFilter(GL_NEAREST);
 	prepareArrays(program);
 }
 
