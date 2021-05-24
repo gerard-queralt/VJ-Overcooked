@@ -38,6 +38,8 @@ public:
 	bool getKey(int key) const;
 	bool getSpecialKey(int key) const;
 
+	void exit();
+
 private:
 	bool bPlay;                       // Continue to play game?
 	Scene scene;                      // Scene to render

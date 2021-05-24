@@ -4,7 +4,7 @@
 bool TrashCan::init(ShaderProgram & program)
 {
 	setScale(1.f);
-	return loadFromFile("models/EmptyTable.obj", program);
+	return loadFromFile("models/TrashCan.obj", program);
 }
 
 bool TrashCan::setItem(Item * item)

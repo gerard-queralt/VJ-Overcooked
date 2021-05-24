@@ -7,8 +7,8 @@
 #include "Level.h"
 #include "AssimpModel.h"
 #include "Billboard.h"
-#include "ParticleSystem.h"
 #include "Number.h"
+#include "Menu.h"
 
 #define CAMERA_WIDTH 640
 #define CAMERA_HEIGHT 480
@@ -31,12 +31,12 @@ public:
 
 private:
 	void initShaders();
+	void createLevel(int levelNum);
 
 private:
 	Level *level;
 	Player *player;
 	Billboard *billboard;
-	//ParticleSystem *particles;
 	
 	std::vector<Number*> timeSprites;
 	std::vector<Number*> pointsSprites;
@@ -45,6 +45,7 @@ private:
 	int timeSeconds;
 	int timeMinutes;
 	int secondsIncrement = 0;
+	int currentLevelTime;
 
 	Sprite* timeText;
 	Texture timeTextSpritesheet;
@@ -52,6 +53,15 @@ private:
 	Texture winTextSpritesheet;
 	Sprite* loseText;
 	Texture loseTextSpritesheet;
+	Sprite* mainMenu;
+	Texture mainMenuSpriteSheet;
+	Sprite* levelMenu;
+	Texture levelMenuSpriteSheet;
+	Menu *arrow;
+	int inputCd;
+
+	int currentState;
+
 	bool timeUp = false;
 	
 	ShaderProgram texProgram;

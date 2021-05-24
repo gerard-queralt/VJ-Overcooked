@@ -1,3 +1,5 @@
+#include <GL/glew.h>
+#include <GL/glut.h>
 #include <iostream>
 #include <cmath>
 #include <cstdlib>
@@ -5,10 +7,17 @@
 #define GLM_FORCE_RADIANS
 #include <glm/gtc/matrix_transform.hpp>
 #include "Scene.h"
+#include "Game.h"
 
 #include "LevelFactory.h"
 
 #define PI 3.14159f
+
+#define INPUT_CD 300
+
+enum GameState {
+	MAINMENU, LEVELMENU, PLAYING, PAUSED
+};
 
 Scene::Scene()
 {
@@ -31,16 +40,21 @@ Scene::~Scene()
 void Scene::init()
 {
 	initShaders();
-	level = LevelFactory::instance().createLevel(1, texProgram);
-	player = new Player();
-	player->init(texProgram);
-	player->setPosition(glm::vec3(0.f, 0.f, -5.f));
-	player->setLevel(level);
 
-	level->setPlayer(player);
+	currentState = MAINMENU;
 
-	billboard = Billboard::createBillboard(glm::vec2(1.f, 1.f), texProgram, "images/tmpHourglass.png");
-	billboard->setType(BILLBOARD_CENTER);
+	mainMenuSpriteSheet.loadFromFile("images/MainMenu.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	mainMenu = Sprite::createSprite(glm::ivec2(CAMERA_WIDTH, CAMERA_HEIGHT), glm::vec2(1.f, 1.f), &mainMenuSpriteSheet, &texProgram);
+	mainMenu->setPosition(glm::vec2(0.f, 0.f));
+
+	levelMenuSpriteSheet.loadFromFile("images/LevelMenu.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	levelMenu = Sprite::createSprite(glm::ivec2(CAMERA_WIDTH, CAMERA_HEIGHT), glm::vec2(1.f, 1.f), &levelMenuSpriteSheet, &texProgram);
+	levelMenu->setPosition(glm::vec2(0.f, 0.f));
+
+	arrow = new Menu();
+	arrow->init(texProgram);
+	arrow->setType(Menu::MAIN);
+	inputCd = INPUT_CD;
 
 	for (int i = 0; i < 2; ++i) {
 		Number* n = new Number();
@@ -77,51 +91,127 @@ void Scene::init()
 	projection = glm::perspective(45.f / 180.f * PI, float(CAMERA_WIDTH) / float(CAMERA_HEIGHT), 0.1f, 100.f);
 	projection2D = glm::ortho(0.f, float(CAMERA_WIDTH), float(CAMERA_HEIGHT), 0.f);
 	currentTime = 0.0f;
-	timeMinutes = level->getMinutes();
 }
 
 void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 
-	player->update(deltaTime);
+	if (currentState == PLAYING) {
+		currentLevelTime += deltaTime;
 
-	level->update(deltaTime);
+		player->update(deltaTime);
 
-	timeSeconds = level->getSeconds() - (int(currentTime) / 1000) % 60 + secondsIncrement;
-	if (timeSeconds < 0) {
-		secondsIncrement += 60;
-		timeSeconds += 60;
-		--timeMinutes;
-	}
-	else if (timeSeconds >= 60) {
-		secondsIncrement -= 60;
-		timeSeconds -= 60;
-	}
-	if (timeMinutes < 0) {
-		timeUp = true;
-	}
-	else {
-		timeSprites[0]->changeNumber(timeSeconds % 10);
-		timeSprites[1]->changeNumber(timeSeconds / 10);
-		timeSprites[2]->changeNumber(timeMinutes % 10);
-		timeSprites[3]->changeNumber(timeMinutes / 10);
-	}
+		level->update(deltaTime);
 
-	int points = level->getPoints();
-	if (points > 0) {
-		pointsSprites.clear();
-		while (points > 0) {
-			for (int p = 0; p < pointsSprites.size(); ++p) {
-				pointsSprites[p]->setPosition(glm::vec2(26.f * (pointsSprites.size() - p + 1), float(CAMERA_HEIGHT) - 26.f * 2.f));
+		timeSeconds = level->getSeconds() - (currentLevelTime / 1000) % 60 + secondsIncrement;
+		if (timeSeconds < 0) {
+			secondsIncrement += 60;
+			timeSeconds += 60;
+			--timeMinutes;
+		}
+		else if (timeSeconds >= 60) {
+			secondsIncrement -= 60;
+			timeSeconds -= 60;
+		}
+		if (timeMinutes < 0) {
+			timeUp = true;
+		}
+		else {
+			timeSprites[0]->changeNumber(timeSeconds % 10);
+			timeSprites[1]->changeNumber(timeSeconds / 10);
+			timeSprites[2]->changeNumber(timeMinutes % 10);
+			timeSprites[3]->changeNumber(timeMinutes / 10);
+		}
+
+		int points = level->getPoints();
+		if (points > 0) {
+			pointsSprites.clear();
+			while (points > 0) {
+				for (int p = 0; p < pointsSprites.size(); ++p) {
+					pointsSprites[p]->setPosition(glm::vec2(26.f * (pointsSprites.size() - p + 1), float(CAMERA_HEIGHT) - 26.f * 2.f));
+				}
+				Number* n = new Number();
+				n->init(glm::vec2(26.f, float(CAMERA_HEIGHT) - 26.f * 2.f), texProgram);
+				n->changeNumber(points % 10);
+				pointsSprites.push_back(n);
+				points /= 10;
 			}
-			Number* n = new Number();
-			n->init(glm::vec2(26.f, float(CAMERA_HEIGHT) - 26.f * 2.f), texProgram);
-			n->changeNumber(points % 10);
-			pointsSprites.push_back(n);
-			points /= 10;
+		}
+		if (inputCd >= INPUT_CD && Game::instance().getKey(27)) {
+			currentState = PAUSED;
 		}
 	}
+	else {
+		if (inputCd >= INPUT_CD) {
+			if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
+				arrow->goDown();
+				inputCd = 0;
+			}
+			else if (Game::instance().getSpecialKey(GLUT_KEY_UP)) {
+				arrow->goUp();
+				inputCd = 0;
+			}
+			else if (Game::instance().getKey(13)) {
+				switch (arrow->getType())
+				{
+				case Menu::MAIN:
+					switch (arrow->getPosition())
+					{
+					case 0: currentState = LEVELMENU;
+						arrow->setType(Menu::LEVEL);
+						break;
+					case 1:
+						break;
+					case 2: Game::instance().exit();
+						break;
+					default:
+						break;
+					}
+					break;
+				case Menu::LEVEL:
+					switch (arrow->getPosition())
+					{
+					case 0:
+
+					case 1:
+
+					case 2:
+
+					case 3:
+
+					case 4:
+						createLevel(arrow->getPosition() + 1);
+						currentState = PLAYING;
+						break;
+					default:
+						break;
+					}
+					break;
+				case Menu::PAUSE:
+					switch (arrow->getPosition())
+					{
+					case 0: currentState = PLAYING;
+						break;
+					case 1: currentState = MAINMENU;
+						break;
+					case 2: Game::instance().exit();
+						break;
+					default:
+						break;
+					}
+				default:
+					break;
+				}
+				inputCd = 0;
+			}
+		}
+		else
+		{
+			inputCd += deltaTime;
+		}
+	}
+	
 }
 
 void Scene::render()
@@ -130,49 +220,69 @@ void Scene::render()
 	glm::mat3 normalMatrix;
 
 	texProgram.use();
-	texProgram.setUniform1b("bLighting", true);
-	texProgram.setUniformMatrix4f("projection", projection);
-	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
-	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 
-	glm::vec3 obs = glm::vec3(0.f, 36.f, -24.f);
-	viewMatrix = glm::lookAt(obs, glm::vec3(0.f, 0.f, -(90.f * PI/180)), glm::vec3(0.f, 1.f, 0.f));
+	if (currentState == PLAYING || currentState == PAUSED) {
+		texProgram.setUniform1b("bLighting", true);
+		texProgram.setUniformMatrix4f("projection", projection);
+		texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
+		texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 
-	// Render level
-	modelMatrix = glm::mat4(1.0f);
-	texProgram.setUniformMatrix4f("modelview", viewMatrix * modelMatrix);
-	normalMatrix = glm::transpose(glm::inverse(glm::mat3(viewMatrix * modelMatrix)));
-	texProgram.setUniformMatrix3f("normalmatrix", normalMatrix);
-	level->render();
+		glm::vec3 obs = glm::vec3(0.f, 36.f, -24.f);
+		viewMatrix = glm::lookAt(obs, glm::vec3(0.f, 0.f, -(90.f * PI / 180)), glm::vec3(0.f, 1.f, 0.f));
 
-	//Render items
-	level->renderEntities(texProgram, viewMatrix);
+		// Render level
+		modelMatrix = glm::mat4(1.0f);
+		texProgram.setUniformMatrix4f("modelview", viewMatrix * modelMatrix);
+		normalMatrix = glm::transpose(glm::inverse(glm::mat3(viewMatrix * modelMatrix)));
+		texProgram.setUniformMatrix3f("normalmatrix", normalMatrix);
+		level->render();
 
-	// Render player
-	player->render(texProgram, viewMatrix);
+		//Render items
+		level->renderEntities(texProgram, viewMatrix);
+
+		// Render player
+		player->render(texProgram, viewMatrix);
+	}
 
 	// Render HUD
 
+	texProgram.setUniform1b("bLighting", false);
 	texProgram.setUniformMatrix4f("projection", projection2D);
 	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
 	glm::mat4 modelview = glm::mat4(1.0f);
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 
-	for (int i = 0; i < timeSprites.size(); ++i) {
-		timeSprites[i]->render();
-	}
-	timeSeparator->render();
-	for (int i = pointsSprites.size() - 1; i >= 0; --i) {
-		pointsSprites[i]->render();
+	if (currentState == PAUSED) {
+		arrow->render();
+		//pauseMenu->render();
 	}
 
-	if (timeUp) {
-		timeText->render();
-		if (level->getPoints() >= level->getPointsRequired())
-			winText->render();
-		else
-			loseText->render();
+	if (currentState == PLAYING || currentState == PAUSED) {
+		for (int i = 0; i < timeSprites.size(); ++i) {
+			timeSprites[i]->render();
+		}
+		timeSeparator->render();
+		for (int i = pointsSprites.size() - 1; i >= 0; --i) {
+			pointsSprites[i]->render();
+		}
+
+		if (timeUp) {
+			timeText->render();
+			if (level->getPoints() >= level->getPointsRequired())
+				winText->render();
+			else
+				loseText->render();
+		}
+	}
+	else {
+		arrow->render();
+		if (currentState == MAINMENU) {
+			mainMenu->render();
+		}
+		else if (currentState == LEVELMENU) {
+			levelMenu->render();
+		}
 	}
 }
 
@@ -204,6 +314,20 @@ void Scene::initShaders()
 	texProgram.bindFragmentOutput("outColor");
 	vShader.free();
 	fShader.free();
+}
+
+void Scene::createLevel(int levelNum)
+{
+	currentLevelTime = 0;
+	level = LevelFactory::instance().createLevel(levelNum, texProgram);
+	player = new Player();
+	player->init(texProgram);
+	player->setPosition(glm::vec3(0.f, 0.f, -5.f));
+	player->setLevel(level);
+
+	level->setPlayer(player);
+
+	timeMinutes = level->getMinutes();
 }
 
 

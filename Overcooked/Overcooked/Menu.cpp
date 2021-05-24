@@ -1,43 +1,10 @@
 #include "Menu.h"
 
-void Menu::init(const glm::vec2 & pos, ShaderProgram & shaderProgram)
+void Menu::init(ShaderProgram & shaderProgram)
 {
-	spritesheet.loadFromFile("images/FletxaSeleccio.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	sprite = Sprite::createSprite(glm::ivec2(26, 26), glm::vec2(0.1f, 1.f), &spritesheet, &shaderProgram);
-	sprite->setNumberAnimations(10);
+	spritesheet.loadFromFile("images/fletxaSeleccio.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	sprite = Sprite::createSprite(glm::ivec2(64, 32), glm::vec2(1.f, 1.f), &spritesheet, &shaderProgram);
 
-	sprite->setAnimationSpeed(0, 8);
-	sprite->addKeyframe(0, glm::vec2(0.f, 0.f));
-
-	sprite->setAnimationSpeed(1, 8);
-	sprite->addKeyframe(1, glm::vec2(0.1f, 0.f));
-
-	sprite->setAnimationSpeed(2, 8);
-	sprite->addKeyframe(2, glm::vec2(0.2f, 0.f));
-
-	sprite->setAnimationSpeed(3, 8);
-	sprite->addKeyframe(3, glm::vec2(0.3f, 0.f));
-
-	sprite->setAnimationSpeed(4, 8);
-	sprite->addKeyframe(4, glm::vec2(0.4f, 0.f));
-
-	sprite->setAnimationSpeed(5, 8);
-	sprite->addKeyframe(5, glm::vec2(0.5f, 0.f));
-
-	sprite->setAnimationSpeed(6, 8);
-	sprite->addKeyframe(6, glm::vec2(0.6f, 0.f));
-
-	sprite->setAnimationSpeed(7, 8);
-	sprite->addKeyframe(7, glm::vec2(0.7f, 0.f));
-
-	sprite->setAnimationSpeed(8, 8);
-	sprite->addKeyframe(8, glm::vec2(0.8f, 0.f));
-
-	sprite->setAnimationSpeed(9, 8);
-	sprite->addKeyframe(9, glm::vec2(0.9f, 0.f));
-
-	position = pos;
-	sprite->setPosition(position);
 }
 
 void Menu::render()
@@ -51,8 +18,80 @@ void Menu::setPosition(const glm::vec2 & pos)
 	sprite->setPosition(position);
 }
 
-void Menu::changeNumber(int n)
+void Menu::setType(Menu::Type type) {
+	this->type = type;
+	currentPosition = 0;
+	changePosition();
+}
+
+void Menu::goUp()
 {
-	sprite->changeAnimation(n);
+	--currentPosition;
+	if (currentPosition == -1) {
+		if (type == MAIN)
+			currentPosition = 2;
+		if (type == LEVEL)
+			currentPosition = 4;
+	}
+	changePosition();
+}
+
+void Menu::goDown()
+{
+	++currentPosition;
+	if (type == MAIN && currentPosition > 2)
+		currentPosition = 0;
+	if (type == LEVEL && currentPosition > 4)
+		currentPosition = 0;
+	changePosition();
+}
+
+int Menu::getPosition()
+{
+	return currentPosition;
+}
+
+Menu::Type Menu::getType()
+{
+	return type;
+}
+
+void Menu::changePosition()
+{
+	switch (type)
+	{
+	case Menu::MAIN:
+		switch (currentPosition)
+		{
+		case 0: setPosition(glm::vec2(11.5f * 32.f, 6.45f * 32.f));
+			break;
+		case 1: setPosition(glm::vec2(13.5f * 32.f, 7.60f * 32.f));
+			break;
+		case 2: setPosition(glm::vec2(10.5f * 32.f, 8.9f * 32.f));
+			break;
+		default:
+			break;
+		}
+		break;
+	case Menu::LEVEL:
+		switch (currentPosition)
+		{
+		case 0: setPosition(glm::vec2(12.25f * 32.f, 5.25f * 32.f));
+			break;
+		case 1: setPosition(glm::vec2(12.25f * 32.f, 6.3f * 32.f));
+			break;
+		case 2: setPosition(glm::vec2(12.25f * 32.f, 7.35f * 32.f));
+			break;
+		case 3: setPosition(glm::vec2(12.25f * 32.f, 8.4f * 32.f));
+			break;
+		case 4: setPosition(glm::vec2(12.25f * 32.f, 9.45f * 32.f));
+			break;
+		default:
+			break;
+		}
+		break;
+	default:
+		break;
+	}
 }
 

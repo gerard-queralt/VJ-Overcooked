@@ -26,7 +26,7 @@ void Game::render()
 
 void Game::keyPressed(int key)
 {
-	if(key == 27) // Escape code
+	if (key == 27) // Escape code
 		bPlay = false;
 	keys[key] = true;
 }
@@ -66,6 +66,11 @@ bool Game::getKey(int key) const
 bool Game::getSpecialKey(int key) const
 {
 	return specialKeys[key];
+}
+
+void Game::exit()
+{
+	bPlay = false;
 }
 
 
