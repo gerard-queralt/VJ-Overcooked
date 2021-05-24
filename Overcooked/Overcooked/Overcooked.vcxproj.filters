@@ -177,6 +177,9 @@
     <ClInclude Include="Extinguisher.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssimpModel.cpp">
@@ -300,6 +303,9 @@
       <Filter>Source Files\Entities\Tables</Filter>
     </ClCompile>
     <ClCompile Include="Extinguisher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
