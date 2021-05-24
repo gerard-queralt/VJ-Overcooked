@@ -105,12 +105,11 @@ void Scene::update(int deltaTime)
 	currentTime += deltaTime;
 
 	if (currentState == PLAYING) {
-		currentLevelTime += deltaTime;
-
 		player->update(deltaTime);
 
 		level->update(deltaTime);
 
+		int currentLevelTime = level->getCurrentTime();
 		timeSeconds = level->getSeconds() - (currentLevelTime / 1000) % 60 + secondsIncrement;
 		if (timeSeconds < 0) {
 			secondsIncrement += 60;
@@ -343,7 +342,6 @@ void Scene::initShaders()
 
 void Scene::createLevel(int levelNum)
 {
-	currentLevelTime = 0;
 	level = LevelFactory::instance().createLevel(levelNum, texProgram);
 	player = new Player();
 	player->init(texProgram);

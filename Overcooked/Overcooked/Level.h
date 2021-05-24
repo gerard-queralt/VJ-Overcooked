@@ -55,6 +55,7 @@ public:
 	int getSeconds();
 	int getPoints();
 	int getPointsRequired();
+	int getCurrentTime();
 
 	bool deliver(Food* food);
 
@@ -82,8 +83,8 @@ private:
 	int timeMinutes;
 	int pointsReq;
 	int curPoints = 0;
-
-	bool debug;
+	int currentTime;
+	int nextRecipeTime;
 };
 
 

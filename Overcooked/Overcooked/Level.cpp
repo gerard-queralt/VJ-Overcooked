@@ -34,9 +34,10 @@ Level::Level(const glm::vec3 &levelSize, ShaderProgram &program, const string &f
 	if(!wall.loadFromFile(wallFile.c_str(), TEXTURE_PIXEL_FORMAT_RGB))
 		cout << "Could not load wall texture!!!" << endl;
 	prepareArrays(program);
+	
 	this->program = program;
-
-	debug = true;
+	currentTime = 0;
+	nextRecipeTime = 0;
 }
 
 Level::~Level()
@@ -83,19 +84,20 @@ void Level::renderEntities(ShaderProgram texProgram, glm::mat4 viewMatrix)
 
 void Level::update(int deltaTime)
 {
+	currentTime += deltaTime;
+
 	for (Item* i : items) {
 		i->update(deltaTime);
 	}
 	for (Table* t : tables) {
 		t->update(deltaTime);
 	}
-	//per debug
-	if (debug) {
-		debug = false;
-
+	if (nextRecipeTime <= 0 && pendingRecipes.size() < 6) {
 		askRandomRecipe();
-		askRandomRecipe();
-		askRandomRecipe();
+		nextRecipeTime = 15000; //uns 15 segons
+	}
+	else {
+		nextRecipeTime -= deltaTime;
 	}
 }
 
@@ -205,6 +207,11 @@ int Level::getPoints()
 int Level::getPointsRequired()
 {
 	return pointsReq;
+}
+
+int Level::getCurrentTime()
+{
+	return currentTime;
 }
 
 bool Level::deliver(Food * food)

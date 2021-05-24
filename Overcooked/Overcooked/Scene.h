@@ -45,7 +45,6 @@ private:
 	int timeSeconds;
 	int timeMinutes;
 	int secondsIncrement = 0;
-	int currentLevelTime;
 
 	Sprite* timeText;
 	Texture timeTextSpritesheet;
