@@ -239,20 +239,19 @@ bool Level::deliver(Food * food)
 			--pos;
 			pendingRecipes.erase(pendingRecipes.begin() + pos);
 			for (int i = pos; i < pendingRecipes.size(); ++i) {
-				pendingRecipes[pos][0]->setPosition(glm::vec3(23.5f - i * 8.25f, 5.f, 18.5f));
-				if (pendingRecipes[pos].size() == 4) { // tres ingredients
+				pendingRecipes[i][0]->setPosition(glm::vec3(24.5 - i * 8.75f, 5.f, 21.f));
+				if (pendingRecipes[i].size() == 4) { // tres ingredients
 					for (int j = 0; j < 3; ++j) {
-						pendingRecipes[pos][j+1]->setPosition(glm::vec3(25.f - 2.f * j - i * 8.25f, 5.f, 16.f));
+						pendingRecipes[i][j+1]->setPosition(glm::vec3(25.5f - 2.f * j - i * 8.25f, 5.f, 18.f));
 					}
 				}
 				else { // dos ingredients
 					for (int j = 0; j < 2; ++j) {
-						pendingRecipes[pos][j + 1]->setPosition(glm::vec3(24.5f - j * 2.5f - i * 8.25f, 5.f, 16.f));
+						pendingRecipes[i][j + 1]->setPosition(glm::vec3(24.5f - j * 2.5f - i * 8.25f, 5.f, 18.f));
 					}
 				}
 			}
 		}
-
 		return true;
 	}
 	return false;
@@ -374,6 +373,14 @@ void Level::prepareArrays(ShaderProgram &program)
 
 void Level::askRandomRecipe()
 {
+	glm::vec3 recipePos = glm::vec3(24.5, 5.f, 21.f);
+	float recipeXOffset = 8.75f;
+	glm::vec3 ingredientOfThreePos = glm::vec3(25.5f, 5.f, 18.f);
+	float ingredientOfThreeSpacing = 2.f;
+	glm::vec3 ingredientOfTwoPos = glm::vec3(24.5f, 5.f, 18.f);
+	float ingredientOfTwoSpacing = 2.5f;
+	float ingredientXOffset = 8.25f;
+
 	int randomRecipe = (rand() % static_cast<int>(recipes.size()));
 	PossibleRecipes recipe = recipes[randomRecipe];
 	switch (recipe)
@@ -384,12 +391,12 @@ void Level::askRandomRecipe()
 		Plate* plate = new Plate();
 		plate->init(program);
 		plate->addFood(new OnionSoup());
-		plate->setPosition(glm::vec3(23.5f - pendingRecipes.size() * 8.25f, 5.f, 18.5f));
+		plate->setPosition(glm::vec3(recipePos.x - pendingRecipes.size() * recipeXOffset, recipePos.y, recipePos.z));
 		recipeModels.push_back(plate);
 		for (int o = 0; o < 3; ++o) {
 			Onion* onion = new Onion();
 			onion->init(program);
-			onion->setPosition(glm::vec3(25.f - 2.f * o - pendingRecipes.size() * 8.25f, 5.f, 16.f));
+			onion->setPosition(glm::vec3(ingredientOfThreePos.x - ingredientOfThreeSpacing * o - pendingRecipes.size() * ingredientXOffset, ingredientOfThreePos.y, ingredientOfThreePos.z));
 			recipeModels.push_back(onion);
 		}
 		pendingRecipes.push_back(recipeModels);
@@ -401,12 +408,12 @@ void Level::askRandomRecipe()
 		Plate* plate = new Plate();
 		plate->init(program);
 		plate->addFood(new TomatoSoup());
-		plate->setPosition(glm::vec3(23.5f - pendingRecipes.size() * 8.25f, 5.f, 18.5f));
+		plate->setPosition(glm::vec3(recipePos.x - pendingRecipes.size() * recipeXOffset, recipePos.y, recipePos.z));
 		recipeModels.push_back(plate);
 		for (int t = 0; t < 3; ++t) {
 			Tomato* tomato = new Tomato();
 			tomato->init(program);
-			tomato->setPosition(glm::vec3(25.f - 2.f * t - pendingRecipes.size() * 8.25f, 5.f, 16.f));
+			tomato->setPosition(glm::vec3(ingredientOfThreePos.x - ingredientOfThreeSpacing * t - pendingRecipes.size() * ingredientXOffset, ingredientOfThreePos.y, ingredientOfThreePos.z));
 			recipeModels.push_back(tomato);
 		}
 		pendingRecipes.push_back(recipeModels);
@@ -418,12 +425,12 @@ void Level::askRandomRecipe()
 		Plate* plate = new Plate();
 		plate->init(program);
 		plate->addFood(new MushroomSoup());
-		plate->setPosition(glm::vec3(23.5f - pendingRecipes.size() * 8.25f, 5.f, 18.5f));
+		plate->setPosition(glm::vec3(recipePos.x - pendingRecipes.size() * recipeXOffset, recipePos.y, recipePos.z));
 		recipeModels.push_back(plate);
 		for (int m = 0; m < 3; ++m) {
 			Mushroom* mushroom = new Mushroom();
 			mushroom->init(program);
-			mushroom->setPosition(glm::vec3(25.f - 2.f * m - pendingRecipes.size() * 8.25f, 5.f, 16.f));
+			mushroom->setPosition(glm::vec3(ingredientOfThreePos.x - ingredientOfThreeSpacing * m - pendingRecipes.size() * ingredientXOffset, ingredientOfThreePos.y, ingredientOfThreePos.z));
 			recipeModels.push_back(mushroom);
 		}
 		pendingRecipes.push_back(recipeModels);
@@ -439,11 +446,11 @@ void Level::askRandomRecipe()
 		Salad* salad = new Salad();
 		salad->init(program);
 
-		salad->setPosition(glm::vec3(23.5f - pendingRecipes.size() * 8.25f, 5.f, 18.5f));
+		salad->setPosition(glm::vec3(recipePos.x - pendingRecipes.size() * recipeXOffset, recipePos.y, recipePos.z));
 		recipeModels.push_back(salad);
-		lettuce->setPosition(glm::vec3(24.5f - pendingRecipes.size() * 7.f, 5.f, 16.f));
+		lettuce->setPosition(glm::vec3(ingredientOfTwoPos.x - pendingRecipes.size() * ingredientXOffset, ingredientOfTwoPos.y, ingredientOfTwoPos.z));
 		recipeModels.push_back(lettuce);
-		tomato->setPosition(glm::vec3(24.5f - 2.5f - pendingRecipes.size() * 8.25f, 5.f, 16.f));
+		tomato->setPosition(glm::vec3(ingredientOfTwoPos.x - ingredientOfTwoSpacing - pendingRecipes.size() * ingredientXOffset, ingredientOfTwoPos.y, ingredientOfTwoPos.z));
 		recipeModels.push_back(tomato);
 		pendingRecipes.push_back(recipeModels);
 		break;
@@ -463,11 +470,11 @@ void Level::askRandomRecipe()
 		cookedBeef->cook();
 		burger->addIngredient(cookedBeef);
 
-		burger->setPosition(glm::vec3(23.5f - pendingRecipes.size() * 8.25f, 5.f, 18.5f));
+		burger->setPosition(glm::vec3(recipePos.x - pendingRecipes.size() * recipeXOffset, recipePos.y, recipePos.z));
 		recipeModels.push_back(burger);
-		bread->setPosition(glm::vec3(24.5f - pendingRecipes.size() * 8.25f, 5.f, 16.f));
+		bread->setPosition(glm::vec3(ingredientOfTwoPos.x - pendingRecipes.size() * ingredientXOffset, ingredientOfTwoPos.y, ingredientOfTwoPos.z));
 		recipeModels.push_back(bread);
-		beef->setPosition(glm::vec3(24.5f - 2.5f - pendingRecipes.size() * 8.25f, 5.f, 16.f));
+		beef->setPosition(glm::vec3(ingredientOfTwoPos.x - ingredientOfTwoSpacing - pendingRecipes.size() * ingredientXOffset, ingredientOfTwoPos.y, ingredientOfTwoPos.z));
 		recipeModels.push_back(beef);
 		pendingRecipes.push_back(recipeModels);
 		break;
@@ -492,13 +499,13 @@ void Level::askRandomRecipe()
 		cutCheese->cut();
 		burger->addIngredient(cutCheese);
 		
-		burger->setPosition(glm::vec3(23.5f - pendingRecipes.size() * 8.25f, 5.f, 18.5f));
+		burger->setPosition(glm::vec3(recipePos.x - pendingRecipes.size() * recipeXOffset, recipePos.y, recipePos.z));
 		recipeModels.push_back(burger);
-		bread->setPosition(glm::vec3(25.f - pendingRecipes.size() * 8.25f, 5.f, 16.f));
+		bread->setPosition(glm::vec3(ingredientOfThreePos.x - pendingRecipes.size() * ingredientXOffset, ingredientOfThreePos.y, ingredientOfThreePos.z));
 		recipeModels.push_back(bread);
-		beef->setPosition(glm::vec3(25.f - 2.f - pendingRecipes.size() * 8.25f, 5.f, 16.f));
+		beef->setPosition(glm::vec3(ingredientOfThreePos.x - ingredientOfThreeSpacing - pendingRecipes.size() * ingredientXOffset, ingredientOfThreePos.y, ingredientOfThreePos.z));
 		recipeModels.push_back(beef);
-		cheese->setPosition(glm::vec3(25.f - 4.f - pendingRecipes.size() * 8.25f, 5.f, 16.f));
+		cheese->setPosition(glm::vec3(ingredientOfThreePos.x - ingredientOfThreeSpacing * 2.f - pendingRecipes.size() * ingredientXOffset, ingredientOfThreePos.y, ingredientOfThreePos.z));
 		recipeModels.push_back(cheese);
 		pendingRecipes.push_back(recipeModels);
 		break;
@@ -523,13 +530,13 @@ void Level::askRandomRecipe()
 		cutTomato->cut();
 		burger->addIngredient(cutTomato);
 
-		burger->setPosition(glm::vec3(23.5f - pendingRecipes.size() * 8.25f, 5.f, 18.5f));
+		burger->setPosition(glm::vec3(recipePos.x - pendingRecipes.size() * recipeXOffset, recipePos.y, recipePos.z));
 		recipeModels.push_back(burger);
-		bread->setPosition(glm::vec3(25.f - pendingRecipes.size() * 8.25f, 5.f, 16.f));
+		bread->setPosition(glm::vec3(ingredientOfThreePos.x - pendingRecipes.size() * ingredientXOffset, ingredientOfThreePos.y, ingredientOfThreePos.z));
 		recipeModels.push_back(bread);
-		beef->setPosition(glm::vec3(25.f - 2.f - pendingRecipes.size() * 8.25f, 5.f, 16.f));
+		beef->setPosition(glm::vec3(ingredientOfThreePos.x - ingredientOfThreeSpacing - pendingRecipes.size() * ingredientXOffset, ingredientOfThreePos.y, ingredientOfThreePos.z));
 		recipeModels.push_back(beef);
-		tomato->setPosition(glm::vec3(25.f - 4.f - pendingRecipes.size() * 8.25f, 5.f, 16.f));
+		tomato->setPosition(glm::vec3(ingredientOfThreePos.x - ingredientOfThreeSpacing * 2.f - pendingRecipes.size() * ingredientXOffset, ingredientOfThreePos.y, ingredientOfThreePos.z));
 		recipeModels.push_back(tomato);
 		pendingRecipes.push_back(recipeModels);
 		break;
@@ -554,13 +561,13 @@ void Level::askRandomRecipe()
 		cutLettuce->cut();
 		burger->addIngredient(cutLettuce);
 
-		burger->setPosition(glm::vec3(23.5f - pendingRecipes.size() * 8.25f, 5.f, 18.5f));
+		burger->setPosition(glm::vec3(recipePos.x - pendingRecipes.size() * recipeXOffset, recipePos.y, recipePos.z));
 		recipeModels.push_back(burger);
-		bread->setPosition(glm::vec3(25.f - pendingRecipes.size() * 8.25f, 5.f, 16.f));
+		bread->setPosition(glm::vec3(ingredientOfThreePos.x - pendingRecipes.size() * ingredientXOffset, ingredientOfThreePos.y, ingredientOfThreePos.z));
 		recipeModels.push_back(bread);
-		beef->setPosition(glm::vec3(25.f - 2.f - pendingRecipes.size() * 8.25f, 5.f, 16.f));
+		beef->setPosition(glm::vec3(ingredientOfThreePos.x - ingredientOfThreeSpacing - pendingRecipes.size() * ingredientXOffset, ingredientOfThreePos.y, ingredientOfThreePos.z));
 		recipeModels.push_back(beef);
-		lettuce->setPosition(glm::vec3(25.f - 4.f - pendingRecipes.size() * 8.25f, 5.f, 16.f));
+		lettuce->setPosition(glm::vec3(ingredientOfThreePos.x - ingredientOfThreeSpacing * 2.f - pendingRecipes.size() * ingredientXOffset, ingredientOfThreePos.y, ingredientOfThreePos.z));
 		recipeModels.push_back(lettuce);
 		pendingRecipes.push_back(recipeModels);
 		break;

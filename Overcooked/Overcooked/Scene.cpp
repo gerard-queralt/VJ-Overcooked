@@ -186,13 +186,9 @@ void Scene::update(int deltaTime)
 					switch (arrow->getPosition())
 					{
 					case 0:
-
 					case 1:
-
 					case 2:
-
 					case 3:
-
 					case 4:
 						createLevel(arrow->getPosition() + 1);
 						currentState = PLAYING;
@@ -257,7 +253,7 @@ void Scene::render()
 		texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 
 		glm::vec3 obs = glm::vec3(0.f, 36.f, -24.f);
-		viewMatrix = glm::lookAt(obs, glm::vec3(0.f, 0.f, -(90.f * PI / 180)), glm::vec3(0.f, 1.f, 0.f));
+		viewMatrix = glm::lookAt(obs, glm::vec3(0.f, 0.f, -(22.5f * PI / 180)), glm::vec3(0.f, 1.f, 0.f));
 
 		// Render level
 		modelMatrix = glm::mat4(1.0f);
