@@ -63,6 +63,9 @@ private:
 	int currentState;
 
 	bool timeUp = false;
+
+	Sprite* recipeOutline;
+	Texture recipeOutlineSpritesheet;
 	
 	ShaderProgram texProgram;
 	float currentTime;

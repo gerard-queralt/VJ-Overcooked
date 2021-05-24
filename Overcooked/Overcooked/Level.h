@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "Table.h"
 #include "Food.h"
+#include "Sprite.h"
 
 using namespace std;
 
@@ -57,6 +58,7 @@ public:
 
 	bool deliver(Food* food);
 
+	int getNumberPendingRecipes();
 
 private:
 	void prepareArrays(ShaderProgram &program);
