@@ -37,7 +37,7 @@ Level* LevelFactory::createLevel(int level, ShaderProgram texProgram)
 Level* LevelFactory::createLevel1(ShaderProgram texProgram)
 {
 	Level *lvl = Level::createLevel(glm::vec3(32, 4, 32), texProgram, "images/floor1.png", "images/wall1.png");
-	lvl->setTime(1, 30);
+	lvl->setTime(5, 0);
 	lvl->setPoints(150);
 	//lvl->addPossibleRecipe(Level::ONION_SOUP);
 	lvl->addPossibleRecipe(Level::TOMATO_SOUP);

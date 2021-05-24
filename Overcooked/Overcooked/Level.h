@@ -80,6 +80,8 @@ private:
 	int timeMinutes;
 	int pointsReq;
 	int curPoints = 0;
+
+	bool debug;
 };
 
 

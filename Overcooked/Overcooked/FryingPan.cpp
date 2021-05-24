@@ -61,6 +61,10 @@ void FryingPan::empty()
 {
 	food = NULL;
 	cookingTime = 0;
+	cookedFood = false;
+	cookedUpdated = false;
+	burnedFood = false;
+	burnedUpdated = false;
 }
 
 string FryingPan::whatAmI()

@@ -24,10 +24,8 @@ void Table::update(int deltaTime)
 			bool toolIsPot = this->item->whatAmI() == "Pot";
 			bool toolIsPan = this->item->whatAmI() == "FryingPan";
 			Food* finished = NULL;
-			if (toolIsPot)
-				finished = ((Pot*)(this->item))->getFinishedRecipe();
-			else if(toolIsPan)
-				finished = ((FryingPan*)(this->item))->getFood();
+			if (toolIsPot || toolIsPan)
+				finished = ((Tool*)(this->item))->getFood();
 			if (itemIsATool &&
 				toolFinished &&
 				playerFacingTable &&

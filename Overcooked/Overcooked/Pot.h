@@ -17,7 +17,7 @@ public:
 	bool hasFood();
 
 	bool finished();
-	Food* getFinishedRecipe();
+	Food* getFood();
 	void empty();
 
 	string whatAmI();
@@ -31,6 +31,7 @@ private:
 	std::vector<Food*> foods;
 
 	Food* recipe;
+	bool addedFood = false;
 	bool emptied = false;
 	bool tomatoSoup = false;
 };
