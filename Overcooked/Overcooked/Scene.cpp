@@ -92,6 +92,9 @@ void Scene::init()
 	loseText = Sprite::createSprite(glm::ivec2(128, 32), glm::vec2(1.f, 1.f), &loseTextSpritesheet, &texProgram);
 	loseText->setPosition(glm::vec2(8.f * 32.f, 7.5f * 32.f));
 
+	recipeOutlineSpritesheet.loadFromFile("images/recipeOutline.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	recipeOutline = Sprite::createSprite(glm::ivec2(96.f, 64.f), glm::vec2(1.f, 1.f), &recipeOutlineSpritesheet, &texProgram);
+
 	projection = glm::perspective(45.f / 180.f * PI, float(CAMERA_WIDTH) / float(CAMERA_HEIGHT), 0.1f, 100.f);
 	projection2D = glm::ortho(0.f, float(CAMERA_WIDTH), float(CAMERA_HEIGHT), 0.f);
 	currentTime = 0.0f;
@@ -102,12 +105,11 @@ void Scene::update(int deltaTime)
 	currentTime += deltaTime;
 
 	if (currentState == PLAYING) {
-		currentLevelTime += deltaTime;
-
 		player->update(deltaTime);
 
 		level->update(deltaTime);
 
+		int currentLevelTime = level->getCurrentTime();
 		timeSeconds = level->getSeconds() - (currentLevelTime / 1000) % 60 + secondsIncrement;
 		if (timeSeconds < 0) {
 			secondsIncrement += 60;
@@ -183,13 +185,9 @@ void Scene::update(int deltaTime)
 					switch (arrow->getPosition())
 					{
 					case 0:
-
 					case 1:
-
 					case 2:
-
 					case 3:
-
 					case 4:
 						createLevel(arrow->getPosition() + 1);
 						currentState = PLAYING;
@@ -235,7 +233,18 @@ void Scene::render()
 	glm::mat3 normalMatrix;
 
 	texProgram.use();
-
+	if (currentState == PLAYING || currentState == PAUSED) {
+		texProgram.setUniform1b("bLighting", false);
+		texProgram.setUniformMatrix4f("projection", projection2D);
+		texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
+		glm::mat4 modelview = glm::mat4(1.0f);
+		texProgram.setUniformMatrix4f("modelview", modelview);
+		texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
+		for (int r = 0; r < level->getNumberPendingRecipes(); ++r) {
+			recipeOutline->setPosition(glm::vec2(r * 96.f, 0.f));
+			recipeOutline->render();
+		}
+	}
 	if (currentState == PLAYING || currentState == PAUSED) {
 		texProgram.setUniform1b("bLighting", true);
 		texProgram.setUniformMatrix4f("projection", projection);
@@ -243,7 +252,7 @@ void Scene::render()
 		texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 
 		glm::vec3 obs = glm::vec3(0.f, 36.f, -24.f);
-		viewMatrix = glm::lookAt(obs, glm::vec3(0.f, 0.f, -(90.f * PI / 180)), glm::vec3(0.f, 1.f, 0.f));
+		viewMatrix = glm::lookAt(obs, glm::vec3(0.f, 0.f, -(22.5f * PI / 180)), glm::vec3(0.f, 1.f, 0.f));
 
 		// Render level
 		modelMatrix = glm::mat4(1.0f);
@@ -333,7 +342,6 @@ void Scene::initShaders()
 
 void Scene::createLevel(int levelNum)
 {
-	currentLevelTime = 0;
 	level = LevelFactory::instance().createLevel(levelNum, texProgram);
 	player = new Player();
 	player->init(texProgram);

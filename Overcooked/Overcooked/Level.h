@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "Table.h"
 #include "Food.h"
+#include "Sprite.h"
 
 using namespace std;
 
@@ -54,9 +55,11 @@ public:
 	int getSeconds();
 	int getPoints();
 	int getPointsRequired();
+	int getCurrentTime();
 
 	bool deliver(Food* food);
 
+	int getNumberPendingRecipes();
 
 private:
 	void prepareArrays(ShaderProgram &program);
@@ -80,8 +83,8 @@ private:
 	int timeMinutes;
 	int pointsReq;
 	int curPoints = 0;
-
-	bool debug;
+	int currentTime;
+	int nextRecipeTime;
 };
 
 

@@ -45,7 +45,6 @@ private:
 	int timeSeconds;
 	int timeMinutes;
 	int secondsIncrement = 0;
-	int currentLevelTime;
 
 	Sprite* timeText;
 	Texture timeTextSpritesheet;
@@ -66,6 +65,9 @@ private:
 	int currentState;
 
 	bool timeUp = false;
+
+	Sprite* recipeOutline;
+	Texture recipeOutlineSpritesheet;
 	
 	ShaderProgram texProgram;
 	float currentTime;
