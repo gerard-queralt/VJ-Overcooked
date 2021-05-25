@@ -1,21 +1,26 @@
 #ifndef _EXTINGUISHER_INCLUDE
 #define _EXTINGUISHER_INCLUDE
 
-#include "Tool.h"
+#include "Item.h"
+#include "ParticleSystem.h"
 
 class Extinguisher :
-	public Tool
+	public Item
 {
 public:
 	bool init(ShaderProgram &program);
 	void render(ShaderProgram & program, glm::mat4 viewMatrix);
+	void update(int deltaTime);
 
-	void use();
+	void changeState();
+	bool isActive();
 	void stop();
 
+	bool isFood();
 	string whatAmI();
 
 private:
+	ParticleSystem *particles;
 	bool inUse;
 };
 

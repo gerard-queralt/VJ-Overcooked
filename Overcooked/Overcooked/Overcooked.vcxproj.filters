@@ -299,14 +299,14 @@
     <ClCompile Include="DeliveryConveyor.cpp">
       <Filter>Source Files\Entities\Tables</Filter>
     </ClCompile>
-    <ClCompile Include="Extinguisher.cpp">
-      <Filter>Source Files\Entities\Items\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="Salad.cpp">
       <Filter>Source Files\Entities\Items\Food</Filter>
     </ClCompile>
     <ClCompile Include="Menu.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Extinguisher.cpp">
+      <Filter>Source Files\Entities\Items</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

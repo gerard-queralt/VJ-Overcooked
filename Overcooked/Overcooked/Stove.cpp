@@ -1,5 +1,6 @@
 #include "Stove.h"
 #include "Tool.h"
+#include "Player.h"
 
 #define PI 3.14159f
 
@@ -22,6 +23,9 @@ bool Stove::init(ShaderProgram & program)
 	particles = new ParticleSystem();
 	particles->init(glm::vec2(1.f, 1.f), program, "images/fire.png", 2.f);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+
+	burning = false;
+	putOut = false;
 
 	return loadFromFile("models/Stove.obj", program);
 }
@@ -63,34 +67,52 @@ void Stove::render(ShaderProgram & program, glm::mat4 viewMatrix)
 				else
 					++fireHazardFlashTime;
 			}
-
-			//render particles
-			glDepthMask(GL_FALSE);
-			glEnable(GL_BLEND);
-
-			modelMatrix = glm::mat4(1.0f);
-			program.setUniformMatrix4f("modelview", viewMatrix * modelMatrix);
-			normalMatrix = glm::transpose(glm::inverse(glm::mat3(viewMatrix * modelMatrix)));
-			program.setUniformMatrix3f("normalmatrix", normalMatrix);
-			program.setUniform2f("texCoordDispl", 0.f, 0.f);
-			particles->render(obs);
-
-			glDisable(GL_BLEND);
-			glDepthMask(GL_TRUE);
 			program.setUniform1b("bLighting", true);
 		}
+	}
+	if ((this->item != NULL && !item->isFood() && 0 < ((Tool*)item)->getCookingTime()) || burning) {
+		glm::mat4 modelMatrix;
+		glm::mat3 normalMatrix;
+		glm::vec3 obs = glm::vec3(0.f, 36.f, -24.f);
+		program.setUniform1b("bLighting", false);
+
+		//render particles
+		glDepthMask(GL_FALSE);
+		glEnable(GL_BLEND);
+
+		modelMatrix = glm::mat4(1.0f);
+		program.setUniformMatrix4f("modelview", viewMatrix * modelMatrix);
+		normalMatrix = glm::transpose(glm::inverse(glm::mat3(viewMatrix * modelMatrix)));
+		program.setUniformMatrix3f("normalmatrix", normalMatrix);
+		program.setUniform2f("texCoordDispl", 0.f, 0.f);
+		particles->render(obs);
+
+		glDisable(GL_BLEND);
+		glDepthMask(GL_TRUE);
+		program.setUniform1b("bLighting", true);
 	}
 }
 
 void Stove::update(int deltaTime)
 {
 	Table::update(deltaTime);
+
+	if (item != NULL && ((Tool*)item)->getCookingTime() < BURN_TIME) {
+		putOut = false;
+	}
 	if (item != NULL && ((Tool*)item)->hasFood()) {
 		((Tool*)item)->cookFood(deltaTime);
 	}
+	if (playerInExtinguisherDistance() && player->usingExtinguisher() && burning && !putOut) {
+		putOut = true;
+		burning = false;
+	}
+	if (item != NULL && ((Tool*)item)->getCookingTime() >= BURN_TIME && !burning && !putOut) {
+		burning = true;
+	}
 
 	int nParticlesToSpawn = 5;
-	if (item != NULL && ((Tool*)item)->getCookingTime() >= BURN_TIME) {
+	if (burning) {
 		nParticlesToSpawn *= 2;
 	}
 	ParticleSystem::Particle particle;
@@ -102,7 +124,7 @@ void Stove::update(int deltaTime)
 		angle = 2.f * PI * (i + float(rand()) / RAND_MAX) / nParticlesToSpawn;
 		float extraX = 0.f;
 		float extraZ = 0.f;
-		if (item != NULL && ((Tool*)item)->getCookingTime() >= BURN_TIME) {
+		if (burning) {
 			extraX = -1.f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (1.f - -1.f)));
 			extraZ = -1.f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (1.f - -1.f)));
 			particle.lifetime = 0.5f;
@@ -126,4 +148,16 @@ bool Stove::setItem(Item * item)
 		return ((Tool*) this->item)->addFood((Food*)item);
 	}
 	return false;
+}
+
+bool Stove::playerInExtinguisherDistance()
+{
+	std::vector<glm::vec3> bbox = getBoundingBox();
+	std::vector<glm::vec3> playerBbox = player->getExtinguisherBBox();
+
+	bool en0InsidePlayer = glm::all(glm::greaterThanEqual(bbox[0], playerBbox[0])) && glm::all(glm::lessThanEqual(bbox[0], playerBbox[1]));
+	bool en1InsidePlayer = glm::all(glm::greaterThanEqual(bbox[1], playerBbox[0])) && glm::all(glm::lessThanEqual(bbox[1], playerBbox[1]));
+	bool p0InsideEntity = glm::all(glm::greaterThanEqual(playerBbox[0], bbox[0])) && glm::all(glm::lessThanEqual(playerBbox[0], bbox[1]));
+	bool p1InsideEntity = glm::all(glm::greaterThanEqual(playerBbox[1], bbox[0])) && glm::all(glm::lessThanEqual(playerBbox[1], bbox[1]));
+	return en0InsidePlayer || en1InsidePlayer || p0InsideEntity || p1InsideEntity;
 }

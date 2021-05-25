@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Game.h"
 #include "Tool.h"
+#include "Extinguisher.h"
 
 #define PI 3.14159f
 
@@ -51,6 +52,7 @@ void Player::update(int deltaTime)
 {
 	holdDropCD -= deltaTime;
 	startStopCutting -= deltaTime;
+	startStopExtinguisher -= deltaTime;
 
 	bool walkingInupt = false;
 	if (!cutting) {
@@ -75,6 +77,11 @@ void Player::update(int deltaTime)
 
 	if (holding != NULL && Game::instance().getKey(' '))
 		dropHolding();
+
+	if(holding != NULL && holding->whatAmI() == "Extinguisher" && startStopExtinguisher <= 0 && Game::instance().getKey('c')){
+		((Extinguisher*)holding)->changeState();
+		startStopExtinguisher = ACTION_INTERVAL;
+	}
 
 	int nParticlesToSpawn = 3;
 	ParticleSystem::Particle particle;
@@ -109,11 +116,40 @@ std::vector<glm::vec3> Player::getFrontBBox()
 	//la rotem
 	float xPrime = bbox[0].x * cos(rotation * PI / 180) - bbox[0].z * sin(rotation * PI / 180);
 	float zPrime = bbox[0].z * cos(rotation * PI / 180) + bbox[0].x * sin(rotation * PI / 180);
-	bbox[0].x = xPrime;
+	bbox[0].x = - xPrime;
 	bbox[0].z = zPrime;
 	xPrime = bbox[1].x * cos(rotation * PI / 180) - bbox[1].z * sin(rotation * PI / 180);
 	zPrime = bbox[1].z * cos(rotation * PI / 180) + bbox[1].x * sin(rotation * PI / 180);
-	bbox[1].x = xPrime;
+	bbox[1].x = - xPrime;
+	bbox[1].z = zPrime;
+
+	//la desplacem a la posicio de l'entitat
+	bbox[0] += position;
+	bbox[1] += position;
+
+	return bbox;
+}
+
+std::vector<glm::vec3> Player::getExtinguisherBBox()
+{
+	std::vector<glm::vec3> modelBbox = model->getBoundingBox();
+	std::vector<glm::vec3> bbox;
+	bbox.resize(2);
+	bbox[0] = glm::vec3(modelBbox[0].x, 0.f, modelBbox[1].z);
+	bbox[1] = glm::vec3(modelBbox[1].x, 0.f, modelBbox[1].z + 2.75f);
+
+	//l'escalem
+	bbox[0] *= scale;
+	bbox[1] *= scale;
+
+	//la rotem
+	float xPrime = bbox[0].x * cos(rotation * PI / 180) - bbox[0].z * sin(rotation * PI / 180);
+	float zPrime = bbox[0].z * cos(rotation * PI / 180) + bbox[0].x * sin(rotation * PI / 180);
+	bbox[0].x = - xPrime;
+	bbox[0].z = zPrime;
+	xPrime = bbox[1].x * cos(rotation * PI / 180) - bbox[1].z * sin(rotation * PI / 180);
+	zPrime = bbox[1].z * cos(rotation * PI / 180) + bbox[1].x * sin(rotation * PI / 180);
+	bbox[1].x = - xPrime;
 	bbox[1].z = zPrime;
 
 	//la desplacem a la posicio de l'entitat
@@ -215,6 +251,9 @@ bool Player::hold(Item * item)
 void Player::dropHolding()
 {
 	if (holdDropCD <= 0) {
+		if (holding->whatAmI() == "Extinguisher") {
+			((Extinguisher*)holding)->stop();
+		}
 		if (level->putItemOnTable(holding) != Level::FULL) {
 			holding = NULL;
 			holdDropCD = ACTION_INTERVAL;
@@ -224,7 +263,7 @@ void Player::dropHolding()
 
 void Player::checkStartStopCutting()
 {
-	if (startStopCutting <= 0 && Game::instance().getKey('c') /*hauria de ser CTRL pero en GLUT no se pot*/) {
+	if (holding == NULL && startStopCutting <= 0 && Game::instance().getKey('c') /*hauria de ser CTRL pero en GLUT no se pot*/) {
 		cutting = !cutting;
 		startStopCutting = ACTION_INTERVAL;
 	}
@@ -245,6 +284,14 @@ bool Player::holdingPlate()
 {
 	if (holding != NULL) {
 		return holding->whatAmI() == "Plate";
+	}
+	return false;
+}
+
+bool Player::usingExtinguisher()
+{
+	if (holding != NULL && holding->whatAmI() == "Extinguisher") {
+		return ((Extinguisher*)holding)->isActive();
 	}
 	return false;
 }

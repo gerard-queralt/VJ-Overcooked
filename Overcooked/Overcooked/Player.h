@@ -15,6 +15,7 @@ public:
 	void update(int deltaTime);
 
 	std::vector<glm::vec3> getFrontBBox();
+	std::vector<glm::vec3> getExtinguisherBBox();
 
 	enum PlayerDirections {
 		FRONT = 0, BACK, LEFT, RIGHT
@@ -30,6 +31,7 @@ public:
 	void stopCutting();
 
 	bool holdingPlate();
+	bool usingExtinguisher();
 
 private:
 	void adjustItemPosition();
@@ -43,6 +45,7 @@ private:
 	Item *holding;
 	int holdDropCD = 0;
 	int startStopCutting = 0;
+	int startStopExtinguisher = 0;
 };
 
 #endif // _PLAYER_INCLUDE

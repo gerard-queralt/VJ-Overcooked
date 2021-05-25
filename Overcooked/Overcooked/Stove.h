@@ -15,10 +15,15 @@ public:
 	bool setItem(Item* item);
 
 private:
+	bool playerInExtinguisherDistance();
+private:
 	Billboard* working;
 	Billboard* fireHazard;
 	int fireHazardFlashTime;
 	ParticleSystem *particles;
+
+	bool burning;
+	bool putOut;
 };
 
 #endif //_STOVE_INCLUDE
