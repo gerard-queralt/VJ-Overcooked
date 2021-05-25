@@ -54,31 +54,15 @@ Level* LevelFactory::createLevel1(ShaderProgram texProgram)
 	pan->setPosition(glm::vec3(5.f, 0.f, 0.f));
 	lvl->addItem(pan);
 
-	Mushroom* mushroom = new Mushroom();
-	mushroom->init(texProgram);
-	mushroom->setPosition(glm::vec3(0.f, 0.f, 0.f));
-	lvl->addItem(mushroom);
-
-	mushroom = new Mushroom();
-	mushroom->init(texProgram);
-	mushroom->setPosition(glm::vec3(10.f, 0.f, 0.f));
-	lvl->addItem(mushroom);
-
 	Table* t = new Table();
 	t->init(texProgram);
-	t->setPosition(glm::vec3(14.f, 0.f, 14.f));
+	t->setPosition(glm::vec3(6.f, 0.f, 14.f));
 	lvl->addTable(t);
 
 	CuttingTable* ct = new CuttingTable();
 	ct->init(texProgram);
-	ct->setPosition(glm::vec3(10.f, 0.f, 14.f));
+	ct->setPosition(glm::vec3(2.f, 0.f, 14.f));
 	lvl->addTable(ct);
-
-	//Ceba que posem a la taula de tallar
-	Mushroom* mushroom2 = new Mushroom();
-	mushroom2->init(texProgram);
-	ct->setItem(mushroom2);
-	lvl->addItem(mushroom2);
 
 	//Plat que posem a la taula buida
 	Plate* plate = new Plate();
@@ -95,42 +79,13 @@ Level* LevelFactory::createLevel1(ShaderProgram texProgram)
 
 	Stove* stove = new Stove();
 	stove->init(texProgram);
-	stove->setPosition(glm::vec3(6.f, 0.f, 14.f));
+	stove->setPosition(glm::vec3(-2.f, 0.f, 14.f));
 	lvl->addTable(stove);
-
-	FoodGenerator* fg = new FoodGenerator();
-	fg->setFood("Beef");
-	fg->init(texProgram);
-	fg->setPosition(glm::vec3(2.f, 0.f, 14.f));
-	fg->setLevel(lvl);
-	lvl->addTable(fg);
-
-	fg = new FoodGenerator();
-	fg->setFood("Tomato");
-	fg->init(texProgram);
-	fg->setPosition(glm::vec3(-2.f, 0.f, 14.f));
-	fg->setLevel(lvl);
-	lvl->addTable(fg);
-
-	Bread* bread = new Bread();
-	bread->init(texProgram);
-	bread->setPosition(glm::vec3(-5.f, 0.f, 5.f));
-	lvl->addItem(bread);
 
 	TrashCan* tc = new TrashCan();
 	tc->init(texProgram);
 	tc->setPosition(glm::vec3(-6.f, 0.f, 14.f));
 	lvl->addTable(tc);
-
-	Cheese* c = new Cheese();
-	c->init(texProgram);
-	c->setPosition(glm::vec3(-15.f, 0.f, -15.f));
-	lvl->addItem(c);
-
-	Lettuce* l = new Lettuce();
-	l->init(texProgram);
-	l->setPosition(glm::vec3(-10.f, 0.f, -10.f));
-	lvl->addItem(l);
 
 	DeliveryConveyor* dc = new DeliveryConveyor();
 	dc->init(texProgram);
@@ -141,9 +96,58 @@ Level* LevelFactory::createLevel1(ShaderProgram texProgram)
 
 	Extinguisher* e = new Extinguisher();
 	e->init(texProgram);
-	e->setPosition(glm::vec3(14.f, 0.f, 0.f));
+	e->setPosition(glm::vec3(-12.f, 0.f, 0.f));
 	e->setLevel(lvl);
 	lvl->addItem(e);
+
+	FoodGenerator* fg = new FoodGenerator();
+	fg->setFood("Onion");
+	fg->init(texProgram);
+	fg->setPosition(glm::vec3(14.f, 0.f, 10.f));
+	fg->setLevel(lvl);
+	lvl->addTable(fg);
+
+	fg = new FoodGenerator();
+	fg->setFood("Mushroom");
+	fg->init(texProgram);
+	fg->setPosition(glm::vec3(14.f, 0.f, 6.f));
+	fg->setLevel(lvl);
+	lvl->addTable(fg);
+
+	fg = new FoodGenerator();
+	fg->setFood("Tomato");
+	fg->init(texProgram);
+	fg->setPosition(glm::vec3(14.f, 0.f, 2.f));
+	fg->setLevel(lvl);
+	lvl->addTable(fg);
+
+	fg = new FoodGenerator();
+	fg->setFood("Lettuce");
+	fg->init(texProgram);
+	fg->setPosition(glm::vec3(14.f, 0.f, -2.f));
+	fg->setLevel(lvl);
+	lvl->addTable(fg);
+
+	fg = new FoodGenerator();
+	fg->setFood("Bread");
+	fg->init(texProgram);
+	fg->setPosition(glm::vec3(14.f, 0.f, -6.f));
+	fg->setLevel(lvl);
+	lvl->addTable(fg);
+
+	fg = new FoodGenerator();
+	fg->setFood("Beef");
+	fg->init(texProgram);
+	fg->setPosition(glm::vec3(14.f, 0.f, -10.f));
+	fg->setLevel(lvl);
+	lvl->addTable(fg);
+
+	fg = new FoodGenerator();
+	fg->setFood("Cheese");
+	fg->init(texProgram);
+	fg->setPosition(glm::vec3(14.f, 0.f, -14.f));
+	fg->setLevel(lvl);
+	lvl->addTable(fg);
 
 	return lvl;
 }
