@@ -67,11 +67,11 @@ void Menu::changePosition()
 	case Menu::MAIN:
 		switch (currentPosition)
 		{
-		case 0: setPosition(glm::vec2(11.5f * 32.f, 6.45f * 32.f));
+		case 0: setPosition(glm::vec2(12.75f * 32.f, 5.f * 32.f));
 			break;
-		case 1: setPosition(glm::vec2(13.5f * 32.f, 7.60f * 32.f));
+		case 1: setPosition(glm::vec2(15.75f * 32.f, 7.f * 32.f));
 			break;
-		case 2: setPosition(glm::vec2(10.5f * 32.f, 8.9f * 32.f));
+		case 2: setPosition(glm::vec2(11.75f * 32.f, 9.f * 32.f));
 			break;
 		default:
 			break;
@@ -98,11 +98,11 @@ void Menu::changePosition()
 	case Menu::PAUSE:
 		switch (currentPosition)
 		{
-		case 0: setPosition(glm::vec2(12.75f * 32.f, 6.8f * 32.f));
+		case 0: setPosition(glm::vec2(12.75f * 32.f, 6.2f * 32.f));
 			break;
-		case 1: setPosition(glm::vec2(14.75f * 32.f, 7.9f * 32.f));
+		case 1: setPosition(glm::vec2(15.75f * 32.f, 8.2f * 32.f));
 			break;
-		case 2: setPosition(glm::vec2(11.25f * 32.f, 9.05f * 32.f));
+		case 2: setPosition(glm::vec2(11.75f * 32.f, 10.2f * 32.f));
 			break;
 		default:
 			break;
