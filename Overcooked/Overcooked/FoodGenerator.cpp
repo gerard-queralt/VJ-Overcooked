@@ -1,8 +1,14 @@
 #include "FoodGenerator.h"
 
 #include "Level.h"
+
+#include "Bread.h"
 #include "Beef.h"
 #include "Tomato.h"
+#include "Mushroom.h"
+#include "Onion.h"
+#include "Cheese.h"
+#include "Lettuce.h"
 
 bool FoodGenerator::init(ShaderProgram & program)
 {
@@ -20,6 +26,21 @@ void FoodGenerator::update(int deltaTime)
 		}
 		else if (generates == "Tomato") {
 			item = new Tomato();
+		}
+		else if (generates == "Bread") {
+			item = new Bread();
+		}
+		else if (generates == "Mushroom") {
+			item = new Mushroom();
+		}
+		else if (generates == "Onion") {
+			item = new Onion();
+		}
+		else if (generates == "Lettuce") {
+			item = new Lettuce();
+		}
+		else if (generates == "Cheese") {
+			item = new Cheese();
 		}
 		if (this->item != NULL) {
 			item->init(program);

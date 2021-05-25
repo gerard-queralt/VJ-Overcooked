@@ -4,7 +4,7 @@
 
 bool Extinguisher::init(ShaderProgram & program)
 {
-	setScale(2.f);
+	setScale(.5f);
 
 	inUse = false;
 	// Initialize particle system
