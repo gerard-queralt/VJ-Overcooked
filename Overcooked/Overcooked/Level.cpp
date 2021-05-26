@@ -91,7 +91,7 @@ void Level::update(int deltaTime)
 	for (Table* t : tables) {
 		t->update(deltaTime);
 	}
-	if (nextRecipeTime <= 0 && pendingRecipes.size() < 6) {
+	if (nextRecipeTime <= 0 && pendingRecipes.size() < 5) {
 		askRandomRecipe();
 		nextRecipeTime = 15000; //uns 15 segons
 	}
@@ -266,6 +266,21 @@ bool Level::deliver(Food * food)
 int Level::getNumberPendingRecipes()
 {
 	return pendingRecipes.size();
+}
+
+Item * Level::getNextPendingRecipe()
+{
+	if (pendingRecipes.size() > 0) {
+		Item* recipe = pendingRecipes[0][0]->clone();
+		if (recipe->whatAmI() != "Plate") {
+			Plate* tmpPlate = new Plate();
+			tmpPlate->init(program);
+			tmpPlate->addFood((Food*) recipe);
+			recipe = tmpPlate;
+		}
+		return recipe;
+	}
+	return NULL;
 }
 
 void Level::prepareArrays(ShaderProgram &program)

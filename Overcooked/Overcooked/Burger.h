@@ -18,6 +18,8 @@ public:
 	};
 	Toppings getTopping();
 
+	Item* clone();
+
 private:
 	ShaderProgram program;
 

@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "Tool.h"
 #include "Extinguisher.h"
+#include "Plate.h"
 
 #define PI 3.14159f
 
@@ -53,6 +54,7 @@ void Player::update(int deltaTime)
 	holdDropCD -= deltaTime;
 	startStopCutting -= deltaTime;
 	startStopExtinguisher -= deltaTime;
+	godModeInputsCD -= deltaTime;
 
 	bool walkingInupt = false;
 	if (!cutting) {
@@ -78,9 +80,44 @@ void Player::update(int deltaTime)
 	if (holding != NULL && Game::instance().getKey(' '))
 		dropHolding();
 
-	if(holding != NULL && holding->whatAmI() == "Extinguisher" && startStopExtinguisher <= 0 && Game::instance().getKey('c')){
+	if(holding != NULL && holding->whatAmI() == "Extinguisher" && startStopExtinguisher <= 0 && (Game::instance().getKey('c') || Game::instance().getKey('C'))){
 		((Extinguisher*)holding)->changeState();
 		startStopExtinguisher = ACTION_INTERVAL;
+	}
+
+	if (godModeInputsCD <= 0 && (Game::instance().getKey('g') || Game::instance().getKey('G'))) {
+		godMode = !godMode;
+		godModeInputsCD = ACTION_INTERVAL;
+		if (!godMode) {
+			fireproof = false;
+		}
+	}
+
+	if (godModeInputsCD <= 0 && godMode && (Game::instance().getKey('r') || Game::instance().getKey('R') || Game::instance().getKey('1'))) {
+		Item* nextRecipe = level->getNextPendingRecipe();
+		if (nextRecipe != NULL && holding == NULL) {
+			holding = nextRecipe;
+			level->addItem(holding);
+			holding->setPlayer(this);
+			adjustItemPosition();
+			if (((Plate*)holding)->getFood()->whatAmI() == "Burger" || ((Plate*)holding)->getFood()->whatAmI() == "Salad") {
+				level->addItem(((Plate*)holding)->getFood());
+				((Plate*)holding)->getFood()->setPlayer(this);
+			}
+			holdDropCD = ACTION_INTERVAL;
+			godModeInputsCD = ACTION_INTERVAL;
+		}
+	}
+
+	finishCooking = false;
+	if (godModeInputsCD <= 0 && godMode && (Game::instance().getKey('f') || Game::instance().getKey('F') || Game::instance().getKey('2'))) {
+		finishCooking = true;
+		godModeInputsCD = ACTION_INTERVAL;
+	}
+
+	if (godModeInputsCD <= 0 && godMode && (Game::instance().getKey('b') || Game::instance().getKey('B') || Game::instance().getKey('3'))) {
+		fireproof = !fireproof;
+		godModeInputsCD = ACTION_INTERVAL;
 	}
 
 	int nParticlesToSpawn = 3;
@@ -263,7 +300,7 @@ void Player::dropHolding()
 
 void Player::checkStartStopCutting()
 {
-	if (holding == NULL && startStopCutting <= 0 && Game::instance().getKey('c') /*hauria de ser CTRL pero en GLUT no se pot*/) {
+	if (holding == NULL && startStopCutting <= 0 && (Game::instance().getKey('c') || Game::instance().getKey('C')) /*hauria de ser CTRL pero en GLUT no se pot*/) {
 		cutting = !cutting;
 		startStopCutting = ACTION_INTERVAL;
 	}
@@ -294,6 +331,21 @@ bool Player::usingExtinguisher()
 		return ((Extinguisher*)holding)->isActive();
 	}
 	return false;
+}
+
+bool Player::godModeOn()
+{
+	return godMode;
+}
+
+bool Player::checkFinishCooking()
+{
+	return finishCooking;
+}
+
+bool Player::fireproofOn()
+{
+	return fireproof;
 }
 
 void Player::adjustItemPosition()

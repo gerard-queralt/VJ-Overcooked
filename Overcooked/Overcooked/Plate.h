@@ -21,6 +21,8 @@ public:
 
 	string whatAmI();
 
+	Item* clone();
+
 private:
 	bool assembleRecipe(Food* addedFood);
 

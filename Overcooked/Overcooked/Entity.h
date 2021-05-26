@@ -10,7 +10,6 @@ class Entity
 {
 public:
 	virtual bool init(ShaderProgram &program) = 0;
-	bool loadFromFile(const string &filename, ShaderProgram &program);
 	virtual void update(int deltaTime);
 	virtual void render(ShaderProgram & program, glm::mat4 viewMatrix);
 
@@ -32,6 +31,8 @@ public:
 	void setLevel(Level *level);
 
 protected:
+	bool loadFromFile(const string &filename, ShaderProgram &program);
+
 	bool inContactWithPlayer();
 
 protected:

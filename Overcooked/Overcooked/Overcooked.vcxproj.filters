@@ -174,11 +174,11 @@
     <ClInclude Include="Salad.h">
       <Filter>Header Files\Entities\Items\Food</Filter>
     </ClInclude>
-    <ClInclude Include="Extinguisher.h">
-      <Filter>Header Files\Entities\Items\Tools</Filter>
-    </ClInclude>
     <ClInclude Include="Menu.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Extinguisher.h">
+      <Filter>Header Files\Entities\Items</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

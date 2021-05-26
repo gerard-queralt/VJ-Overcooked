@@ -10,6 +10,8 @@ public:
 	bool init(ShaderProgram &program);
 
 	string whatAmI();
+
+	Item* clone();
 };
 
 #endif //_SALAD_INCLUDE

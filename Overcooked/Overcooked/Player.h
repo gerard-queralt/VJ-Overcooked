@@ -33,6 +33,10 @@ public:
 	bool holdingPlate();
 	bool usingExtinguisher();
 
+	bool godModeOn();
+	bool checkFinishCooking();
+	bool fireproofOn();
+
 private:
 	void adjustItemPosition();
 
@@ -46,6 +50,11 @@ private:
 	int holdDropCD = 0;
 	int startStopCutting = 0;
 	int startStopExtinguisher = 0;
+	int godModeInputsCD = 0;
+
+	bool godMode = false;
+	bool finishCooking = false;
+	bool fireproof = false;
 };
 
 #endif // _PLAYER_INCLUDE
