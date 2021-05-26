@@ -16,6 +16,7 @@
 #define PI 3.14159f
 
 #define INPUT_CD 200
+#define TIME_TO_MENU 5000 //uns 5 segons
 
 enum GameState {
 	MAINMENU, LEVELMENU, PLAYING, PAUSED
@@ -120,29 +121,41 @@ void Scene::update(int deltaTime)
 	currentTime += deltaTime;
 
 	if (currentState == PLAYING) {
-		player->update(deltaTime);
+		if(!timeUp)
+			player->update(deltaTime);
 
 		level->update(deltaTime);
 
-		int currentLevelTime = level->getCurrentTime();
-		timeSeconds = level->getSeconds() - (currentLevelTime / 1000) % 60 + secondsIncrement;
-		if (timeSeconds < 0) {
-			secondsIncrement += 60;
-			timeSeconds += 60;
-			--timeMinutes;
-		}
-		else if (timeSeconds >= 60) {
-			secondsIncrement -= 60;
-			timeSeconds -= 60;
-		}
-		if (timeMinutes < 0) {
-			timeUp = true;
+		if (!timeUp) {
+			int currentLevelTime = level->getCurrentTime();
+			timeSeconds = level->getSeconds() - (currentLevelTime / 1000) % 60 + secondsIncrement;
+			if (timeSeconds < 0) {
+				secondsIncrement += 60;
+				timeSeconds += 60;
+				--timeMinutes;
+			}
+			else if (timeSeconds >= 60) {
+				secondsIncrement -= 60;
+				timeSeconds -= 60;
+			}
+			if (timeMinutes < 0) {
+				timeUp = true;
+			}
+			else {
+				timeSprites[0]->changeNumber(timeSeconds % 10);
+				timeSprites[1]->changeNumber(timeSeconds / 10);
+				timeSprites[2]->changeNumber(timeMinutes % 10);
+				timeSprites[3]->changeNumber(timeMinutes / 10);
+			}
 		}
 		else {
-			timeSprites[0]->changeNumber(timeSeconds % 10);
-			timeSprites[1]->changeNumber(timeSeconds / 10);
-			timeSprites[2]->changeNumber(timeMinutes % 10);
-			timeSprites[3]->changeNumber(timeMinutes / 10);
+			timeToReturnToMenu -= deltaTime;
+			if (timeToReturnToMenu <= 0) {
+				timeUp = false;
+				currentState = LEVELMENU;
+				arrow->setType(Menu::LEVEL);
+				Music::instance().playMenuMusic();
+			}
 		}
 
 		int points = level->getPoints();
@@ -188,7 +201,8 @@ void Scene::update(int deltaTime)
 				case Menu::MAIN:
 					switch (arrow->getPosition())
 					{
-					case 0: { currentState = LEVELMENU;
+					case 0: { 
+						currentState = LEVELMENU;
 						arrow->setType(Menu::LEVEL);
 					}
 						break;
@@ -396,4 +410,5 @@ void Scene::createLevel(int levelNum)
 	}
 
 	timeMinutes = level->getMinutes();
+	timeToReturnToMenu = TIME_TO_MENU;
 }

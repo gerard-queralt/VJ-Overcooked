@@ -55,6 +55,7 @@ private:
 	Texture winTextSpritesheet;
 	Sprite* loseText;
 	Texture loseTextSpritesheet;
+	int timeToReturnToMenu;
 	Sprite* godModeText;
 	Texture godModeTextSpritesheet;
 	Sprite* fireproofText;
