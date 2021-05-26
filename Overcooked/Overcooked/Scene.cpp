@@ -81,6 +81,10 @@ void Scene::init()
 	n->changeNumber(0);
 	pointsSprites.push_back(n);
 
+	slashSpritesheet.loadFromFile("images/slash.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	slash = Sprite::createSprite(glm::ivec2(26, 20), glm::vec2(1.f, 1.f), &slashSpritesheet, &texProgram);
+	slash->setPosition(glm::vec2(26.f, float(CAMERA_HEIGHT) - 26.f * 2.f));
+
 	timeTextSpritesheet.loadFromFile("images/time!.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	timeText = Sprite::createSprite(glm::ivec2(160, 32), glm::vec2(1.f, 1.f), &timeTextSpritesheet, &texProgram);
 	timeText->setPosition(glm::vec2(7.5f * 32.f, 6.f * 32.f));
@@ -150,6 +154,10 @@ void Scene::update(int deltaTime)
 				pointsSprites.push_back(n);
 				points /= 10;
 			}
+		}
+		slash->setPosition(glm::vec2(26.f * (pointsSprites.size() + 1), float(CAMERA_HEIGHT) - 26.f * 1.75f));
+		for (int p = 0; p < pointsRquiredSprites.size(); ++p) {
+			pointsRquiredSprites[p]->setPosition(glm::vec2(26.f * (pointsSprites.size() + 1 + pointsRquiredSprites.size() - p), float(CAMERA_HEIGHT) - 26.f * 1.5f));
 		}
 		if (inputCd >= INPUT_CD && Game::instance().getKey(27)) {
 			currentState = PAUSED;
@@ -304,6 +312,10 @@ void Scene::render()
 		for (int i = pointsSprites.size() - 1; i >= 0; --i) {
 			pointsSprites[i]->render();
 		}
+		slash->render();
+		for (int i = pointsRquiredSprites.size() - 1; i >= 0; --i) {
+			pointsRquiredSprites[i]->render();
+		}
 
 		if (timeUp) {
 			timeText->render();
@@ -364,8 +376,17 @@ void Scene::createLevel(int levelNum)
 
 	level->setPlayer(player);
 
+	int points = level->getPointsRequired();
+	if (points > 0) {
+		pointsRquiredSprites.clear();
+		while (points > 0) {
+			Number* n = new Number();
+			n->init(glm::vec2(26.f, float(CAMERA_HEIGHT) - 26.f * 2.f), texProgram);
+			n->changeNumber(points % 10);
+			pointsRquiredSprites.push_back(n);
+			points /= 10;
+		}
+	}
+
 	timeMinutes = level->getMinutes();
 }
-
-
-

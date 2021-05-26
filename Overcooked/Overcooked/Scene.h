@@ -39,12 +39,15 @@ private:
 	Billboard *billboard;
 	
 	std::vector<Number*> timeSprites;
-	std::vector<Number*> pointsSprites;
 	Sprite* timeSeparator;
 	Texture timeSeparatorSpritesheet;
 	int timeSeconds;
 	int timeMinutes;
 	int secondsIncrement = 0;
+	std::vector<Number*> pointsSprites;
+	std::vector<Number*> pointsRquiredSprites;
+	Sprite* slash;
+	Texture slashSpritesheet;
 
 	Sprite* timeText;
 	Texture timeTextSpritesheet;
