@@ -11,7 +11,7 @@
 
 bool Player::init(ShaderProgram & program)
 {
-	setScale(2.f);
+	setScale(1.f);
 
 	// Initialize particle system
 	ParticleSystem::Particle particle;
@@ -20,7 +20,7 @@ bool Player::init(ShaderProgram & program)
 	particles->init(glm::vec2(0.5f, 0.5f), program, "images/dust.png", 2.f);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 
-	return loadFromFile("models/chr_swordless.obj", program);
+	return loadFromFile("models/Chef.obj", program);
 }
 
 void Player::render(ShaderProgram & program, glm::mat4 viewMatrix)
