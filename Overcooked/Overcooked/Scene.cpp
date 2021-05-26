@@ -108,6 +108,8 @@ void Scene::init()
 	recipeOutlineSpritesheet.loadFromFile("images/recipeOutline.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	recipeOutline = Sprite::createSprite(glm::ivec2(96.f, 64.f), glm::vec2(1.f, 1.f), &recipeOutlineSpritesheet, &texProgram);
 
+	Music::instance().playMenuMusic();
+
 	projection = glm::perspective(45.f / 180.f * PI, float(CAMERA_WIDTH) / float(CAMERA_HEIGHT), 0.1f, 100.f);
 	projection2D = glm::ortho(0.f, float(CAMERA_WIDTH), float(CAMERA_HEIGHT), 0.f);
 	currentTime = 0.0f;
@@ -219,10 +221,13 @@ void Scene::update(int deltaTime)
 				case Menu::PAUSE:
 					switch (arrow->getPosition())
 					{
-					case 0: currentState = PLAYING;
+					case 0: 
+						currentState = PLAYING;
 						break;
-					case 1: { currentState = MAINMENU;
+					case 1: {
+						currentState = MAINMENU;
 						arrow->setType(Menu::MAIN);
+						Music::instance().playMenuMusic();
 					}
 						break;
 					case 2: Game::instance().exit();
@@ -331,7 +336,6 @@ void Scene::render()
 		arrow->render();
 		if (currentState == MAINMENU) {
 			mainMenu->render();
-			Music::instance().playMenuMusic();
 		}
 		else if (currentState == LEVELMENU) {
 			levelMenu->render();
