@@ -11,6 +11,8 @@
 
 #include "LevelFactory.h"
 
+#include "Music.h"
+
 #define PI 3.14159f
 
 #define INPUT_CD 200
@@ -329,6 +331,7 @@ void Scene::render()
 		arrow->render();
 		if (currentState == MAINMENU) {
 			mainMenu->render();
+			Music::instance().playMenuMusic();
 		}
 		else if (currentState == LEVELMENU) {
 			levelMenu->render();
