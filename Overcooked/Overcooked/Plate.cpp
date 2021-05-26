@@ -60,6 +60,7 @@ bool Plate::addFood(Food * food)
 		else {
 			this->food = food;
 			this->food->setPosition(glm::vec3(position.x, position.y + model->getHeight() * scale, position.z));
+			this->food->setRotation(rotation);
 			return true;
 		}
 	}

@@ -304,11 +304,12 @@ void Scene::render()
 		texProgram.setUniformMatrix3f("normalmatrix", normalMatrix);
 		level->render();
 
+		// Render player
+		player->render(texProgram, viewMatrix);
+
 		//Render items
 		level->renderEntities(texProgram, viewMatrix);
 
-		// Render player
-		player->render(texProgram, viewMatrix);
 	}
 
 	// Render HUD
@@ -392,7 +393,23 @@ void Scene::createLevel(int levelNum)
 	level = LevelFactory::instance().createLevel(levelNum, texProgram);
 	player = new Player();
 	player->init(texProgram);
-	player->setPosition(glm::vec3(0.f, 0.f, -5.f));
+	switch (levelNum)
+	{
+	case 1:
+		break;
+	case 2:
+		player->setPosition(glm::vec3(0.f, 0.f, -7.5f));
+		break;
+	case 3:
+		break;
+	case 4:
+		break;
+	case 5:
+		break;
+	default:
+		player->setPosition(glm::vec3(0.f, 0.f, -5.f));
+		break;
+	}
 	player->setLevel(level);
 
 	level->setPlayer(player);

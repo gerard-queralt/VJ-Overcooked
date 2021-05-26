@@ -34,6 +34,7 @@ bool FryingPan::addFood(Food * food)
 	if (this->food == NULL && foodIsValid(food)) {
 		this->food = food;
 		this->food->setPosition(glm::vec3(position.x, position.y + model->getHeight() * scale, position.z));
+		this->food->setRotation(rotation);
 		return true;
 	}
 	return false;

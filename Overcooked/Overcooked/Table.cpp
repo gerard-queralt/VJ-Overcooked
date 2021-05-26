@@ -18,8 +18,7 @@ void Table::update(int deltaTime)
 		this->item->update(deltaTime);
 		if (playerFacingThis() && player->hold(this->item))
 			this->item = NULL;
-		else {
-			bool itemIsATool = !this->item->isFood();
+		else if (!this->item->isFood() && this->item->whatAmI() != "Extinguisher"){
 			bool toolFinished = ((Tool*)(this->item))->finished();
 			bool playerFacingTable = playerFacingThis();
 			bool playerHoldingPlate = player->holdingPlate();
@@ -28,8 +27,7 @@ void Table::update(int deltaTime)
 			Food* finished = NULL;
 			if (toolIsPot || toolIsPan)
 				finished = ((Tool*)(this->item))->getFood();
-			if (itemIsATool &&
-				toolFinished &&
+			if (toolFinished &&
 				playerFacingTable &&
 				playerHoldingPlate &&
 				player->hold(finished)) {
@@ -44,12 +42,17 @@ bool Table::setItem(Item * item)
 {
 	if (this->item == NULL) {
 		item->setPosition(glm::vec3(position.x, 1.5f, position.z));
+		item->setRotation(rotation);
 		this->item = item;
 		return true;
+	}
+	else if (this->item->whatAmI() == "Extinguisher") {
+		return false;
 	}
 	else if (this->item->isFood() && !item->isFood()) {
 		if (((Tool*)item)->addFood((Food*) this->item)) {
 			item->setPosition(glm::vec3(position.x, 1.5f, position.z));
+			item->setRotation(rotation);
 			this->item = item;
 			return true;
 		}
