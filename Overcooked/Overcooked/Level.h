@@ -60,6 +60,7 @@ public:
 	bool deliver(Food* food);
 
 	int getNumberPendingRecipes();
+	Item* getNextPendingRecipe();
 
 private:
 	void prepareArrays(ShaderProgram &program);

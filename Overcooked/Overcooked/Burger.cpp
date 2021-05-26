@@ -68,6 +68,7 @@ bool Burger::addIngredient(Food * food)
 			return loadFromFile("models/BreadLettuce.obj", program);
 		}
 	}
+	return false;
 }
 
 string Burger::whatAmI()
@@ -87,4 +88,9 @@ Burger::Toppings Burger::getTopping()
 		return NOTHING;
 	}
 	return UNFINISHED;
+}
+
+Item * Burger::clone()
+{
+	return new Burger(*this);
 }

@@ -89,6 +89,11 @@ string Plate::whatAmI()
 	return "Plate";
 }
 
+Item * Plate::clone()
+{
+	return new Plate(*this);
+}
+
 bool Plate::assembleRecipe(Food* addedFood)
 {
 	if ((partOfBurgerRecipe(food) && (addedFood->whatAmI() == "Beef" || addedFood->whatAmI() == "Bread")) || (partOfBurgerRecipe(addedFood) && (food->whatAmI() == "Beef" || food->whatAmI() == "Bread"))) {

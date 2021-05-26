@@ -174,14 +174,11 @@
     <ClInclude Include="Salad.h">
       <Filter>Header Files\Entities\Items\Food</Filter>
     </ClInclude>
-    <ClInclude Include="Extinguisher.h">
-      <Filter>Header Files\Entities\Items\Tools</Filter>
-    </ClInclude>
     <ClInclude Include="Menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Music.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Extinguisher.h">
+      <Filter>Header Files\Entities\Items</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -310,9 +307,6 @@
     </ClCompile>
     <ClCompile Include="Extinguisher.cpp">
       <Filter>Source Files\Entities\Items</Filter>
-    </ClCompile>
-    <ClCompile Include="Music.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

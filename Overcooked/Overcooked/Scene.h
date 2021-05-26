@@ -52,6 +52,11 @@ private:
 	Texture winTextSpritesheet;
 	Sprite* loseText;
 	Texture loseTextSpritesheet;
+	Sprite* godModeText;
+	Texture godModeTextSpritesheet;
+	Sprite* fireproofText;
+	Texture fireproofTextSpritesheet;
+
 	Sprite* mainMenu;
 	Texture mainMenuSpriteSheet;
 	Sprite* levelMenu;

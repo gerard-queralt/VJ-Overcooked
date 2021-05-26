@@ -15,7 +15,7 @@
 
 #define PI 3.14159f
 
-#define INPUT_CD 300
+#define INPUT_CD 200
 
 enum GameState {
 	MAINMENU, LEVELMENU, PLAYING, PAUSED
@@ -93,6 +93,13 @@ void Scene::init()
 	loseTextSpritesheet.loadFromFile("images/lose.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	loseText = Sprite::createSprite(glm::ivec2(128, 32), glm::vec2(1.f, 1.f), &loseTextSpritesheet, &texProgram);
 	loseText->setPosition(glm::vec2(8.f * 32.f, 7.5f * 32.f));
+
+	godModeTextSpritesheet.loadFromFile("images/godMode.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	godModeText = Sprite::createSprite(glm::ivec2((32*8) / 1.5f, 32), glm::vec2(1.f, 1.f), &godModeTextSpritesheet, &texProgram);
+	godModeText->setPosition(glm::vec2(CAMERA_WIDTH - (32.f * 8.f) / 1.5f, 0.f));
+	fireproofTextSpritesheet.loadFromFile("images/fireproof.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	fireproofText = Sprite::createSprite(glm::ivec2((32 * 9) / 1.75f, 32), glm::vec2(1.f, 1.f), &fireproofTextSpritesheet, &texProgram);
+	fireproofText->setPosition(glm::vec2(CAMERA_WIDTH - (32 * 9) / 1.75f, 32.f));
 
 	recipeOutlineSpritesheet.loadFromFile("images/recipeOutline.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	recipeOutline = Sprite::createSprite(glm::ivec2(96.f, 64.f), glm::vec2(1.f, 1.f), &recipeOutlineSpritesheet, &texProgram);
@@ -245,6 +252,13 @@ void Scene::render()
 		for (int r = 0; r < level->getNumberPendingRecipes(); ++r) {
 			recipeOutline->setPosition(glm::vec2(r * 96.f, 0.f));
 			recipeOutline->render();
+		}
+		if (player->godModeOn()) {
+			glClear(GL_DEPTH_BUFFER_BIT);
+			godModeText->render();
+			if (player->fireproofOn()) {
+				fireproofText->render();
+			}
 		}
 	}
 	if (currentState == PLAYING || currentState == PAUSED) {

@@ -10,3 +10,8 @@ string Salad::whatAmI()
 {
 	return "Salad";
 }
+
+Item * Salad::clone()
+{
+	return new Salad(*this);
+}

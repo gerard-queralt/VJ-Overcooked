@@ -7,3 +7,8 @@ void Item::update(int deltaTime)
 		player->hold(this);
 	}
 }
+
+Item * Item::clone()
+{
+	return NULL;
+}
