@@ -90,6 +90,7 @@ void Player::update(int deltaTime)
 		godModeInputsCD = ACTION_INTERVAL;
 		if (!godMode) {
 			fireproof = false;
+			theWorld = false;
 		}
 	}
 
