@@ -288,8 +288,10 @@ void Scene::render()
 		glm::mat4 modelview = glm::mat4(1.0f);
 		texProgram.setUniformMatrix4f("modelview", modelview);
 		texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
+
+		float proportion = level->getRecipeRepositionProportion();
 		for (int r = 0; r < level->getNumberPendingRecipes(); ++r) {
-			recipeOutline->setPosition(glm::vec2(r * 96.f, 0.f));
+			recipeOutline->setPosition(glm::vec2((r + 1) * 96.f - 96.f * proportion, 0.f));
 			recipeOutline->render();
 		}
 		if (player->godModeOn()) {

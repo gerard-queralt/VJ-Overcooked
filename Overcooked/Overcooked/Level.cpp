@@ -20,7 +20,8 @@
 
 using namespace std;
 
-#define FLASH_TIME 3000;
+#define FLASH_TIME 3000
+#define RECIPE_REPOSITION_TIME 750
 
 Level *Level::createLevel(const glm::vec3 &levelSize, ShaderProgram &program, const string &floorFile, const string &wallFile)
 {
@@ -42,6 +43,7 @@ Level::Level(const glm::vec3 &levelSize, ShaderProgram &program, const string &f
 	this->program = program;
 	currentTime = 0;
 	nextRecipeTime = 0;
+	recipeListRepositionTime = RECIPE_REPOSITION_TIME;
 }
 
 Level::~Level()
@@ -108,6 +110,14 @@ void Level::update(int deltaTime)
 	}
 	else {
 		nextRecipeTime -= deltaTime;
+	}
+	if (recipeListRepositionTime < RECIPE_REPOSITION_TIME) {
+		recipeReposition();
+		recipeListRepositionTime += deltaTime;
+	}
+	else if (RECIPE_REPOSITION_TIME < recipeListRepositionTime) {
+		recipeListRepositionTime = RECIPE_REPOSITION_TIME;
+		recipeReposition();
 	}
 }
 
@@ -255,19 +265,8 @@ bool Level::deliver(Food * food)
 			curPoints += 150;
 			--pos;
 			pendingRecipes.erase(pendingRecipes.begin() + pos);
-			for (int i = pos; i < pendingRecipes.size(); ++i) {
-				pendingRecipes[i][0]->setPosition(glm::vec3(24.5 - i * 8.75f, 5.f, 21.f));
-				if (pendingRecipes[i].size() == 4) { // tres ingredients
-					for (int j = 0; j < 3; ++j) {
-						pendingRecipes[i][j + 1]->setPosition(glm::vec3(25.5f - 2.f * j - i * 8.25f, 5.f, 18.f));
-					}
-				}
-				else { // dos ingredients
-					for (int j = 0; j < 2; ++j) {
-						pendingRecipes[i][j + 1]->setPosition(glm::vec3(24.5f - j * 2.5f - i * 8.25f, 5.f, 18.f));
-					}
-				}
-			}
+			recipeListRepositionTime = 0;
+			erasedPos = pos;
 		}
 		return true;
 	}
@@ -280,6 +279,11 @@ int Level::getNumberPendingRecipes()
 		return pendingRecipes.size();
 	}
 	return pendingRecipes.size() - 1;
+}
+
+float Level::getRecipeRepositionProportion()
+{
+	return ((float)recipeListRepositionTime) / ((float)RECIPE_REPOSITION_TIME);
 }
 
 Item * Level::getNextPendingRecipe()
@@ -611,6 +615,33 @@ void Level::askRandomRecipe()
 	}
 	default:
 		break;
+	}
+}
+
+void Level::recipeReposition()
+{
+	glm::vec3 recipePos = glm::vec3(24.5, 5.f, 21.f);
+	float recipeXOffset = 8.75f;
+	glm::vec3 ingredientOfThreePos = glm::vec3(25.5f, 5.f, 18.f);
+	float ingredientOfThreeSpacing = 2.f;
+	glm::vec3 ingredientOfTwoPos = glm::vec3(24.5f, 5.f, 18.f);
+	float ingredientOfTwoSpacing = 2.5f;
+	float ingredientXOffset = 8.25f;
+
+	float proportionTimePassed = getRecipeRepositionProportion();
+
+	for (int i = erasedPos; i < pendingRecipes.size(); ++i) {
+		pendingRecipes[i][0]->setPosition(glm::vec3(recipePos.x - (i + 1) * recipeXOffset + recipeXOffset * proportionTimePassed, recipePos.y, recipePos.z));
+		if (pendingRecipes[i].size() == 4) { // tres ingredients
+			for (int j = 0; j < 3; ++j) {
+				pendingRecipes[i][j + 1]->setPosition(glm::vec3(ingredientOfThreePos.x - ingredientOfThreeSpacing * j - (i + 1) * ingredientXOffset + recipeXOffset * proportionTimePassed, ingredientOfThreePos.y, ingredientOfThreePos.z));
+			}
+		}
+		else { // dos ingredients
+			for (int j = 0; j < 2; ++j) {
+				pendingRecipes[i][j + 1]->setPosition(glm::vec3(ingredientOfTwoPos.x - j * ingredientOfTwoSpacing - (i + 1) * ingredientXOffset + recipeXOffset * proportionTimePassed, ingredientOfTwoPos.y, ingredientOfTwoPos.z));
+			}
+		}
 	}
 }
 

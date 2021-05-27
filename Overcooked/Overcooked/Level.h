@@ -60,12 +60,14 @@ public:
 	bool deliver(Food* food);
 
 	int getNumberPendingRecipes();
+	float getRecipeRepositionProportion();
 	Item* getNextPendingRecipe();
 
 private:
 	void prepareArrays(ShaderProgram &program);
 
 	void askRandomRecipe();
+	void recipeReposition();
 
 private:
 	GLuint vao[2];
@@ -88,6 +90,8 @@ private:
 	int nextRecipeTime;
 
 	int flashTime;
+	int recipeListRepositionTime;
+	int erasedPos;
 };
 
 
