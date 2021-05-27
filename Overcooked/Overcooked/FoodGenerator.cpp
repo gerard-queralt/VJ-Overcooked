@@ -20,16 +20,16 @@ bool FoodGenerator::init(ShaderProgram & program)
 
 void FoodGenerator::render(ShaderProgram & program, glm::mat4 viewMatrix)
 {
-	/*if (playerFacingThis() && !facingUpdated) {
-	loadFromFile("models/EmptyTableSoft.obj", program);
-	facingUpdated = true;
-	notFacingUpdated = false;
+	if (playerFacingThis() && !facingUpdated) {
+		loadFromFile("models/FoodPicker" + generates + "Soft.obj", program);
+		facingUpdated = true;
+		notFacingUpdated = false;
 	}
 	else if(!playerFacingThis() && !notFacingUpdated){
-	loadFromFile("models/EmptyTable.obj", program);
-	notFacingUpdated = true;
-	facingUpdated = false;
-	}*/
+		loadFromFile("models/FoodPicker" + generates + ".obj", program);
+		notFacingUpdated = true;
+		facingUpdated = false;
+	}
 	Entity::render(program, viewMatrix);
 }
 

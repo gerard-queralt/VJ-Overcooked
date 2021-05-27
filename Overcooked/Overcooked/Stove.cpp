@@ -32,16 +32,16 @@ bool Stove::init(ShaderProgram & program)
 
 void Stove::render(ShaderProgram & program, glm::mat4 viewMatrix)
 {
-	/*if (playerFacingThis() && !facingUpdated) {
-	loadFromFile("models/EmptyTableSoft.obj", program);
-	facingUpdated = true;
-	notFacingUpdated = false;
+	if (playerFacingThis() && !facingUpdated) {
+		loadFromFile("models/StoveSoft.obj", program);
+		facingUpdated = true;
+		notFacingUpdated = false;
 	}
 	else if(!playerFacingThis() && !notFacingUpdated){
-	loadFromFile("models/EmptyTable.obj", program);
-	notFacingUpdated = true;
-	facingUpdated = false;
-	}*/
+		loadFromFile("models/Stove.obj", program);
+		notFacingUpdated = true;
+		facingUpdated = false;
+	}
 	Entity::render(program, viewMatrix);
 	if (this->item != NULL && !item->isFood()) {
 		if (0 < ((Tool*) item)->getCookingTime()) {

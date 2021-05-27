@@ -7,6 +7,21 @@ bool TrashCan::init(ShaderProgram & program)
 	return loadFromFile("models/TrashCan.obj", program);
 }
 
+void TrashCan::render(ShaderProgram & program, glm::mat4 viewMatrix)
+{
+	if (playerFacingThis() && !facingUpdated) {
+		loadFromFile("models/TrashCanSoft.obj", program);
+		facingUpdated = true;
+		notFacingUpdated = false;
+	}
+	else if (!playerFacingThis() && !notFacingUpdated) {
+		loadFromFile("models/TrashCan.obj", program);
+		notFacingUpdated = true;
+		facingUpdated = false;
+	}
+	Entity::render(program, viewMatrix);
+}
+
 bool TrashCan::setItem(Item * item)
 {
 	if (item->isFood()) {

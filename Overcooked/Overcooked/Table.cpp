@@ -14,7 +14,7 @@ bool Table::init(ShaderProgram & program)
 
 void Table::render(ShaderProgram & program, glm::mat4 viewMatrix)
 {
-	/*if (playerFacingThis() && !facingUpdated) {
+	if (playerFacingThis() && !facingUpdated) {
 		loadFromFile("models/EmptyTableSoft.obj", program);
 		facingUpdated = true;
 		notFacingUpdated = false;
@@ -23,7 +23,7 @@ void Table::render(ShaderProgram & program, glm::mat4 viewMatrix)
 		loadFromFile("models/EmptyTable.obj", program);
 		notFacingUpdated = true;
 		facingUpdated = false;
-	}*/
+	}
 	Entity::render(program, viewMatrix);
 }
 
