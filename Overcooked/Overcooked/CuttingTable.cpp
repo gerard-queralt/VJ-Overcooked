@@ -3,6 +3,8 @@
 #include "Player.h"
 #include "Onion.h"
 
+#include "Music.h"
+
 #define CUTTING_TIME 500
 
 bool CuttingTable::init(ShaderProgram & program)
@@ -53,7 +55,7 @@ void CuttingTable::update(int deltaTime)
 		player->checkStartStopCutting();
 	if (item != NULL && item->isFood() && !((Food*) item)->isCut() && playerFacingThis() && player->isCutting()) {
 		if (!playingSound) {
-			//play sound
+			Music::instance().playSoundEffect();
 			playingSound = true;
 		}
 		
@@ -65,7 +67,7 @@ void CuttingTable::update(int deltaTime)
 		}
 	}
 	else {
-		//stop sound
+		Music::instance().stopSoundEffect();
 		playingSound = false;
 	}
 }

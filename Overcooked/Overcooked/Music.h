@@ -21,11 +21,16 @@ public:
 	void playGameMusic(int level);
 	void stopMusic();
 
+	void playSoundEffect();
+	bool validSoundEffect();
+	void stopSoundEffect();
+
 private:
 	ISoundEngine* engine;
+	ISoundEngine* effect;
 	ISound* music;
 
-	void setVolume();
+	void setVolume(int vol);
 };
 
 #endif //_MUSIC_INCLUDE
