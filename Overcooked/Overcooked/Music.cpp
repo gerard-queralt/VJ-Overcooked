@@ -5,7 +5,6 @@
 Music::Music()
 {
 	engine = createIrrKlangDevice();
-	effect = createIrrKlangDevice();
 }
 
 
@@ -44,19 +43,80 @@ void Music::stopMusic()
 	music->stop();
 }
 
-void Music::playSoundEffect()
+void Music::playSoundEffect(int sound)
 {
-	effect->play2D("music/cutting.mp3", true, false, true, ESM_AUTO_DETECT, true);
+	switch (sound)
+	{
+	case 1:
+		cutting = engine->play2D("music/cutting.mp3", true, false, true);
+		break;
+	case 2:
+		alarm = engine->play2D("music/alarm.mp3", true, false, true);
+		break;
+	case 3:
+		steps = engine->play2D("music/footsteps.mp3", true, false, true);
+		break;
+	case 4:
+		arrow = engine->play2D("music/arrow.mp3", false, false, true);
+		break;
+	case 5:
+		clock = engine->play2D("music/foodReady.mp3", false, false, true);
+		break;
+	case 6:
+		pick = engine->play2D("music/pickItem.mp3", false, false, true);
+		break;
+	case 7:
+		stove = engine->play2D("music/stove.mp3", true, false, true);
+		break;
+	case 8:
+		corDish = engine->play2D("music/correct.mp3", false, false, true);
+		break;
+	case 9:
+		incDish = engine->play2D("music/incorrect.mp3", false, false, true);
+		break;
+	default:
+		break;
+	}
 }
 
-bool Music::validSoundEffect()
-{
-	return effect;
-}
 
-void Music::stopSoundEffect()
+void Music::stopSoundEffect(int sound)
 {
-	effect->stopAllSounds();
+	switch (sound)
+	{
+	case 1: 
+		if (cutting) {
+			cutting->stop();
+		}
+		break;
+	case 2:
+		if (alarm) {
+			alarm->stop();
+		}
+		break;
+	case 3:
+		if (steps) {
+			steps->stop();
+		}
+		break;
+	case 4:
+		break;
+	case 5:
+		break;
+	case 6:
+		break;
+	case 7:
+		if (stove) {
+			stove->stop();
+		}
+		break;
+	case 8:
+		break;
+	case 9:
+		break;
+	default:
+		break;
+	}
 }
 
 void Music::setVolume(int vol)

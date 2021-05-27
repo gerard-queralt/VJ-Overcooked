@@ -57,6 +57,8 @@ private:
 	bool finishCooking = false;
 	bool fireproof = false;
 	bool theWorld = false;
+
+	bool playingSound;
 };
 
 #endif // _PLAYER_INCLUDE

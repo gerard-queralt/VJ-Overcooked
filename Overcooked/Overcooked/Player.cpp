@@ -4,6 +4,8 @@
 #include "Extinguisher.h"
 #include "Plate.h"
 
+#include "Music.h"
+
 #define PI 3.14159f
 
 #define PLAYER_SPEED 0.2f
@@ -13,6 +15,8 @@
 bool Player::init(ShaderProgram & program)
 {
 	setScale(1.f);
+
+	playingSound = false;
 
 	// Initialize particle system
 	ParticleSystem::Particle particle;
@@ -76,6 +80,14 @@ void Player::update(int deltaTime)
 		}
 	}
 	walking = walkingInupt;
+	if (walking && !playingSound) {
+		Music::instance().playSoundEffect(3);
+		playingSound = true;
+	}
+	else if (!walking && playingSound) {
+		Music::instance().stopSoundEffect(3);
+		playingSound = false;
+	}
 
 	if (holding != NULL && Game::instance().getKey(' '))
 		dropHolding();

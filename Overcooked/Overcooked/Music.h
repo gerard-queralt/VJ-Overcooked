@@ -21,13 +21,20 @@ public:
 	void playGameMusic(int level);
 	void stopMusic();
 
-	void playSoundEffect();
-	bool validSoundEffect();
-	void stopSoundEffect();
+	void playSoundEffect(int sound);
+	void stopSoundEffect(int sound);
 
 private:
 	ISoundEngine* engine;
-	ISoundEngine* effect;
+	ISound* cutting; //1
+	ISound* alarm; //2
+	ISound* steps; //3
+	ISound* arrow; //4
+	ISound* clock; //5
+	ISound* pick; //6
+	ISound* stove; //7
+	ISound* corDish; //8
+	ISound* incDish; //9
 	ISound* music;
 
 	void setVolume(int vol);

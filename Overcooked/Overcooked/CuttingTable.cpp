@@ -55,7 +55,7 @@ void CuttingTable::update(int deltaTime)
 		player->checkStartStopCutting();
 	if (item != NULL && item->isFood() && !((Food*) item)->isCut() && playerFacingThis() && player->isCutting()) {
 		if (!playingSound) {
-			Music::instance().playSoundEffect();
+			Music::instance().playSoundEffect(1);
 			playingSound = true;
 		}
 		
@@ -67,7 +67,7 @@ void CuttingTable::update(int deltaTime)
 		}
 	}
 	else if(playingSound){
-		Music::instance().stopSoundEffect();
+		Music::instance().stopSoundEffect(1);
 		playingSound = false;
 	}
 }
