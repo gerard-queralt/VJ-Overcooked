@@ -20,6 +20,8 @@
 
 using namespace std;
 
+#define FLASH_TIME 3000;
+
 Level *Level::createLevel(const glm::vec3 &levelSize, ShaderProgram &program, const string &floorFile, const string &wallFile)
 {
 	Level *level = new Level(levelSize, program, floorFile, wallFile);
@@ -77,9 +79,12 @@ void Level::renderEntities(ShaderProgram texProgram, glm::mat4 viewMatrix)
 		t->render(texProgram, viewMatrix);
 	}
 	glClear(GL_DEPTH_BUFFER_BIT);
-	for (std::vector<Item*> recipe : pendingRecipes) {
-		for (Item* i : recipe) {
-			i->render(texProgram, viewMatrix);
+	for (int r = 0; r < pendingRecipes.size(); ++r) {
+		if (r < pendingRecipes.size() - 1 || (flashTime >= 0 && (flashTime/100) % 3 == 0) || flashTime < 0) {
+			std::vector<Item*> recipe = pendingRecipes[r];
+			for (Item* i : recipe) {
+				i->render(texProgram, viewMatrix);
+			}
 		}
 	}
 }
@@ -87,6 +92,7 @@ void Level::renderEntities(ShaderProgram texProgram, glm::mat4 viewMatrix)
 void Level::update(int deltaTime)
 {
 	currentTime += deltaTime;
+	flashTime -= deltaTime;
 
 	for (Item* i : items) {
 		i->update(deltaTime);
@@ -253,7 +259,7 @@ bool Level::deliver(Food * food)
 				pendingRecipes[i][0]->setPosition(glm::vec3(24.5 - i * 8.75f, 5.f, 21.f));
 				if (pendingRecipes[i].size() == 4) { // tres ingredients
 					for (int j = 0; j < 3; ++j) {
-						pendingRecipes[i][j+1]->setPosition(glm::vec3(25.5f - 2.f * j - i * 8.25f, 5.f, 18.f));
+						pendingRecipes[i][j + 1]->setPosition(glm::vec3(25.5f - 2.f * j - i * 8.25f, 5.f, 18.f));
 					}
 				}
 				else { // dos ingredients
@@ -270,7 +276,10 @@ bool Level::deliver(Food * food)
 
 int Level::getNumberPendingRecipes()
 {
-	return pendingRecipes.size();
+	if ((flashTime >= 0 && (flashTime / 100) % 3 == 0) || (flashTime < 0)){
+		return pendingRecipes.size();
+	}
+	return pendingRecipes.size() - 1;
 }
 
 Item * Level::getNextPendingRecipe()
@@ -287,40 +296,6 @@ Item * Level::getNextPendingRecipe()
 	}
 	return NULL;
 }
-
-/* crec que aixo no fa falta
-std::vector<std::vector<glm::vec2>> Level::getWorkingPositionsAndTime()
-{
-	std::vector<std::vector<glm::vec2>> result;
-
-	for (Item* i : items) {
-		if (!i->isFood() && i->whatAmI() != "Extinguisher") {
-			int cookingTime = ((Tool*)i)->getCookingTime();
-			if (cookingTime > 0) {
-				glm::vec2 pos = glm::vec2(i->getPosition().x, i->getPosition().z);
-				glm::vec2 time = glm::vec2(cookingTime, COOKING_TIME);
-				std::vector<glm::vec2> itemInfo;
-				itemInfo.push_back(pos);
-				itemInfo.push_back(time);
-				result.push_back(itemInfo);
-			}
-		}
-	}
-
-	for (Table* t : tables) {
-		if (t->getCuttingTime() > 0) {
-			glm::vec2 pos = glm::vec2(t->getPosition().x, t->getPosition().z);
-			glm::vec2 time = glm::vec2(t->getCuttingTime(), CUTTING_TIME);
-			std::vector<glm::vec2> tableInfo;
-			tableInfo.push_back(pos);
-			tableInfo.push_back(time);
-			result.push_back(tableInfo);
-		}
-	}
-
-	return result;
-}
-*/
 
 void Level::prepareArrays(ShaderProgram &program)
 {
@@ -440,6 +415,8 @@ void Level::askRandomRecipe()
 	glm::vec3 ingredientOfTwoPos = glm::vec3(24.5f, 5.f, 18.f);
 	float ingredientOfTwoSpacing = 2.5f;
 	float ingredientXOffset = 8.25f;
+
+	flashTime = FLASH_TIME;
 
 	int randomRecipe = (rand() % static_cast<int>(recipes.size()));
 	PossibleRecipes recipe = recipes[randomRecipe];

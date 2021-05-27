@@ -40,15 +40,7 @@ void Stove::render(ShaderProgram & program, glm::mat4 viewMatrix)
 			glm::vec3 obs = glm::vec3(0.f, 36.f, -24.f);
 			program.setUniform1b("bLighting", false);
 
-			/*if (((Tool*)item)->getCookingTime() < COOKING_TIME) {
-				//render billboard
-				modelMatrix = glm::mat4(1.0f);
-				program.setUniformMatrix4f("modelview", viewMatrix * modelMatrix);
-				normalMatrix = glm::transpose(glm::inverse(glm::mat3(viewMatrix * modelMatrix)));
-				program.setUniformMatrix3f("normalmatrix", normalMatrix);
-				working->render(glm::vec3(position.x, 2.f, position.z), obs);
-			}
-			else*/ if (((Tool*)item)->getCookingTime() - COOKING_TIME >= (BURN_TIME - COOKING_TIME) / 2 && ((Tool*)item)->getCookingTime() < BURN_TIME) {
+			if (((Tool*)item)->getCookingTime() - COOKING_TIME >= (BURN_TIME - COOKING_TIME) / 2 && ((Tool*)item)->getCookingTime() < BURN_TIME) {
 				if (fireHazardFlashTime >= FLASH_TIME) {
 					//render billboard
 					modelMatrix = glm::mat4(1.0f);

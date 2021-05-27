@@ -62,8 +62,6 @@ public:
 	int getNumberPendingRecipes();
 	Item* getNextPendingRecipe();
 
-	//std::vector<std::vector<glm::vec2> > getWorkingPositionsAndTime(); //Matriu on cada fila es una entitat del nivell que esta treballant, i cada columna te dos vec3, el primer amb la posicio (x, z) de l'entitat i el segon amb el temps actual i el temps total del proces
-
 private:
 	void prepareArrays(ShaderProgram &program);
 
@@ -88,6 +86,8 @@ private:
 	int curPoints = 0;
 	int currentTime;
 	int nextRecipeTime;
+
+	int flashTime;
 };
 
 
