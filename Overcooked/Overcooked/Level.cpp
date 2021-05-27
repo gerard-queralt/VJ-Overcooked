@@ -94,8 +94,10 @@ void Level::update(int deltaTime)
 	for (Table* t : tables) {
 		t->update(deltaTime);
 	}
-	if (nextRecipeTime <= 0 && pendingRecipes.size() < 5) {
-		askRandomRecipe();
+	if (nextRecipeTime <= 0) {
+		if (pendingRecipes.size() < 5) {
+			askRandomRecipe();
+		}
 		nextRecipeTime = 15000; //uns 15 segons
 	}
 	else {

@@ -417,16 +417,22 @@ void Scene::createLevel(int levelNum)
 
 	level->setPlayer(player);
 
+	pointsSprites.clear();
+	Number* n = new Number();
+	n->init(glm::vec2(26.f, float(CAMERA_HEIGHT) - 26.f * 2.f), texProgram);
+	n->changeNumber(0);
+	pointsSprites.push_back(n);
+
+	slash->setPosition(glm::vec2(26.f, float(CAMERA_HEIGHT) - 26.f * 2.f));
+
 	int points = level->getPointsRequired();
-	if (points > 0) {
-		pointsRquiredSprites.clear();
-		while (points > 0) {
-			Number* n = new Number();
-			n->init(glm::vec2(26.f, float(CAMERA_HEIGHT) - 26.f * 2.f), texProgram);
-			n->changeNumber(points % 10);
-			pointsRquiredSprites.push_back(n);
-			points /= 10;
-		}
+	pointsRquiredSprites.clear();
+	while (points > 0) {
+		Number* n = new Number();
+		n->init(glm::vec2(26.f, float(CAMERA_HEIGHT) - 26.f * 2.f), texProgram);
+		n->changeNumber(points % 10);
+		pointsRquiredSprites.push_back(n);
+		points /= 10;
 	}
 
 	timeMinutes = level->getMinutes();
