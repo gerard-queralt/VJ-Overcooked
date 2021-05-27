@@ -18,9 +18,14 @@ public:
 
 	~Music();
 	void playMenuMusic();
+	void playGameMusic(int level);
+	void stopMusic();
 
 private:
 	ISoundEngine* engine;
+	ISound* music;
+
+	void setVolume();
 };
 
 #endif //_MUSIC_INCLUDE

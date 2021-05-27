@@ -222,7 +222,9 @@ void Scene::update(int deltaTime)
 					case 2:
 					case 3:
 					case 4:
+						Music::instance().stopMusic();
 						createLevel(arrow->getPosition() + 1);
+						Music::instance().playGameMusic(arrow->getPosition() + 1);
 						currentState = PLAYING;
 						break;
 					case 5:
@@ -241,6 +243,7 @@ void Scene::update(int deltaTime)
 					case 1: {
 						currentState = MAINMENU;
 						arrow->setType(Menu::MAIN);
+						Music::instance().stopMusic();
 						Music::instance().playMenuMusic();
 					}
 						break;
