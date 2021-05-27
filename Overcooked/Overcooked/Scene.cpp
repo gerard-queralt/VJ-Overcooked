@@ -179,6 +179,7 @@ void Scene::update(int deltaTime)
 		if (inputCd >= INPUT_CD && Game::instance().getKey(27)) {
 			currentState = PAUSED;
 			arrow->setType(Menu::PAUSE);
+			inputCd = 0;
 		}
 		else
 		{
@@ -255,6 +256,10 @@ void Scene::update(int deltaTime)
 				default:
 					break;
 				}
+				inputCd = 0;
+			}
+			else if (currentState == PAUSED && Game::instance().getKey(27)) {
+				currentState = PLAYING;
 				inputCd = 0;
 			}
 		}
