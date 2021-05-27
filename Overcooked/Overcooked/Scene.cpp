@@ -127,25 +127,27 @@ void Scene::update(int deltaTime)
 		level->update(deltaTime);
 
 		if (!timeUp) {
-			int currentLevelTime = level->getCurrentTime();
-			timeSeconds = level->getSeconds() - (currentLevelTime / 1000) % 60 + secondsIncrement;
-			if (timeSeconds < 0) {
-				secondsIncrement += 60;
-				timeSeconds += 60;
-				--timeMinutes;
-			}
-			else if (timeSeconds >= 60) {
-				secondsIncrement -= 60;
-				timeSeconds -= 60;
-			}
-			if (timeMinutes < 0) {
-				timeUp = true;
-			}
-			else {
-				timeSprites[0]->changeNumber(timeSeconds % 10);
-				timeSprites[1]->changeNumber(timeSeconds / 10);
-				timeSprites[2]->changeNumber(timeMinutes % 10);
-				timeSprites[3]->changeNumber(timeMinutes / 10);
+			if (!player->timeFrozen()) {
+				int currentLevelTime = level->getCurrentTime();
+				timeSeconds = level->getSeconds() - (currentLevelTime / 1000) % 60 + secondsIncrement;
+				if (timeSeconds < 0) {
+					secondsIncrement += 60;
+					timeSeconds += 60;
+					--timeMinutes;
+				}
+				else if (timeSeconds >= 60) {
+					secondsIncrement -= 60;
+					timeSeconds -= 60;
+				}
+				if (timeMinutes < 0) {
+					timeUp = true;
+				}
+				else {
+					timeSprites[0]->changeNumber(timeSeconds % 10);
+					timeSprites[1]->changeNumber(timeSeconds / 10);
+					timeSprites[2]->changeNumber(timeMinutes % 10);
+					timeSprites[3]->changeNumber(timeMinutes / 10);
+				}
 			}
 		}
 		else {
@@ -267,6 +269,8 @@ void Scene::update(int deltaTime)
 		{
 			inputCd += deltaTime;
 		}
+
+		arrow->update(deltaTime);
 	}
 	
 }

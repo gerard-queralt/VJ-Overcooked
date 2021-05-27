@@ -36,6 +36,7 @@ public:
 	bool godModeOn();
 	bool checkFinishCooking();
 	bool fireproofOn();
+	bool timeFrozen();
 
 private:
 	void adjustItemPosition();
@@ -55,6 +56,7 @@ private:
 	bool godMode = false;
 	bool finishCooking = false;
 	bool fireproof = false;
+	bool theWorld = false;
 };
 
 #endif // _PLAYER_INCLUDE

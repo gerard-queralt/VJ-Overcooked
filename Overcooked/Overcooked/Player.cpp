@@ -120,6 +120,11 @@ void Player::update(int deltaTime)
 		godModeInputsCD = ACTION_INTERVAL;
 	}
 
+	if (godModeInputsCD <= 0 && godMode && (Game::instance().getKey('t') || Game::instance().getKey('T') || Game::instance().getKey('4'))) {
+		theWorld = !theWorld;
+		godModeInputsCD = ACTION_INTERVAL;
+	}
+
 	int nParticlesToSpawn = 3;
 	ParticleSystem::Particle particle;
 
@@ -346,6 +351,11 @@ bool Player::checkFinishCooking()
 bool Player::fireproofOn()
 {
 	return fireproof;
+}
+
+bool Player::timeFrozen()
+{
+	return theWorld;
 }
 
 void Player::adjustItemPosition()

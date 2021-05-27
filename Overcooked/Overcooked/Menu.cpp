@@ -7,6 +7,13 @@ void Menu::init(ShaderProgram & shaderProgram)
 
 }
 
+void Menu::update(int deltaTime)
+{
+	currentTime += deltaTime;
+	float displacement = sin( ((float) currentTime) / 200.f) * 8.f;
+	sprite->setPosition(glm::vec2(position.x + displacement, position.y));
+}
+
 void Menu::render()
 {
 	sprite->render();
@@ -111,5 +118,7 @@ void Menu::changePosition()
 	default:
 		break;
 	}
+	
+	currentTime = 0;
 }
 

@@ -9,6 +9,7 @@ public:
 
 	enum Type{MAIN, LEVEL, PAUSE};
 	void init(ShaderProgram &shaderProgram);
+	void update(int deltaTime);
 	void render();
 
 	void setPosition(const glm::vec2 &pos);
@@ -23,6 +24,9 @@ public:
 	Type getType();
 
 private:
+	void changePosition();
+
+private:
 	glm::vec2 position;
 	Texture spritesheet;
 	Sprite *sprite;
@@ -31,8 +35,7 @@ private:
 
 	Type type;
 	int currentPosition;
-
-	void changePosition();
+	int currentTime;
 };
 
 #endif // _MENU_INCLUDE
