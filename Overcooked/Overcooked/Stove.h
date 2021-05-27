@@ -17,13 +17,15 @@ public:
 private:
 	bool playerInExtinguisherDistance();
 private:
-	//Billboard* working;
 	Billboard* fireHazard;
 	int fireHazardFlashTime;
 	ParticleSystem *particles;
 
 	bool burning;
 	bool putOut;
+
+	bool facingUpdated = false;
+	bool notFacingUpdated = false;
 };
 
 #endif //_STOVE_INCLUDE

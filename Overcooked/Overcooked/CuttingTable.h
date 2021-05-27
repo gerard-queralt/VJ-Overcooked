@@ -16,6 +16,9 @@ private:
 	Billboard* working;
 
 	int cuttingTime = 0;
+
+	bool facingUpdated = false;
+	bool notFacingUpdated = false;
 };
 
 #endif //_CUTTING_TABLE_INCLUDE

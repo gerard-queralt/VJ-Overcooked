@@ -9,6 +9,7 @@ class Table :
 {
 public:
 	virtual bool init(ShaderProgram &program);
+	virtual void render(ShaderProgram & program, glm::mat4 viewMatrix);
 	void update(int deltaTime);
 
 	virtual bool setItem(Item* item);
@@ -19,6 +20,10 @@ public:
 
 protected:
 	Item* item = NULL;
+
+private:
+	bool facingUpdated = false;
+	bool notFacingUpdated = false;
 };
 
 #endif //_TABLE_INCLUDE

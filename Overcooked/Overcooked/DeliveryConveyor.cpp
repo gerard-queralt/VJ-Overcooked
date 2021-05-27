@@ -8,6 +8,21 @@ bool DeliveryConveyor::init(ShaderProgram & program)
 	return loadFromFile("models/DeliveryConveyor.obj", program);
 }
 
+void DeliveryConveyor::render(ShaderProgram & program, glm::mat4 viewMatrix)
+{
+	/*if (playerFacingThis() && !facingUpdated) {
+	loadFromFile("models/EmptyTableSoft.obj", program);
+	facingUpdated = true;
+	notFacingUpdated = false;
+	}
+	else if(!playerFacingThis() && !notFacingUpdated){
+	loadFromFile("models/EmptyTable.obj", program);
+	notFacingUpdated = true;
+	facingUpdated = false;
+	}*/
+	Entity::render(program, viewMatrix);
+}
+
 bool DeliveryConveyor::setItem(Item * item)
 {
 	if (this->item == NULL && item->whatAmI() == "Plate" && ((Plate*) item)->getFood() != NULL) {

@@ -33,6 +33,16 @@ void CuttingTable::render(ShaderProgram & program, glm::mat4 viewMatrix)
 		
 		program.setUniform1b("bLighting", true);
 	}
+	/*if (playerFacingThis() && !facingUpdated) {
+	loadFromFile("models/EmptyTableSoft.obj", program);
+	facingUpdated = true;
+	notFacingUpdated = false;
+	}
+	else if(!playerFacingThis() && !notFacingUpdated){
+	loadFromFile("models/EmptyTable.obj", program);
+	notFacingUpdated = true;
+	facingUpdated = false;
+	}*/
 	Entity::render(program, viewMatrix);
 }
 

@@ -12,6 +12,21 @@ bool Table::init(ShaderProgram & program)
 	return loadFromFile("models/EmptyTable.obj", program);
 }
 
+void Table::render(ShaderProgram & program, glm::mat4 viewMatrix)
+{
+	/*if (playerFacingThis() && !facingUpdated) {
+		loadFromFile("models/EmptyTableSoft.obj", program);
+		facingUpdated = true;
+		notFacingUpdated = false;
+	}
+	else if(!playerFacingThis() && !notFacingUpdated){
+		loadFromFile("models/EmptyTable.obj", program);
+		notFacingUpdated = true;
+		facingUpdated = false;
+	}*/
+	Entity::render(program, viewMatrix);
+}
+
 void Table::update(int deltaTime)
 {
 	if (this->item != NULL) {
