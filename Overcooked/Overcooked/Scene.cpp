@@ -156,6 +156,7 @@ void Scene::update(int deltaTime)
 				timeUp = false;
 				currentState = LEVELMENU;
 				arrow->setType(Menu::LEVEL);
+				Music::instance().stopMusic();
 				Music::instance().playMenuMusic();
 			}
 		}
@@ -291,7 +292,12 @@ void Scene::render()
 
 		float proportion = level->getRecipeRepositionProportion();
 		for (int r = 0; r < level->getNumberPendingRecipes(); ++r) {
-			recipeOutline->setPosition(glm::vec2((r + 1) * 96.f - 96.f * proportion, 0.f));
+			if (r < level->getLastErasedPosition()) {
+				recipeOutline->setPosition(glm::vec2(r * 96.f, 0.f));
+			}
+			else {
+				recipeOutline->setPosition(glm::vec2((r + 1) * 96.f - 96.f * proportion, 0.f));
+			}
 			recipeOutline->render();
 		}
 		if (player->godModeOn()) {

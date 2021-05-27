@@ -286,6 +286,11 @@ float Level::getRecipeRepositionProportion()
 	return ((float)recipeListRepositionTime) / ((float)RECIPE_REPOSITION_TIME);
 }
 
+int Level::getLastErasedPosition()
+{
+	return erasedPos;
+}
+
 Item * Level::getNextPendingRecipe()
 {
 	if (pendingRecipes.size() > 0) {
@@ -634,43 +639,13 @@ void Level::recipeReposition()
 		pendingRecipes[i][0]->setPosition(glm::vec3(recipePos.x - (i + 1) * recipeXOffset + recipeXOffset * proportionTimePassed, recipePos.y, recipePos.z));
 		if (pendingRecipes[i].size() == 4) { // tres ingredients
 			for (int j = 0; j < 3; ++j) {
-				pendingRecipes[i][j + 1]->setPosition(glm::vec3(ingredientOfThreePos.x - ingredientOfThreeSpacing * j - (i + 1) * ingredientXOffset + recipeXOffset * proportionTimePassed, ingredientOfThreePos.y, ingredientOfThreePos.z));
+				pendingRecipes[i][j + 1]->setPosition(glm::vec3(ingredientOfThreePos.x - ingredientOfThreeSpacing * j - (i + 1) * ingredientXOffset + ingredientXOffset * proportionTimePassed, ingredientOfThreePos.y, ingredientOfThreePos.z));
 			}
 		}
 		else { // dos ingredients
 			for (int j = 0; j < 2; ++j) {
-				pendingRecipes[i][j + 1]->setPosition(glm::vec3(ingredientOfTwoPos.x - j * ingredientOfTwoSpacing - (i + 1) * ingredientXOffset + recipeXOffset * proportionTimePassed, ingredientOfTwoPos.y, ingredientOfTwoPos.z));
+				pendingRecipes[i][j + 1]->setPosition(glm::vec3(ingredientOfTwoPos.x - j * ingredientOfTwoSpacing - (i + 1) * ingredientXOffset + ingredientXOffset * proportionTimePassed, ingredientOfTwoPos.y, ingredientOfTwoPos.z));
 			}
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

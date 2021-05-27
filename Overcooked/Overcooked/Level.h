@@ -61,6 +61,7 @@ public:
 
 	int getNumberPendingRecipes();
 	float getRecipeRepositionProportion();
+	int getLastErasedPosition();
 	Item* getNextPendingRecipe();
 
 private:

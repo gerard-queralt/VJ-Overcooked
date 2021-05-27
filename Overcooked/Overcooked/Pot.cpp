@@ -49,9 +49,6 @@ void Pot::render(ShaderProgram & program, glm::mat4 viewMatrix)
 void Pot::setPosition(const glm::vec3 pos)
 {
 	this->position = pos;
-	//for (int f = 0; f < foods.size(); ++f) {
-		//foods[f]->setPosition(glm::vec3(position.x, position.y + model->getHeight() * scale, position.z));
-	//}
 }
 
 bool Pot::addFood(Food * food)
