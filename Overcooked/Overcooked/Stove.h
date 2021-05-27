@@ -17,7 +17,7 @@ public:
 private:
 	bool playerInExtinguisherDistance();
 private:
-	Billboard* working;
+	//Billboard* working;
 	Billboard* fireHazard;
 	int fireHazardFlashTime;
 	ParticleSystem *particles;

@@ -43,7 +43,7 @@ void Pot::render(ShaderProgram & program, glm::mat4 viewMatrix)
 		burnedFood = !loadFromFile("models/BurnedSoupCookingPot.obj", program);
 		this->recipe = new Trash();
 	}
-	Entity::render(program, viewMatrix);
+	Tool::render(program, viewMatrix);
 }
 
 void Pot::setPosition(const glm::vec3 pos)

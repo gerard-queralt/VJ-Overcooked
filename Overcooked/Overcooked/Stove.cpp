@@ -10,8 +10,8 @@ bool Stove::init(ShaderProgram & program)
 {
 	setScale(1.f);
 
-	working = Billboard::createBillboard(glm::vec2(1.f, 1.f), program, "images/tmpHourglass.png");
-	working->setType(BILLBOARD_Y_AXIS);
+	//working = Billboard::createBillboard(glm::vec2(1.f, 1.f), program, "images/progress0.png");
+	//working->setType(BILLBOARD_Y_AXIS);
 
 	fireHazard = Billboard::createBillboard(glm::vec2(1.f, 1.f), program, "images/fireHazard.png");
 	fireHazard->setType(BILLBOARD_Y_AXIS);
@@ -40,7 +40,7 @@ void Stove::render(ShaderProgram & program, glm::mat4 viewMatrix)
 			glm::vec3 obs = glm::vec3(0.f, 36.f, -24.f);
 			program.setUniform1b("bLighting", false);
 
-			if (((Tool*)item)->getCookingTime() < COOKING_TIME) {
+			/*if (((Tool*)item)->getCookingTime() < COOKING_TIME) {
 				//render billboard
 				modelMatrix = glm::mat4(1.0f);
 				program.setUniformMatrix4f("modelview", viewMatrix * modelMatrix);
@@ -48,7 +48,7 @@ void Stove::render(ShaderProgram & program, glm::mat4 viewMatrix)
 				program.setUniformMatrix3f("normalmatrix", normalMatrix);
 				working->render(glm::vec3(position.x, 2.f, position.z), obs);
 			}
-			else if (((Tool*)item)->getCookingTime() - COOKING_TIME >= (BURN_TIME - COOKING_TIME) / 2 && ((Tool*)item)->getCookingTime() < BURN_TIME) {
+			else*/ if (((Tool*)item)->getCookingTime() - COOKING_TIME >= (BURN_TIME - COOKING_TIME) / 2 && ((Tool*)item)->getCookingTime() < BURN_TIME) {
 				if (fireHazardFlashTime >= FLASH_TIME) {
 					//render billboard
 					modelMatrix = glm::mat4(1.0f);

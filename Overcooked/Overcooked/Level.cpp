@@ -1,6 +1,9 @@
 #include <iostream>
 #include <vector>
 #include "Level.h"
+
+#include "CuttingTable.h"
+
 #include "Plate.h"
 #include "OnionSoup.h"
 #include "Onion.h"
@@ -282,6 +285,40 @@ Item * Level::getNextPendingRecipe()
 	}
 	return NULL;
 }
+
+/* crec que aixo no fa falta
+std::vector<std::vector<glm::vec2>> Level::getWorkingPositionsAndTime()
+{
+	std::vector<std::vector<glm::vec2>> result;
+
+	for (Item* i : items) {
+		if (!i->isFood() && i->whatAmI() != "Extinguisher") {
+			int cookingTime = ((Tool*)i)->getCookingTime();
+			if (cookingTime > 0) {
+				glm::vec2 pos = glm::vec2(i->getPosition().x, i->getPosition().z);
+				glm::vec2 time = glm::vec2(cookingTime, COOKING_TIME);
+				std::vector<glm::vec2> itemInfo;
+				itemInfo.push_back(pos);
+				itemInfo.push_back(time);
+				result.push_back(itemInfo);
+			}
+		}
+	}
+
+	for (Table* t : tables) {
+		if (t->getCuttingTime() > 0) {
+			glm::vec2 pos = glm::vec2(t->getPosition().x, t->getPosition().z);
+			glm::vec2 time = glm::vec2(t->getCuttingTime(), CUTTING_TIME);
+			std::vector<glm::vec2> tableInfo;
+			tableInfo.push_back(pos);
+			tableInfo.push_back(time);
+			result.push_back(tableInfo);
+		}
+	}
+
+	return result;
+}
+*/
 
 void Level::prepareArrays(ShaderProgram &program)
 {

@@ -3,11 +3,14 @@
 
 #include "Item.h"
 #include "Food.h"
+#include "Billboard.h"
 
 class Tool :
 	public Item
 {
 public:
+	virtual void render(ShaderProgram & program, glm::mat4 viewMatrix);
+
 	virtual bool addFood(Food* food) = 0;
 
 	virtual bool hasFood() = 0;
@@ -32,6 +35,9 @@ protected:
 	bool burnedUpdated = false;
 
 	int cookingTime = 0;	
+
+private:
+	Billboard* working;
 };
 
 #endif // _TOOL_INCLUDE

@@ -8,8 +8,6 @@
 bool CuttingTable::init(ShaderProgram & program)
 {
 	setScale(1.f);
-	working = Billboard::createBillboard(glm::vec2(1.f, 1.f), program, "images/tmpHourglass.png");
-	working->setType(BILLBOARD_Y_AXIS);
 	return loadFromFile("models/CuttingTable.obj", program);
 }
 
@@ -25,7 +23,14 @@ void CuttingTable::render(ShaderProgram & program, glm::mat4 viewMatrix)
 		program.setUniformMatrix4f("modelview", viewMatrix * modelMatrix);
 		normalMatrix = glm::transpose(glm::inverse(glm::mat3(viewMatrix * modelMatrix)));
 		program.setUniformMatrix3f("normalmatrix", normalMatrix);
+		
+		float percent = ((float)cuttingTime) / ((float)CUTTING_TIME) * 100;
+		string path = "images/progress" + std::to_string((int)(percent / 10)) + ".png";
+		working = Billboard::createBillboard(glm::vec2(1.f, 0.5f), program, path);
+		working->setType(BILLBOARD_Y_AXIS);
+
 		working->render(glm::vec3(position.x, 1.f, position.z), obs);
+		
 		program.setUniform1b("bLighting", true);
 	}
 	Entity::render(program, viewMatrix);
