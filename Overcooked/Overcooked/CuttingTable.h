@@ -19,6 +19,8 @@ private:
 
 	bool facingUpdated = false;
 	bool notFacingUpdated = false;
+
+	bool playingSound;
 };
 
 #endif //_CUTTING_TABLE_INCLUDE

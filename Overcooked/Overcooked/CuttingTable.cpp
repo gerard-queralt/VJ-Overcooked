@@ -49,6 +49,17 @@ void CuttingTable::render(ShaderProgram & program, glm::mat4 viewMatrix)
 void CuttingTable::update(int deltaTime)
 {
 	Table::update(deltaTime);
+	if (cuttingTime == 0) {
+		playingSound = false;
+	}
+	else if (0 < cuttingTime && cuttingTime < CUTTING_TIME && !playingSound) {
+		//play sound
+		playingSound = true;
+	}
+	if (CUTTING_TIME <= cuttingTime) {
+		//stop sound
+		playingSound = false;
+	}
 	if (item != NULL && playerFacingThis() && !((Food*)item)->isCut())
 		player->checkStartStopCutting();
 	if (item != NULL && item->isFood() && !((Food*) item)->isCut() && playerFacingThis() && player->isCutting()) {
@@ -58,5 +69,9 @@ void CuttingTable::update(int deltaTime)
 			cuttingTime = 0;
 			player->stopCutting();
 		}
+	}
+	else {
+		//stop sound
+		playingSound = false;
 	}
 }
