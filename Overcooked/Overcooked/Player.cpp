@@ -27,26 +27,26 @@ bool Player::init(ShaderProgram & program)
 void Player::render(ShaderProgram & program, glm::mat4 viewMatrix)
 {
 	Entity::render(program, viewMatrix);
-	if (walking) {
-		//render particles
-		glm::mat4 modelMatrix;
-		glm::mat3 normalMatrix;
-		glm::vec3 obs = glm::vec3(0.f, 36.f, -24.f);
 
-		glDepthMask(GL_FALSE);
-		glEnable(GL_BLEND);
+	//render particles
+	glm::mat4 modelMatrix;
+	glm::mat3 normalMatrix;
+	glm::vec3 obs = glm::vec3(0.f, 36.f, -24.f);
 
-		modelMatrix = glm::mat4(1.0f);
-		program.setUniformMatrix4f("modelview", viewMatrix * modelMatrix);
-		normalMatrix = glm::transpose(glm::inverse(glm::mat3(viewMatrix * modelMatrix)));
-		program.setUniformMatrix3f("normalmatrix", normalMatrix);
-		program.setUniform2f("texCoordDispl", 0.f, 0.f);
-		particles->render(obs);
+	glDepthMask(GL_FALSE);
+	glEnable(GL_BLEND);
 
-		glDisable(GL_BLEND);
-		glDepthMask(GL_TRUE);
-		program.setUniform1b("bLighting", true);
-	}
+	modelMatrix = glm::mat4(1.0f);
+	program.setUniformMatrix4f("modelview", viewMatrix * modelMatrix);
+	normalMatrix = glm::transpose(glm::inverse(glm::mat3(viewMatrix * modelMatrix)));
+	program.setUniformMatrix3f("normalmatrix", normalMatrix);
+	program.setUniform2f("texCoordDispl", 0.f, 0.f);
+	particles->render(obs);
+
+	glDisable(GL_BLEND);
+	glDepthMask(GL_TRUE);
+	program.setUniform1b("bLighting", true);
+
 }
 
 void Player::update(int deltaTime)
@@ -129,17 +129,19 @@ void Player::update(int deltaTime)
 	int nParticlesToSpawn = 3;
 	ParticleSystem::Particle particle;
 
-	particle.lifetime = 0.1f;
-	for (int i = 0; i < nParticlesToSpawn; i++)
-	{
-		float z = -2.f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (0.1f - -2.f)));
-		float x = -0.5f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (0.5f - -0.5f)));
-		float xPrime = x * cos(rotation * PI / 180) - z * sin(rotation * PI / 180);
-		float zPrime = z * cos(rotation * PI / 180) + x * sin(rotation * PI / 180);
-		particle.position = glm::vec3(- xPrime, -1.75f, zPrime);
-		particle.position += position;
-		particle.speed = 1.5f * glm::normalize(0.5f * particle.position + glm::vec3(0.f, 3.f, 0.f));
-		particles->addParticle(particle);
+	if (walking) {
+		particle.lifetime = 0.25f;
+		for (int i = 0; i < nParticlesToSpawn; i++)
+		{
+			float z = -2.f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (0.1f - -2.f)));
+			float x = -0.5f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (0.5f - -0.5f)));
+			float xPrime = x * cos(rotation * PI / 180) - z * sin(rotation * PI / 180);
+			float zPrime = z * cos(rotation * PI / 180) + x * sin(rotation * PI / 180);
+			particle.position = glm::vec3(-xPrime, -1.5f, zPrime);
+			particle.position += position;
+			particle.speed = 1.5f * glm::normalize(0.5f * particle.position + glm::vec3(0.f, 3.f, 0.f));
+			particles->addParticle(particle);
+		}
 	}
 	particles->update(deltaTime / 1000.f);
 }
