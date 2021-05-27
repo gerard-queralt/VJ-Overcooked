@@ -66,7 +66,7 @@ void CuttingTable::update(int deltaTime)
 			player->stopCutting();
 		}
 	}
-	else {
+	else if(playingSound){
 		Music::instance().stopSoundEffect();
 		playingSound = false;
 	}
