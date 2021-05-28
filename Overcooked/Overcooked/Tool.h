@@ -25,7 +25,7 @@ public:
 	virtual Food* getFood();
 	virtual void empty() = 0;
 
-	#define COOKING_TIME 5000
+	#define COOKING_TIME 10000
 	#define BURN_TIME COOKING_TIME + 10000
 
 protected:

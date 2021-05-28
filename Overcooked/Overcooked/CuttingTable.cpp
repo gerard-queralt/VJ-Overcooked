@@ -5,7 +5,7 @@
 
 #include "Music.h"
 
-#define CUTTING_TIME 500
+#define CUTTING_TIME 2000
 
 bool CuttingTable::init(ShaderProgram & program)
 {

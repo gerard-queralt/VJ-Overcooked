@@ -250,9 +250,6 @@ void Scene::update(int deltaTime)
 						currentState = PLAYING;
 						break;
 					case 1: {
-						if (level != NULL) {
-							delete level;
-						}
 						currentState = MAINMENU;
 						arrow->setType(Menu::MAIN);
 						Music::instance().stopMusic();
@@ -273,7 +270,7 @@ void Scene::update(int deltaTime)
 				currentState = PLAYING;
 				inputCd = 0;
 			}
-			else if(currentState == HOW && (Game::instance().getKey(27) || Game::instance().getKey(13) || Game::instance().getKey(' ')))
+			else if(currentState == HOW && (Game::instance().getKey(27) || Game::instance().getKey(' ')))
 			{
 				currentState = MAINMENU;
 				arrow->setType(Menu::MAIN);
