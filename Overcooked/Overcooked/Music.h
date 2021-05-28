@@ -21,6 +21,8 @@ public:
 	void playGameMusic(int level);
 	void stopMusic();
 
+	void stopAll();
+
 	void playSoundEffect(int sound);
 	void stopSoundEffect(int sound);
 

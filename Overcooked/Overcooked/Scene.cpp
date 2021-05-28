@@ -254,6 +254,7 @@ void Scene::update(int deltaTime)
 						arrow->setType(Menu::MAIN);
 						Music::instance().stopMusic();
 						Music::instance().playMenuMusic();
+						Music::instance().stopAll();
 					}
 						break;
 					case 2: Game::instance().exit();

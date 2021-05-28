@@ -142,3 +142,21 @@ void Music::setVolume(int vol)
 		music->setVolume(0.05);
 }
 
+void Music::stopAll() {
+	if (cutting) {
+		cutting->stop();
+	}
+	if (alarm) {
+		alarm->stop();
+	}
+	if (steps) {
+		steps->stop();
+	}
+	if (stove) {
+		stove->stop();
+	}
+	if (burning) {
+		burning->stop();
+	}
+}
+
