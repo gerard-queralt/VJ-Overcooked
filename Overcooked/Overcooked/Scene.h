@@ -67,6 +67,8 @@ private:
 	Texture levelMenuSpriteSheet;
 	Sprite* pauseMenu;
 	Texture pauseMenuSpriteSheet;
+	Sprite* howMenu;
+	Texture howMenuSpriteSheet;
 
 	Menu *arrow;
 	int inputCd;
