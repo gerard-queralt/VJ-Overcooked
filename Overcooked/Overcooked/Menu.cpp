@@ -1,5 +1,7 @@
 #include "Menu.h"
 
+#include "Music.h"
+
 void Menu::init(ShaderProgram & shaderProgram)
 {
 	spritesheet.loadFromFile("images/fletxaSeleccio.png", TEXTURE_PIXEL_FORMAT_RGBA);
@@ -42,6 +44,9 @@ void Menu::goUp()
 		if (type == PAUSE)
 			currentPosition = 2;
 	}
+
+	Music::instance().playSoundEffect(4);
+
 	changePosition();
 }
 
@@ -54,6 +59,9 @@ void Menu::goDown()
 		currentPosition = 0;
 	if(type == PAUSE && currentPosition > 2)
 		currentPosition = 0;
+
+	Music::instance().playSoundEffect(4);
+
 	changePosition();
 }
 
