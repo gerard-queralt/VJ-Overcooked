@@ -2,8 +2,6 @@
 #include <vector>
 #include "Level.h"
 
-#include "CuttingTable.h"
-
 #include "Plate.h"
 #include "OnionSoup.h"
 #include "Onion.h"
@@ -17,6 +15,8 @@
 #include "Beef.h"
 #include "Bread.h"
 #include "Cheese.h"
+
+#include "Music.h"
 
 using namespace std;
 
@@ -109,6 +109,9 @@ void Level::update(int deltaTime)
 		nextRecipeTime = 15000; //uns 15 segons
 	}
 	else {
+		if (pendingRecipes.size() == 0) {
+			askRandomRecipe();
+		}
 		nextRecipeTime -= deltaTime;
 	}
 	if (recipeListRepositionTime < RECIPE_REPOSITION_TIME) {
@@ -267,6 +270,10 @@ bool Level::deliver(Food * food)
 			pendingRecipes.erase(pendingRecipes.begin() + pos);
 			recipeListRepositionTime = 0;
 			erasedPos = pos;
+			Music::instance().playSoundEffect(8);
+		}
+		else {
+			Music::instance().playSoundEffect(9);
 		}
 		return true;
 	}

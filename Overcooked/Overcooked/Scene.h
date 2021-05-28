@@ -85,6 +85,4 @@ private:
 	glm::mat4 projection, projection2D;
 };
 
-
 #endif // _SCENE_INCLUDE
-

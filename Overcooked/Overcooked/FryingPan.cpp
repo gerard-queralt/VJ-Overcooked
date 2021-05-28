@@ -1,6 +1,8 @@
 #include "FryingPan.h"
 #include "Beef.h"
 
+#include "Music.h"
+
 bool FryingPan::init(ShaderProgram & program)
 {
 	setScale(0.75f);
@@ -12,6 +14,7 @@ void FryingPan::update(int deltaTime)
 	if (cookedFood) {
 		((Beef*)food)->cook();
 		cookedFood = false;
+		Music::instance().playSoundEffect(5);
 	}
 	if (burnedFood) {
 		((Beef*)food)->burn();

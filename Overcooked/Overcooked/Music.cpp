@@ -52,6 +52,7 @@ void Music::playSoundEffect(int sound)
 		break;
 	case 2:
 		alarm = engine->play2D("music/alarm.mp3", true, false, true);
+		alarm->setVolume(0.25);
 		break;
 	case 3:
 		steps = engine->play2D("music/footsteps.mp3", true, false, true);
@@ -66,15 +67,23 @@ void Music::playSoundEffect(int sound)
 		break;
 	case 6:
 		pick = engine->play2D("music/pickItem.mp3", false, false, true);
+		pick->setVolume(0.25);
 		break;
 	case 7:
 		stove = engine->play2D("music/stove.mp3", true, false, true);
+		stove->setVolume(0.1);
 		break;
 	case 8:
 		corDish = engine->play2D("music/correct.mp3", false, false, true);
+		corDish->setVolume(0.25);
 		break;
 	case 9:
 		incDish = engine->play2D("music/incorrect.mp3", false, false, true);
+		incDish->setVolume(0.1);
+		break;
+	case 10:
+		burning = engine->play2D("music/stove.mp3", true, false, true);
+		burning->setVolume(0.2);
 		break;
 	default:
 		break;
@@ -116,6 +125,10 @@ void Music::stopSoundEffect(int sound)
 		break;
 	case 9:
 		break;
+	case 10:
+		if (burning) {
+			burning->stop();
+		}
 	default:
 		break;
 	}

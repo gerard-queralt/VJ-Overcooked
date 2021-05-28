@@ -35,6 +35,7 @@ private:
 	ISound* stove; //7
 	ISound* corDish; //8
 	ISound* incDish; //9
+	ISound* burning; //10
 	ISound* music;
 
 	void setVolume(int vol);

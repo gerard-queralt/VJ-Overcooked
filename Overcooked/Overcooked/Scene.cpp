@@ -273,7 +273,7 @@ void Scene::update(int deltaTime)
 				currentState = PLAYING;
 				inputCd = 0;
 			}
-			else if(currentState == HOW && Game::instance().getKey(27))
+			else if(currentState == HOW && (Game::instance().getKey(27) || Game::instance().getKey(13) || Game::instance().getKey(' ')))
 			{
 				currentState = MAINMENU;
 				arrow->setType(Menu::MAIN);
@@ -438,8 +438,10 @@ void Scene::createLevel(int levelNum)
 		player->setPosition(glm::vec3(0.f, 0.f, -7.5f));
 		break;
 	case 3:
+		player->setPosition(glm::vec3(-5.f, 0.f, 0.f));
 		break;
 	case 4:
+		player->setPosition(glm::vec3(0.f, 0.f, 0.f));
 		break;
 	case 5:
 		break;
