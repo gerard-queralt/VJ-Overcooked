@@ -19,7 +19,7 @@
 #define TIME_TO_MENU 5000 //uns 5 segons
 
 enum GameState {
-	MAINMENU, LEVELMENU, PLAYING, PAUSED
+	MAINMENU, LEVELMENU, PLAYING, PAUSED, HOW
 };
 
 Scene::Scene()
@@ -57,6 +57,10 @@ void Scene::init()
 	pauseMenuSpriteSheet.loadFromFile("images/PauseMenu.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	pauseMenu = Sprite::createSprite(glm::ivec2(CAMERA_WIDTH, CAMERA_HEIGHT), glm::vec2(1.f, 1.f), &pauseMenuSpriteSheet, &texProgram);
 	pauseMenu->setPosition(glm::vec2(0.f, 0.f));
+
+	howMenuSpriteSheet.loadFromFile("images/HowToPlay.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	howMenu = Sprite::createSprite(glm::ivec2(CAMERA_WIDTH, CAMERA_HEIGHT), glm::vec2(1.f, 1.f), &howMenuSpriteSheet, &texProgram);
+	howMenu->setPosition(glm::vec2(0.f, 0.f));
 
 	arrow = new Menu();
 	arrow->init(texProgram);
@@ -211,6 +215,7 @@ void Scene::update(int deltaTime)
 					}
 						break;
 					case 1:
+						currentState = HOW;
 						break;
 					case 2: Game::instance().exit();
 						break;
@@ -267,6 +272,11 @@ void Scene::update(int deltaTime)
 			else if (currentState == PAUSED && Game::instance().getKey(27)) {
 				currentState = PLAYING;
 				inputCd = 0;
+			}
+			else if(currentState == HOW && Game::instance().getKey(27))
+			{
+				currentState = MAINMENU;
+				arrow->setType(Menu::MAIN);
 			}
 		}
 		else
@@ -371,13 +381,16 @@ void Scene::render()
 		}
 	}
 	else {
-		arrow->render();
+		if(currentState == MAINMENU || currentState == LEVELMENU)
+			arrow->render();
 		if (currentState == MAINMENU) {
 			mainMenu->render();
 		}
 		else if (currentState == LEVELMENU) {
 			levelMenu->render();
 		}
+		else if (currentState == HOW)
+			howMenu->render();
 	}
 }
 

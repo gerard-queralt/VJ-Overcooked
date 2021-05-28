@@ -7,7 +7,7 @@ class Menu
 {
 public:
 
-	enum Type{MAIN, LEVEL, PAUSE};
+	enum Type{MAIN, LEVEL, PAUSE, HOW};
 	void init(ShaderProgram &shaderProgram);
 	void update(int deltaTime);
 	void render();
