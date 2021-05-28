@@ -5,6 +5,8 @@
 #include "Trash.h"
 #include "Level.h"
 
+#include "Music.h"
+
 #define TIME_SETBACK 1000
 
 bool Pot::init(ShaderProgram & program)
@@ -38,6 +40,8 @@ void Pot::render(ShaderProgram & program, glm::mat4 viewMatrix)
 			cookedFood = !loadFromFile("models/SoupCookingPot.obj", program);
 		}
 		checkRecipe();
+
+		Music::instance().playSoundEffect(5);
 	}
 	if (burnedFood) {
 		burnedFood = !loadFromFile("models/BurnedSoupCookingPot.obj", program);

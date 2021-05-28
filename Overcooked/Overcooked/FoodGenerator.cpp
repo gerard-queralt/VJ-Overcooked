@@ -10,6 +10,8 @@
 #include "Cheese.h"
 #include "Lettuce.h"
 
+#include "Music.h"
+
 bool FoodGenerator::init(ShaderProgram & program)
 {
 	this->program = program;
@@ -64,7 +66,7 @@ void FoodGenerator::update(int deltaTime)
 			level->addItem(item);
 
 			if (!firstGenerate) {
-				//so
+				Music::instance().playSoundEffect(6);
 			}
 			firstGenerate = false;
 		}

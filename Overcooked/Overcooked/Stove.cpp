@@ -2,6 +2,8 @@
 #include "Tool.h"
 #include "Player.h"
 
+#include "Music.h"
+
 #define PI 3.14159f
 
 #define FLASH_TIME 10
@@ -9,9 +11,6 @@
 bool Stove::init(ShaderProgram & program)
 {
 	setScale(1.f);
-
-	//working = Billboard::createBillboard(glm::vec2(1.f, 1.f), program, "images/progress0.png");
-	//working->setType(BILLBOARD_Y_AXIS);
 
 	fireHazard = Billboard::createBillboard(glm::vec2(1.f, 1.f), program, "images/fireHazard.png");
 	fireHazard->setType(BILLBOARD_Y_AXIS);
@@ -68,6 +67,15 @@ void Stove::render(ShaderProgram & program, glm::mat4 viewMatrix)
 				}
 				else
 					++fireHazardFlashTime;
+
+				if (!playingAlarmSound) {
+					playingAlarmSound = true;
+					Music::instance().playSoundEffect(2);
+				}
+			}
+			else {
+				playingAlarmSound = false;
+				Music::instance().stopSoundEffect(2);
 			}
 			program.setUniform1b("bLighting", true);
 		}
@@ -99,18 +107,29 @@ void Stove::update(int deltaTime)
 {
 	Table::update(deltaTime);
 
+	if (item == NULL) {
+		playingFireSound = false;
+		Music::instance().stopSoundEffect(7);
+	}
 	if (item != NULL && ((Tool*)item)->getCookingTime() < BURN_TIME) {
 		putOut = false;
 	}
 	if (item != NULL && ((Tool*)item)->hasFood()) {
 		((Tool*)item)->cookFood(deltaTime);
+
+		if (!playingFireSound) {
+			playingFireSound = true;
+			Music::instance().playSoundEffect(7);
+		}
 	}
 	if (playerInExtinguisherDistance() && player->usingExtinguisher() && burning && !putOut) {
 		putOut = true;
 		burning = false;
+		Music::instance().stopSoundEffect(10);
 	}
 	if (item != NULL && ((Tool*)item)->getCookingTime() >= BURN_TIME && !burning && !putOut) {
 		burning = true;
+		Music::instance().playSoundEffect(10);
 	}
 
 	int nParticlesToSpawn = 5;

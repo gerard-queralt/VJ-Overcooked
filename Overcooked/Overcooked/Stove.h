@@ -26,6 +26,10 @@ private:
 
 	bool facingUpdated = false;
 	bool notFacingUpdated = false;
+
+	bool playingFireSound = false;
+	bool playingAlarmSound = false;
+	bool playingBuringSound = false;
 };
 
 #endif //_STOVE_INCLUDE
