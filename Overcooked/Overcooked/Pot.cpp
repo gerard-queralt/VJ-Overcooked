@@ -90,6 +90,7 @@ Food * Pot::getFood()
 
 void Pot::empty()
 {
+	Music::instance().stopSoundEffect(7);
 	recipe = NULL;
 	emptied = true;
 	cookedFood = false;

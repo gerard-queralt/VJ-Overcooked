@@ -93,7 +93,6 @@ void Level::renderEntities(ShaderProgram texProgram, glm::mat4 viewMatrix)
 
 void Level::update(int deltaTime)
 {
-	currentTime += deltaTime;
 	flashTime -= deltaTime;
 
 	for (Item* i : items) {
@@ -235,6 +234,11 @@ int Level::getPointsRequired()
 int Level::getCurrentTime()
 {
 	return currentTime;
+}
+
+void Level::updateTime(int deltaTime)
+{
+	currentTime += deltaTime;
 }
 
 bool Level::deliver(Food * food)

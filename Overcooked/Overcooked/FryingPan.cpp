@@ -63,6 +63,7 @@ Food * FryingPan::getFood()
 
 void FryingPan::empty()
 {
+	Music::instance().stopSoundEffect(7);
 	food = NULL;
 	cookingTime = 0;
 	cookedFood = false;

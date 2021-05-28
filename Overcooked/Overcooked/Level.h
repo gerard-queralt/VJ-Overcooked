@@ -57,6 +57,8 @@ public:
 	int getPointsRequired();
 	int getCurrentTime();
 
+	void updateTime(int deltaTime);
+
 	bool deliver(Food* food);
 
 	int getNumberPendingRecipes();

@@ -132,6 +132,7 @@ void Scene::update(int deltaTime)
 
 		if (!timeUp) {
 			if (!player->timeFrozen()) {
+				level->updateTime(deltaTime);
 				int currentLevelTime = level->getCurrentTime();
 				timeSeconds = level->getSeconds() - (currentLevelTime / 1000) % 60 + secondsIncrement;
 				if (timeSeconds < 0) {
