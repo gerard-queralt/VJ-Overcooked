@@ -55,9 +55,11 @@ void Music::playSoundEffect(int sound)
 		break;
 	case 3:
 		steps = engine->play2D("music/footsteps.mp3", true, false, true);
+		steps->setVolume(0.15);
 		break;
 	case 4:
 		arrow = engine->play2D("music/arrow.mp3", false, false, true);
+		arrow->setVolume(0.02);
 		break;
 	case 5:
 		clock = engine->play2D("music/foodReady.mp3", false, false, true);

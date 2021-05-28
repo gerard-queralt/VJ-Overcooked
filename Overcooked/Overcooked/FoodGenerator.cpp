@@ -62,6 +62,11 @@ void FoodGenerator::update(int deltaTime)
 			item->setPosition(position);
 			item->setPlayer(player);
 			level->addItem(item);
+
+			if (!firstGenerate) {
+				//so
+			}
+			firstGenerate = false;
 		}
 	}
 	Table::update(deltaTime);

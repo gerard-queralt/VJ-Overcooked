@@ -21,6 +21,8 @@ private:
 
 	bool facingUpdated = false;
 	bool notFacingUpdated = false;
+
+	bool firstGenerate = true;
 };
 
 #endif //_FOOD_GENERATOR_INCLUDE

@@ -245,6 +245,9 @@ void Scene::update(int deltaTime)
 						currentState = PLAYING;
 						break;
 					case 1: {
+						if (level != NULL) {
+							delete level;
+						}
 						currentState = MAINMENU;
 						arrow->setType(Menu::MAIN);
 						Music::instance().stopMusic();
@@ -416,6 +419,7 @@ void Scene::createLevel(int levelNum)
 	switch (levelNum)
 	{
 	case 1:
+		player->setPosition(glm::vec3(0.f, 0.f, 5.f));
 		break;
 	case 2:
 		player->setPosition(glm::vec3(0.f, 0.f, -7.5f));
